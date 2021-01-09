@@ -9,7 +9,7 @@ Installation
 
 <dependency>
     <groupId>io.github.junhuhdev</groupId>
-    <artifactId>dracarys-chain</artifactId>
+    <artifactId>dracarys-jobrunr</artifactId>
     <version>1.0.0</version>
 </dependency>
 ```
