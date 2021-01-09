@@ -8,9 +8,9 @@
         <version>2.4.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>huh.enterprises</groupId>
+    <groupId>io.github.junhuhdev</groupId>
     <artifactId>dracarys-jobrunr</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>dracarys-jobrunr</name>
     <description>Abstraction over jobrnr</description>
 

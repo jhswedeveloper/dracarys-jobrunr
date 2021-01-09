@@ -1,4 +1,4 @@
-package huh.enterprises.dracarysjobrunr.config;
+package io.github.junhuhdev.config;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;

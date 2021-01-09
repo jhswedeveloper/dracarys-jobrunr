@@ -1,4 +1,4 @@
-package huh.enterprises.dracarysjobrunr.config;
+package io.github.junhuhdev.config;
 
 import org.jobrunr.scheduling.exceptions.FieldNotFoundException;
 import org.jobrunr.scheduling.exceptions.JobNotFoundException;

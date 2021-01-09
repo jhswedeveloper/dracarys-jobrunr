@@ -1,4 +1,4 @@
-package huh.enterprises.dracarysjobrunr.config;
+package io.github.junhuhdev.config;
 
 import org.jobrunr.scheduling.JobScheduler;
 import org.jobrunr.server.JobActivator;
