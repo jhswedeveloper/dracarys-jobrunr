@@ -1,9 +1,6 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs.filters;
 
 import org.jobrunr.jobs.AbstractJob;
-import org.jobrunr.jobs.filters.AbstractJobFilters;
-import org.jobrunr.jobs.filters.JobClientFilter;
-import org.jobrunr.jobs.filters.JobDefaultFilters;
 import org.jobrunr.utils.streams.StreamUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

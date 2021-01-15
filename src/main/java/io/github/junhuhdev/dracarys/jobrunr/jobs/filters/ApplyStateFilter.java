@@ -1,7 +1,6 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs.filters;
 
 import org.jobrunr.jobs.Job;
-import org.jobrunr.jobs.filters.JobFilter;
 import org.jobrunr.jobs.states.JobState;
 
 /**

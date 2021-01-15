@@ -1,9 +1,6 @@
 package io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb;
 
 import org.jobrunr.utils.mapper.JsonMapper;
-import org.jobrunr.utils.mapper.jsonb.FieldAccessStrategy;
-import org.jobrunr.utils.mapper.jsonb.JobAdapter;
-import org.jobrunr.utils.mapper.jsonb.RecurringJobAdapter;
 import org.jobrunr.utils.mapper.jsonb.serializer.DurationTypeDeserializer;
 import org.jobrunr.utils.mapper.jsonb.serializer.DurationTypeSerializer;
 

@@ -2,7 +2,6 @@ package io.github.junhuhdev.dracarys.jobrunr.jobs.details.instructions;
 
 import org.jobrunr.jobs.JobParameter;
 import org.jobrunr.jobs.details.JobDetailsFinderContext;
-import org.jobrunr.jobs.details.instructions.VisitMethodInstruction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

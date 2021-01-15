@@ -9,12 +9,6 @@ import org.jobrunr.jobs.JobParameter;
 import org.jobrunr.jobs.context.JobContext;
 import org.jobrunr.jobs.states.JobState;
 import org.jobrunr.utils.mapper.JsonMapper;
-import org.jobrunr.utils.mapper.gson.ClassNameObjectTypeAdapter;
-import org.jobrunr.utils.mapper.gson.DurationAdapter;
-import org.jobrunr.utils.mapper.gson.InstantAdapter;
-import org.jobrunr.utils.mapper.gson.JobParameterDeserializer;
-import org.jobrunr.utils.mapper.gson.PathAdapter;
-import org.jobrunr.utils.mapper.gson.RuntimeClassNameTypeAdapterFactory;
 import org.jobrunr.utils.metadata.VersionRetriever;
 import org.jobrunr.utils.reflection.ReflectionUtils;
 

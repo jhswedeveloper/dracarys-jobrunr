@@ -1,8 +1,6 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs.states;
 
 import org.jobrunr.JobRunrException;
-import org.jobrunr.jobs.states.AbstractJobState;
-import org.jobrunr.jobs.states.StateName;
 import org.jobrunr.utils.reflection.ReflectionUtils;
 
 import static org.jobrunr.utils.exceptions.Exceptions.getStackTraceAsString;

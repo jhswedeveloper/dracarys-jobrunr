@@ -1,7 +1,6 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs.context;
 
 import org.jobrunr.jobs.Job;
-import org.jobrunr.jobs.context.JobDashboardLogger;
 import org.jobrunr.jobs.context.JobDashboardLogger.Level;
 import org.jobrunr.server.runner.RunnerJobContext;
 import org.slf4j.Logger;

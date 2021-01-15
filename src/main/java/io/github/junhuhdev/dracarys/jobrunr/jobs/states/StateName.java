@@ -1,8 +1,5 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs.states;
 
-import org.jobrunr.jobs.states.FailedState;
-import org.jobrunr.jobs.states.JobState;
-
 import java.util.function.Predicate;
 
 public enum StateName {

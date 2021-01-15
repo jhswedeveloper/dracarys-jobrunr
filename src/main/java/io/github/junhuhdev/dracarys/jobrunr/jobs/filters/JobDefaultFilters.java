@@ -1,9 +1,5 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs.filters;
 
-import org.jobrunr.jobs.filters.DisplayNameFilter;
-import org.jobrunr.jobs.filters.JobFilter;
-import org.jobrunr.jobs.filters.RetryFilter;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

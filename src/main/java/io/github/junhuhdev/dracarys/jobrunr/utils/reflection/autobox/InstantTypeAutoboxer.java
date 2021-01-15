@@ -1,8 +1,5 @@
 package io.github.junhuhdev.dracarys.jobrunr.utils.reflection.autobox;
 
-import org.jobrunr.utils.reflection.autobox.InstantForOracleTypeAutoboxer;
-import org.jobrunr.utils.reflection.autobox.TypeAutoboxer;
-
 import java.sql.Timestamp;
 import java.time.Instant;
 

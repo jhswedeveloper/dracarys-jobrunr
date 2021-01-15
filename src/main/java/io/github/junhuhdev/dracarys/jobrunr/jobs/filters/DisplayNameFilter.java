@@ -3,7 +3,6 @@ package io.github.junhuhdev.dracarys.jobrunr.jobs.filters;
 import org.jobrunr.jobs.AbstractJob;
 import org.jobrunr.jobs.JobDetails;
 import org.jobrunr.jobs.annotations.Job;
-import org.jobrunr.jobs.filters.JobClientFilter;
 import org.jobrunr.utils.JobUtils;
 import org.jobrunr.utils.StringUtils;
 

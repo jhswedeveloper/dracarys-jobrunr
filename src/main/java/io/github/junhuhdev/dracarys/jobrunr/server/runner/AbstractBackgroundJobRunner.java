@@ -3,8 +3,6 @@ package io.github.junhuhdev.dracarys.jobrunr.server.runner;
 import org.jobrunr.jobs.Job;
 import org.jobrunr.jobs.JobDetails;
 import org.jobrunr.jobs.context.JobContext;
-import org.jobrunr.server.runner.BackgroundJobRunner;
-import org.jobrunr.server.runner.RunnerJobContext;
 import org.jobrunr.utils.JobUtils;
 
 import java.lang.reflect.Method;

@@ -2,7 +2,6 @@ package io.github.junhuhdev.dracarys.jobrunr.server.runner;
 
 import org.jobrunr.jobs.Job;
 import org.jobrunr.server.JobActivator;
-import org.jobrunr.server.runner.AbstractBackgroundJobRunner;
 
 import static org.jobrunr.utils.JobUtils.assertJobExists;
 import static org.jobrunr.utils.reflection.ReflectionUtils.toClass;

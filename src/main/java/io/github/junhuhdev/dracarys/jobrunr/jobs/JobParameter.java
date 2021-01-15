@@ -1,7 +1,5 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs;
 
-import io.github.junhuhdev.dracarys.jobrunr.jobs.context.JobContext;
-
 public class JobParameter {
 
     public static final JobParameter JobContext = new JobParameter(io.github.junhuhdev.dracarys.jobrunr.jobs.context.JobContext.class);

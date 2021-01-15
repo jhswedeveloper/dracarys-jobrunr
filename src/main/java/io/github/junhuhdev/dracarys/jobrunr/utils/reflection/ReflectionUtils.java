@@ -2,7 +2,6 @@ package io.github.junhuhdev.dracarys.jobrunr.utils.reflection;
 
 import org.jobrunr.scheduling.exceptions.FieldNotFoundException;
 import org.jobrunr.scheduling.exceptions.JobNotFoundException;
-import org.jobrunr.utils.reflection.MethodFinderPredicate;
 import org.jobrunr.utils.reflection.autobox.Autoboxer;
 
 import java.lang.reflect.AccessibleObject;

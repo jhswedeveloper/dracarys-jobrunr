@@ -2,7 +2,6 @@ package io.github.junhuhdev.dracarys.jobrunr.jobs.details.instructions;
 
 import org.jobrunr.JobRunrException;
 import org.jobrunr.jobs.details.JobDetailsFinderContext;
-import org.jobrunr.jobs.details.instructions.VisitMethodInstruction;
 import org.jobrunr.utils.reflection.ReflectionUtils;
 
 import java.lang.reflect.Method;

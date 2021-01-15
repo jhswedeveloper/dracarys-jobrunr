@@ -2,7 +2,6 @@ package io.github.junhuhdev.dracarys.jobrunr.utils.reflection.autobox;
 
 import oracle.sql.TIMESTAMP;
 import org.jobrunr.JobRunrException;
-import org.jobrunr.utils.reflection.autobox.InstantTypeAutoboxer;
 
 import java.sql.SQLException;
 import java.time.Instant;

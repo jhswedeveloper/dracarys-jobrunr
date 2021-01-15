@@ -1,9 +1,6 @@
 package io.github.junhuhdev.dracarys.jobrunr.server.jmx;
 
 import org.jobrunr.server.BackgroundJobServer;
-import org.jobrunr.server.jmx.BackgroundJobServerMBean;
-import org.jobrunr.server.jmx.BackgroundJobServerStatusMBean;
-import org.jobrunr.server.jmx.JobStatsMBean;
 import org.jobrunr.storage.JobStats;
 import org.jobrunr.storage.StorageProvider;
 import org.jobrunr.storage.listeners.JobStatsChangeListener;

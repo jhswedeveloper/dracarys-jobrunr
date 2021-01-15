@@ -1,5 +1,6 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs.mappers;
 
+import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
 import io.github.junhuhdev.dracarys.jobrunr.jobs.RecurringJob;
 import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.JsonMapper;
 

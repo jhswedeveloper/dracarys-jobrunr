@@ -1,8 +1,5 @@
 package io.github.junhuhdev.dracarys.jobrunr.utils.resilience;
 
-import org.jobrunr.utils.resilience.Lock;
-import org.jobrunr.utils.resilience.Lockable;
-
 import java.io.Closeable;
 import java.util.Arrays;
 import java.util.Collection;

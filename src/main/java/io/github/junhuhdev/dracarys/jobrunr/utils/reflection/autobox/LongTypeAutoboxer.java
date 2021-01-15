@@ -1,7 +1,5 @@
 package io.github.junhuhdev.dracarys.jobrunr.utils.reflection.autobox;
 
-import org.jobrunr.utils.reflection.autobox.TypeAutoboxer;
-
 import java.math.BigDecimal;
 
 import static org.jobrunr.utils.reflection.ReflectionUtils.cast;

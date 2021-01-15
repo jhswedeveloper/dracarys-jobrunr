@@ -1,7 +1,6 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs.context;
 
 import org.jobrunr.jobs.Job;
-import org.jobrunr.jobs.context.JobContext;
 
 import java.util.Map;
 

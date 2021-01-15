@@ -3,8 +3,6 @@ package io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb;
 import org.jobrunr.jobs.Job;
 import org.jobrunr.jobs.JobDetails;
 import org.jobrunr.jobs.states.JobState;
-import org.jobrunr.utils.mapper.jsonb.FieldAccessStrategy;
-import org.jobrunr.utils.mapper.jsonb.JobRunrJsonb;
 import org.jobrunr.utils.mapper.jsonb.adapters.JobDetailsAdapter;
 import org.jobrunr.utils.mapper.jsonb.adapters.JobHistoryAdapter;
 import org.jobrunr.utils.mapper.jsonb.adapters.JobMetadataAdapter;

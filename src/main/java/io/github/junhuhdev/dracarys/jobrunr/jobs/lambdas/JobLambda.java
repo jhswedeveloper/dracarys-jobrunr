@@ -1,7 +1,5 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs.lambdas;
 
-import org.jobrunr.jobs.lambdas.JobRunrJob;
-
 /**
  * This is a functional interface which represents a lambda that will be parsed by JobRunr.
  * You <strong>may not create an actual instance of this class</strong>, instead you use it as follows:

@@ -2,8 +2,6 @@ package io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb;
 
 import org.jobrunr.dashboard.ui.model.RecurringJobUIModel;
 import org.jobrunr.jobs.RecurringJob;
-import org.jobrunr.utils.mapper.jsonb.FieldAccessStrategy;
-import org.jobrunr.utils.mapper.jsonb.JobRunrJsonb;
 import org.jobrunr.utils.mapper.jsonb.adapters.JobDetailsAdapter;
 import org.jobrunr.utils.mapper.jsonb.serializer.DurationTypeDeserializer;
 import org.jobrunr.utils.mapper.jsonb.serializer.DurationTypeSerializer;
