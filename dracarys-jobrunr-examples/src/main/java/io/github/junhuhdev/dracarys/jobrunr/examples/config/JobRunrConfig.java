@@ -23,11 +23,6 @@ import javax.sql.DataSource;
 import static io.github.junhuhdev.dracarys.jobrunr.server.BackgroundJobServerConfiguration.usingStandardBackgroundJobServerConfiguration;
 
 @Configuration
-@ConditionalOnProperty(
-		value = "org.jobrunr.enabled",
-		havingValue = "true",
-		matchIfMissing = false
-)
 @Slf4j
 public class JobRunrConfig {
 

@@ -77,6 +77,20 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>7.3.2</version>
+                <configuration>
+                    <url>jdbc:postgresql://localhost:5432/family</url>
+                    <user>user</user>
+                    <password>test</password>
+                    <schemas>
+                        <schema>public</schema>
+                    </schemas>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 
