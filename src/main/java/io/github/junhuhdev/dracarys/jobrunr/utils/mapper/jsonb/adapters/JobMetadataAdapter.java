@@ -1,12 +1,15 @@
 package io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb.adapters;
 
-import org.jobrunr.utils.mapper.jsonb.JobRunrJsonb;
+
+import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb.JobRunrJsonb;
 
 import javax.json.*;
 import javax.json.bind.adapter.JsonbAdapter;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb.NullSafeJsonBuilder.nullSafeJsonObjectBuilder;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.toClass;
 import static javax.json.JsonValue.ValueType.*;
 import static javax.json.JsonValue.ValueType.ARRAY;
 import static javax.json.JsonValue.ValueType.FALSE;
@@ -14,8 +17,6 @@ import static javax.json.JsonValue.ValueType.NUMBER;
 import static javax.json.JsonValue.ValueType.OBJECT;
 import static javax.json.JsonValue.ValueType.STRING;
 import static javax.json.JsonValue.ValueType.TRUE;
-import static org.jobrunr.utils.mapper.jsonb.NullSafeJsonBuilder.nullSafeJsonObjectBuilder;
-import static org.jobrunr.utils.reflection.ReflectionUtils.toClass;
 
 public class JobMetadataAdapter implements JsonbAdapter<Map<String, Object>, JsonObject> {
 

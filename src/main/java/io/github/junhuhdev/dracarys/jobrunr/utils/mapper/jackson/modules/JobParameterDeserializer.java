@@ -4,14 +4,14 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import org.jobrunr.jobs.JobParameter;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.JobParameter;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static org.jobrunr.utils.mapper.JsonMapperUtils.getActualClassName;
-import static org.jobrunr.utils.reflection.ReflectionUtils.toClass;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.mapper.JsonMapperUtils.getActualClassName;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.toClass;
 
 public class JobParameterDeserializer extends StdDeserializer<JobParameter> {
 

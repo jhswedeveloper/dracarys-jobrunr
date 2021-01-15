@@ -1,7 +1,7 @@
 package io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jackson.modules;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import org.jobrunr.jobs.JobParameter;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.JobParameter;
 
 import java.time.Duration;
 import java.time.Instant;

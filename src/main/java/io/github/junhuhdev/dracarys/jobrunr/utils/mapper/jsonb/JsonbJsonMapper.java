@@ -1,8 +1,9 @@
 package io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb;
 
-import org.jobrunr.utils.mapper.JsonMapper;
-import org.jobrunr.utils.mapper.jsonb.serializer.DurationTypeDeserializer;
-import org.jobrunr.utils.mapper.jsonb.serializer.DurationTypeSerializer;
+
+import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.JsonMapper;
+import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb.serializer.DurationTypeDeserializer;
+import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb.serializer.DurationTypeSerializer;
 
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;

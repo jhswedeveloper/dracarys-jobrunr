@@ -3,7 +3,7 @@ package io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jackson.modules;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import org.jobrunr.jobs.JobParameter;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.JobParameter;
 
 import java.io.IOException;
 

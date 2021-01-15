@@ -1,12 +1,13 @@
 package io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb;
 
-import org.jobrunr.dashboard.ui.model.RecurringJobUIModel;
-import org.jobrunr.jobs.RecurringJob;
-import org.jobrunr.utils.mapper.jsonb.adapters.JobDetailsAdapter;
-import org.jobrunr.utils.mapper.jsonb.serializer.DurationTypeDeserializer;
-import org.jobrunr.utils.mapper.jsonb.serializer.DurationTypeSerializer;
-import org.jobrunr.utils.mapper.jsonb.serializer.PathTypeDeserializer;
-import org.jobrunr.utils.mapper.jsonb.serializer.PathTypeSerializer;
+
+import io.github.junhuhdev.dracarys.jobrunr.dashboard.ui.model.RecurringJobUIModel;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.RecurringJob;
+import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb.adapters.JobDetailsAdapter;
+import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb.serializer.DurationTypeDeserializer;
+import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb.serializer.DurationTypeSerializer;
+import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb.serializer.PathTypeDeserializer;
+import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb.serializer.PathTypeSerializer;
 
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
@@ -15,7 +16,7 @@ import javax.json.bind.JsonbBuilder;
 import javax.json.bind.JsonbConfig;
 import javax.json.bind.adapter.JsonbAdapter;
 
-import static org.jobrunr.utils.mapper.jsonb.NullSafeJsonBuilder.nullSafeJsonObjectBuilder;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb.NullSafeJsonBuilder.nullSafeJsonObjectBuilder;
 
 public class RecurringJobAdapter implements JsonbAdapter<RecurringJob, JsonObject> {
 

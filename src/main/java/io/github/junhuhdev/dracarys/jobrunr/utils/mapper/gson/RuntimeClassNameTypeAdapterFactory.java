@@ -128,16 +128,16 @@ public final class RuntimeClassNameTypeAdapterFactory<T> implements TypeAdapterF
      * Creates a new runtime type adapter using for {@code baseType} using {@code
      * typeFieldName} as the type field name. Type field names are case sensitive.
      */
-    public static <T> org.jobrunr.utils.mapper.gson.RuntimeClassNameTypeAdapterFactory<T> of(Class<T> baseType, String typeFieldName) {
-        return new org.jobrunr.utils.mapper.gson.RuntimeClassNameTypeAdapterFactory<>(baseType, typeFieldName);
+    public static <T> RuntimeClassNameTypeAdapterFactory<T> of(Class<T> baseType, String typeFieldName) {
+        return new RuntimeClassNameTypeAdapterFactory<>(baseType, typeFieldName);
     }
 
     /**
      * Creates a new runtime type adapter for {@code baseType} using {@code "type"} as
      * the type field name.
      */
-    public static <T> org.jobrunr.utils.mapper.gson.RuntimeClassNameTypeAdapterFactory<T> of(Class<T> baseType) {
-        return new org.jobrunr.utils.mapper.gson.RuntimeClassNameTypeAdapterFactory<>(baseType, TYPE_FIELD_NAME);
+    public static <T> RuntimeClassNameTypeAdapterFactory<T> of(Class<T> baseType) {
+        return new RuntimeClassNameTypeAdapterFactory<>(baseType, TYPE_FIELD_NAME);
     }
 
     /**
@@ -147,7 +147,7 @@ public final class RuntimeClassNameTypeAdapterFactory<T> implements TypeAdapterF
      * @throws IllegalArgumentException if either {@code type} or {@code label}
      *                                  have already been registered on this type adapter.
      */
-    public org.jobrunr.utils.mapper.gson.RuntimeClassNameTypeAdapterFactory<T> registerSubtype(Class<? extends T> type, String label) {
+    public RuntimeClassNameTypeAdapterFactory<T> registerSubtype(Class<? extends T> type, String label) {
         if (type == null || label == null) {
             throw new NullPointerException();
         }
@@ -166,7 +166,7 @@ public final class RuntimeClassNameTypeAdapterFactory<T> implements TypeAdapterF
      * @throws IllegalArgumentException if either {@code type} or its simple name
      *                                  have already been registered on this type adapter.
      */
-    public org.jobrunr.utils.mapper.gson.RuntimeClassNameTypeAdapterFactory<T> registerSubtype(Class<? extends T> type) {
+    public RuntimeClassNameTypeAdapterFactory<T> registerSubtype(Class<? extends T> type) {
         return registerSubtype(type, type.getSimpleName());
     }
 
@@ -202,7 +202,7 @@ public final class RuntimeClassNameTypeAdapterFactory<T> implements TypeAdapterF
                         }
 
                         TypeToken<R> subClass = TypeToken.get(aClass);
-                        delegate = gson.getDelegateAdapter(org.jobrunr.utils.mapper.gson.RuntimeClassNameTypeAdapterFactory.this, subClass);
+                        delegate = gson.getDelegateAdapter(RuntimeClassNameTypeAdapterFactory.this, subClass);
                         if (delegate == null) {
                             throw new JsonParseException("cannot deserialize " + baseType + " subtype named "
                                     + label + "; did you forget to register a subtype?");
@@ -212,7 +212,7 @@ public final class RuntimeClassNameTypeAdapterFactory<T> implements TypeAdapterF
                 } else if (jsonElement.isJsonNull()) {
                     return null;
                 } else {
-                    TypeAdapter<R> delegate = gson.getDelegateAdapter(org.jobrunr.utils.mapper.gson.RuntimeClassNameTypeAdapterFactory.this, type);
+                    TypeAdapter<R> delegate = gson.getDelegateAdapter(RuntimeClassNameTypeAdapterFactory.this, type);
                     if (delegate == null) {
                         throw new JsonParseException("cannot deserialize " + baseType + "; did you forget to register a subtype?");
                     }

@@ -3,7 +3,7 @@ package io.github.junhuhdev.dracarys.jobrunr.utils.reflection.autobox;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.jobrunr.utils.reflection.ReflectionUtils.cast;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.cast;
 
 public class Autoboxer {
 

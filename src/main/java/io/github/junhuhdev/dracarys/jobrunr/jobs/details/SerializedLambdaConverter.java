@@ -1,13 +1,14 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs.details;
 
-import org.jobrunr.JobRunrException;
+
+import io.github.junhuhdev.dracarys.jobrunr.common.JobRunrException;
 
 import java.io.Serializable;
 import java.lang.invoke.SerializedLambda;
 import java.lang.reflect.Method;
 
-import static org.jobrunr.JobRunrException.shouldNotHappenException;
-import static org.jobrunr.utils.reflection.ReflectionUtils.makeAccessible;
+import static io.github.junhuhdev.dracarys.jobrunr.common.JobRunrException.shouldNotHappenException;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.makeAccessible;
 
 public class SerializedLambdaConverter {
 

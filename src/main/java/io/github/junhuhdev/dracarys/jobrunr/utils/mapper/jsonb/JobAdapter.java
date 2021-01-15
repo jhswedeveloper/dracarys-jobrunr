@@ -1,17 +1,18 @@
 package io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb;
 
-import org.jobrunr.jobs.Job;
-import org.jobrunr.jobs.JobDetails;
-import org.jobrunr.jobs.states.JobState;
-import org.jobrunr.utils.mapper.jsonb.adapters.JobDetailsAdapter;
-import org.jobrunr.utils.mapper.jsonb.adapters.JobHistoryAdapter;
-import org.jobrunr.utils.mapper.jsonb.adapters.JobMetadataAdapter;
-import org.jobrunr.utils.mapper.jsonb.serializer.DurationTypeDeserializer;
-import org.jobrunr.utils.mapper.jsonb.serializer.DurationTypeSerializer;
-import org.jobrunr.utils.mapper.jsonb.serializer.FileTypeDeserializer;
-import org.jobrunr.utils.mapper.jsonb.serializer.FileTypeSerializer;
-import org.jobrunr.utils.mapper.jsonb.serializer.PathTypeDeserializer;
-import org.jobrunr.utils.mapper.jsonb.serializer.PathTypeSerializer;
+
+import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.JobDetails;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.states.JobState;
+import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb.adapters.JobDetailsAdapter;
+import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb.adapters.JobHistoryAdapter;
+import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb.adapters.JobMetadataAdapter;
+import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb.serializer.DurationTypeDeserializer;
+import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb.serializer.DurationTypeSerializer;
+import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb.serializer.FileTypeDeserializer;
+import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb.serializer.FileTypeSerializer;
+import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb.serializer.PathTypeDeserializer;
+import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb.serializer.PathTypeSerializer;
 
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
@@ -23,7 +24,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static org.jobrunr.utils.mapper.jsonb.NullSafeJsonBuilder.nullSafeJsonObjectBuilder;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb.NullSafeJsonBuilder.nullSafeJsonObjectBuilder;
 
 public class JobAdapter implements JsonbAdapter<Job, JsonObject> {
 

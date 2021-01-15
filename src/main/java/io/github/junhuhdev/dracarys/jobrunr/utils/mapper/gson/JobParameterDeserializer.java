@@ -4,12 +4,12 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import org.jobrunr.jobs.JobParameter;
-import org.jobrunr.utils.reflection.ReflectionUtils;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.JobParameter;
+import io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils;
 
 import java.lang.reflect.Type;
 
-import static org.jobrunr.utils.mapper.JsonMapperUtils.getActualClassName;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.mapper.JsonMapperUtils.getActualClassName;
 
 public class JobParameterDeserializer implements JsonDeserializer<JobParameter> {
 

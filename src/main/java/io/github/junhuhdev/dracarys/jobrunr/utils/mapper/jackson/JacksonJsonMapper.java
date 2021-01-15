@@ -7,16 +7,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.exc.InvalidDefinitionException;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
-import org.jobrunr.JobRunrException;
-import org.jobrunr.utils.mapper.JsonMapper;
-import org.jobrunr.utils.mapper.jackson.modules.JobRunrTimeModule;
+import io.github.junhuhdev.dracarys.jobrunr.common.JobRunrException;
+import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.JsonMapper;
+import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jackson.modules.JobRunrTimeModule;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
 import java.text.SimpleDateFormat;
 
-import static org.jobrunr.utils.reflection.ReflectionUtils.newInstanceOrElse;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.newInstanceOrElse;
 
 public class JacksonJsonMapper implements JsonMapper {
 

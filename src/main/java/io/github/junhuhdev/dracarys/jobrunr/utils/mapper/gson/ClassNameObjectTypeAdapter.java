@@ -17,14 +17,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static org.jobrunr.utils.mapper.gson.RuntimeClassNameTypeAdapterFactory.TYPE_FIELD_NAME;
-import static org.jobrunr.utils.reflection.ReflectionUtils.toClass;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.mapper.gson.RuntimeClassNameTypeAdapterFactory.TYPE_FIELD_NAME;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.toClass;
 
 public class ClassNameObjectTypeAdapter extends TypeAdapter<Object> {
 
     public static final TypeAdapterFactory FACTORY = new TypeAdapterFactory() {
         public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-            return type.getRawType() == Object.class ? (TypeAdapter<T>) new org.jobrunr.utils.mapper.gson.ClassNameObjectTypeAdapter(gson) : null;
+            return type.getRawType() == Object.class ? (TypeAdapter<T>) new ClassNameObjectTypeAdapter(gson) : null;
         }
     };
 

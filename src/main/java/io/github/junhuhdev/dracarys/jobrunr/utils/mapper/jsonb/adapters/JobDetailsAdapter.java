@@ -1,17 +1,18 @@
 package io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb.adapters;
 
-import org.jobrunr.jobs.JobDetails;
-import org.jobrunr.jobs.JobParameter;
-import org.jobrunr.utils.mapper.jsonb.JobRunrJsonb;
+
+import io.github.junhuhdev.dracarys.jobrunr.jobs.JobDetails;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.JobParameter;
+import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb.JobRunrJsonb;
 
 import javax.json.*;
 import javax.json.bind.adapter.JsonbAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.jobrunr.utils.mapper.JsonMapperUtils.getActualClassName;
-import static org.jobrunr.utils.mapper.jsonb.NullSafeJsonBuilder.nullSafeJsonObjectBuilder;
-import static org.jobrunr.utils.reflection.ReflectionUtils.toClass;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.mapper.JsonMapperUtils.getActualClassName;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb.NullSafeJsonBuilder.nullSafeJsonObjectBuilder;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.toClass;
 
 public class JobDetailsAdapter implements JsonbAdapter<JobDetails, JsonObject> {
     private final JobRunrJsonb jsonb;
