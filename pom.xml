@@ -5,11 +5,11 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.4.1</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath /> <!-- lookup parent from repository -->
     </parent>
     <groupId>io.github.junhuhdev</groupId>
     <artifactId>dracarys-jobrunr</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
     <name>dracarys-jobrunr</name>
     <description>Abstraction over jobrnr</description>
 
@@ -22,7 +22,7 @@
         <connection>scm:git:git@github.com:junhuhdev/dracarys-jobrunr.git</connection>
         <developerConnection>scm:git:git@github.com:junhuhdev/dracarys-jobrunr.git</developerConnection>
         <url>https://github.com/junhuhdev/dracarys-jobrunr</url>
-        <tag>HEAD</tag>
+        <tag>dracarys-jobrunr-1.0.1</tag>
     </scm>
 
     <dependencies>
