@@ -1,6 +1,5 @@
 package io.github.junhuhdev.dracarys.jobrunr.dashboard.ui.model.problems;
 
-import org.jobrunr.dashboard.ui.model.problems.Problem;
 
 import java.util.HashSet;
 import java.util.Set;

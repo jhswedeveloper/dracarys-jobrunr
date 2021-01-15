@@ -1,6 +1,7 @@
 package io.github.junhuhdev.dracarys.jobrunr.dashboard.ui.model;
 
-import org.jobrunr.jobs.RecurringJob;
+
+import io.github.junhuhdev.dracarys.jobrunr.jobs.RecurringJob;
 
 import java.time.Instant;
 

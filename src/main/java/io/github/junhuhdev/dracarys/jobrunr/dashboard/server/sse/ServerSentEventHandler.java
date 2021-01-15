@@ -1,8 +1,7 @@
 package io.github.junhuhdev.dracarys.jobrunr.dashboard.server.sse;
 
 import com.sun.net.httpserver.HttpExchange;
-import org.jobrunr.dashboard.server.AbstractTeenyHttpHandler;
-import org.jobrunr.dashboard.server.sse.SseExchange;
+import io.github.junhuhdev.dracarys.jobrunr.dashboard.server.AbstractTeenyHttpHandler;
 
 import java.io.IOException;
 import java.util.HashSet;

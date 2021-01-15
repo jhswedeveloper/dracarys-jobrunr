@@ -1,13 +1,13 @@
 package io.github.junhuhdev.dracarys.jobrunr.dashboard;
 
 import com.sun.net.httpserver.HttpExchange;
-import org.jobrunr.dashboard.server.sse.ServerSentEventHandler;
-import org.jobrunr.dashboard.server.sse.SseExchange;
-import org.jobrunr.dashboard.sse.BackgroundJobServerStatusSseExchange;
-import org.jobrunr.dashboard.sse.JobSseExchange;
-import org.jobrunr.dashboard.sse.JobStatsSseExchange;
-import org.jobrunr.storage.StorageProvider;
-import org.jobrunr.utils.mapper.JsonMapper;
+import io.github.junhuhdev.dracarys.jobrunr.dashboard.server.sse.ServerSentEventHandler;
+import io.github.junhuhdev.dracarys.jobrunr.dashboard.server.sse.SseExchange;
+import io.github.junhuhdev.dracarys.jobrunr.dashboard.sse.BackgroundJobServerStatusSseExchange;
+import io.github.junhuhdev.dracarys.jobrunr.dashboard.sse.JobSseExchange;
+import io.github.junhuhdev.dracarys.jobrunr.dashboard.sse.JobStatsSseExchange;
+import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProvider;
+import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.JsonMapper;
 
 import java.io.IOException;
 

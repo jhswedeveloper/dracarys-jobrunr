@@ -1,6 +1,5 @@
 package io.github.junhuhdev.dracarys.jobrunr.dashboard.server.http.handlers;
 
-import org.jobrunr.dashboard.server.http.HttpResponse;
 
 import java.util.function.BiConsumer;
 

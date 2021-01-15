@@ -1,11 +1,10 @@
 package io.github.junhuhdev.dracarys.jobrunr.dashboard.sse;
 
 import com.sun.net.httpserver.HttpExchange;
-import org.jobrunr.dashboard.sse.AbstractObjectSseExchange;
-import org.jobrunr.storage.JobStats;
-import org.jobrunr.storage.StorageProvider;
-import org.jobrunr.storage.listeners.JobStatsChangeListener;
-import org.jobrunr.utils.mapper.JsonMapper;
+import io.github.junhuhdev.dracarys.jobrunr.storage.JobStats;
+import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProvider;
+import io.github.junhuhdev.dracarys.jobrunr.storage.listeners.JobStatsChangeListener;
+import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.JsonMapper;
 
 import java.io.IOException;
 

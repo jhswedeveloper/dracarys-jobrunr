@@ -1,8 +1,7 @@
 package io.github.junhuhdev.dracarys.jobrunr.dashboard.server.http;
 
 import com.sun.net.httpserver.HttpExchange;
-import org.jobrunr.dashboard.server.AbstractTeenyHttpHandler;
-import org.jobrunr.dashboard.server.http.ContentType;
+import io.github.junhuhdev.dracarys.jobrunr.dashboard.server.AbstractTeenyHttpHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +12,7 @@ import java.net.URL;
 
 public class StaticFileHttpHandler extends AbstractTeenyHttpHandler {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(org.jobrunr.dashboard.server.http.StaticFileHttpHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(StaticFileHttpHandler.class);
 
     private final String contextPath;
     private final String rootDir;

@@ -2,7 +2,6 @@ package io.github.junhuhdev.dracarys.jobrunr.dashboard.server;
 
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpServer;
-import org.jobrunr.dashboard.server.TeenyHttpHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 public class TeenyWebServer {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(org.jobrunr.dashboard.server.TeenyWebServer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TeenyWebServer.class);
 
     private final HttpServer httpServer;
     private final ExecutorService executorService;

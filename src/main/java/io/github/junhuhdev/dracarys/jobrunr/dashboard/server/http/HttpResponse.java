@@ -1,8 +1,7 @@
 package io.github.junhuhdev.dracarys.jobrunr.dashboard.server.http;
 
 import com.sun.net.httpserver.HttpExchange;
-import org.jobrunr.dashboard.server.http.ContentType;
-import org.jobrunr.utils.mapper.JsonMapper;
+import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.JsonMapper;
 
 import java.io.IOException;
 import java.io.OutputStream;

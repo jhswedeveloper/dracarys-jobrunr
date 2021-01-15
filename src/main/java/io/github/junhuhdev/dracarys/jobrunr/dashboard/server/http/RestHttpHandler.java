@@ -1,21 +1,18 @@
 package io.github.junhuhdev.dracarys.jobrunr.dashboard.server.http;
 
 import com.sun.net.httpserver.HttpExchange;
-import org.jobrunr.dashboard.server.AbstractTeenyHttpHandler;
-import org.jobrunr.dashboard.server.http.HttpRequest;
-import org.jobrunr.dashboard.server.http.HttpResponse;
-import org.jobrunr.dashboard.server.http.handlers.ExceptionHandler;
-import org.jobrunr.dashboard.server.http.handlers.HttpRequestHandler;
-import org.jobrunr.dashboard.server.http.handlers.HttpRequestHandlers;
-import org.jobrunr.dashboard.server.http.handlers.HttpRequestMethodHandlers;
-import org.jobrunr.dashboard.server.http.url.TeenyMatchUrl;
-import org.jobrunr.utils.mapper.JsonMapper;
+import io.github.junhuhdev.dracarys.jobrunr.dashboard.server.AbstractTeenyHttpHandler;
+import io.github.junhuhdev.dracarys.jobrunr.dashboard.server.http.handlers.ExceptionHandler;
+import io.github.junhuhdev.dracarys.jobrunr.dashboard.server.http.handlers.HttpRequestHandler;
+import io.github.junhuhdev.dracarys.jobrunr.dashboard.server.http.handlers.HttpRequestHandlers;
+import io.github.junhuhdev.dracarys.jobrunr.dashboard.server.http.handlers.HttpRequestMethodHandlers;
+import io.github.junhuhdev.dracarys.jobrunr.dashboard.server.http.url.TeenyMatchUrl;
+import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.JsonMapper;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.jobrunr.dashboard.server.http.handlers.HttpRequestHandlers.RequestMethod.*;
 
 public class RestHttpHandler extends AbstractTeenyHttpHandler {
 

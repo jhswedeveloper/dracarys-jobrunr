@@ -1,6 +1,6 @@
 package io.github.junhuhdev.dracarys.jobrunr.dashboard.server.http;
 
-import org.jobrunr.dashboard.server.http.url.TeenyRequestUrl;
+import io.github.junhuhdev.dracarys.jobrunr.dashboard.server.http.url.TeenyRequestUrl;
 
 public class HttpRequest {
 

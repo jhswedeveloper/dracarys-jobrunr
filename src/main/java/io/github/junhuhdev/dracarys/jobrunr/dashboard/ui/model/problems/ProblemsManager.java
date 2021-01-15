@@ -1,16 +1,13 @@
 package io.github.junhuhdev.dracarys.jobrunr.dashboard.ui.model.problems;
 
-import org.jobrunr.dashboard.ui.model.problems.JobsNotFoundProblem;
-import org.jobrunr.dashboard.ui.model.problems.Problems;
-import org.jobrunr.jobs.states.StateName;
-import org.jobrunr.storage.JobStats;
-import org.jobrunr.storage.StorageProvider;
-import org.jobrunr.storage.listeners.JobStatsChangeListener;
+
+import io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName;
+import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProvider;
+import io.github.junhuhdev.dracarys.jobrunr.storage.listeners.JobStatsChangeListener;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.jobrunr.utils.JobUtils.jobExists;
 
 public class ProblemsManager implements JobStatsChangeListener {
 

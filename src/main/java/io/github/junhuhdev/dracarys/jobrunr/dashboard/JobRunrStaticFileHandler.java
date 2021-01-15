@@ -1,6 +1,6 @@
 package io.github.junhuhdev.dracarys.jobrunr.dashboard;
 
-import org.jobrunr.dashboard.server.http.StaticFileHttpHandler;
+import io.github.junhuhdev.dracarys.jobrunr.dashboard.server.http.StaticFileHttpHandler;
 
 public class JobRunrStaticFileHandler extends StaticFileHttpHandler {
 

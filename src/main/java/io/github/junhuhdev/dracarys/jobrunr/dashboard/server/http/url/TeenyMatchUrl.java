@@ -1,9 +1,5 @@
 package io.github.junhuhdev.dracarys.jobrunr.dashboard.server.http.url;
 
-import org.jobrunr.dashboard.server.http.url.TeenyRequestUrl;
-import org.jobrunr.dashboard.server.http.url.UrlParamPathPart;
-import org.jobrunr.dashboard.server.http.url.UrlPathPart;
-import org.jobrunr.dashboard.server.http.url.UrlStringPathPart;
 
 import java.util.HashMap;
 import java.util.Iterator;

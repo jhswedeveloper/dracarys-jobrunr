@@ -1,7 +1,8 @@
 package io.github.junhuhdev.dracarys.jobrunr.dashboard.server.http.url;
 
-import org.jobrunr.utils.reflection.ReflectionUtils;
-import org.jobrunr.utils.reflection.autobox.Autoboxer;
+
+import io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils;
+import io.github.junhuhdev.dracarys.jobrunr.utils.reflection.autobox.Autoboxer;
 
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.Arrays;

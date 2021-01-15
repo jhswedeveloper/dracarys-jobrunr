@@ -1,7 +1,7 @@
 package io.github.junhuhdev.dracarys.jobrunr.dashboard.server.http;
 
 import com.sun.net.httpserver.HttpExchange;
-import org.jobrunr.dashboard.server.AbstractTeenyHttpHandler;
+import io.github.junhuhdev.dracarys.jobrunr.dashboard.server.AbstractTeenyHttpHandler;
 
 import java.io.IOException;
 

@@ -15,8 +15,8 @@ public class JobRunrDashboardWebServerConfiguration {
      *
      * @return the default JobRunrDashboard configuration
      */
-    public static org.jobrunr.dashboard.JobRunrDashboardWebServerConfiguration usingStandardDashboardConfiguration() {
-        return new org.jobrunr.dashboard.JobRunrDashboardWebServerConfiguration();
+    public static JobRunrDashboardWebServerConfiguration usingStandardDashboardConfiguration() {
+        return new JobRunrDashboardWebServerConfiguration();
     }
 
     /**
@@ -25,7 +25,7 @@ public class JobRunrDashboardWebServerConfiguration {
      * @param port the port on which the JobRunrDashboard will run
      * @return the same configuration instance which provides a fluent api
      */
-    public org.jobrunr.dashboard.JobRunrDashboardWebServerConfiguration andPort(int port) {
+    public JobRunrDashboardWebServerConfiguration andPort(int port) {
         this.port = port;
         return this;
     }

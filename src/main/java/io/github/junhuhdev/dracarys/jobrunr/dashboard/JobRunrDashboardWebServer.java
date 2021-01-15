@@ -1,22 +1,18 @@
 package io.github.junhuhdev.dracarys.jobrunr.dashboard;
 
 import com.sun.net.httpserver.HttpContext;
-import org.jobrunr.dashboard.JobRunrApiHandler;
-import org.jobrunr.dashboard.JobRunrDashboardWebServerConfiguration;
-import org.jobrunr.dashboard.JobRunrSseHandler;
-import org.jobrunr.dashboard.JobRunrStaticFileHandler;
-import org.jobrunr.dashboard.server.TeenyHttpHandler;
-import org.jobrunr.dashboard.server.TeenyWebServer;
-import org.jobrunr.dashboard.server.http.RedirectHttpHandler;
-import org.jobrunr.storage.StorageProvider;
-import org.jobrunr.storage.ThreadSafeStorageProvider;
-import org.jobrunr.utils.annotations.VisibleFor;
-import org.jobrunr.utils.mapper.JsonMapper;
-import org.jobrunr.utils.mapper.jackson.JacksonJsonMapper;
+import io.github.junhuhdev.dracarys.jobrunr.dashboard.server.TeenyHttpHandler;
+import io.github.junhuhdev.dracarys.jobrunr.dashboard.server.TeenyWebServer;
+import io.github.junhuhdev.dracarys.jobrunr.dashboard.server.http.RedirectHttpHandler;
+import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProvider;
+import io.github.junhuhdev.dracarys.jobrunr.storage.ThreadSafeStorageProvider;
+import io.github.junhuhdev.dracarys.jobrunr.utils.annotations.VisibleFor;
+import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.JsonMapper;
+import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jackson.JacksonJsonMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.jobrunr.dashboard.JobRunrDashboardWebServerConfiguration.usingStandardDashboardConfiguration;
+import static io.github.junhuhdev.dracarys.jobrunr.dashboard.JobRunrDashboardWebServerConfiguration.usingStandardDashboardConfiguration;
 
 /**
  * Provides a dashboard which gives insights in your jobs and servers.
@@ -26,7 +22,7 @@ import static org.jobrunr.dashboard.JobRunrDashboardWebServerConfiguration.using
  */
 public class JobRunrDashboardWebServer {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(org.jobrunr.dashboard.JobRunrDashboardWebServer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JobRunrDashboardWebServer.class);
 
     private final StorageProvider storageProvider;
     private final JsonMapper jsonMapper;
@@ -35,7 +31,7 @@ public class JobRunrDashboardWebServer {
     private TeenyWebServer teenyWebServer;
 
     public static void main(String[] args) {
-        new org.jobrunr.dashboard.JobRunrDashboardWebServer(null, new JacksonJsonMapper());
+        new JobRunrDashboardWebServer(null, new JacksonJsonMapper());
     }
 
     public JobRunrDashboardWebServer(StorageProvider storageProvider, JsonMapper jsonMapper) {
