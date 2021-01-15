@@ -206,6 +206,7 @@
                 <version>2.9.1</version>
                 <configuration>
                     <additionalparam>-Xdoclint:none</additionalparam>
+                    <source>8</source>
 <!--                    <doclint>none</doclint>-->
                     <encoding>UTF-8</encoding>
                 </configuration>
