@@ -1,7 +1,7 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs.details.instructions;
 
-import org.jobrunr.jobs.JobParameter;
-import org.jobrunr.jobs.details.JobDetailsFinderContext;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.JobParameter;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.details.JobDetailsFinderContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,17 +10,17 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static io.github.junhuhdev.dracarys.jobrunr.common.JobRunrException.shouldNotHappenException;
+import static io.github.junhuhdev.dracarys.jobrunr.jobs.details.JobDetailsGeneratorUtils.createObjectViaMethod;
+import static io.github.junhuhdev.dracarys.jobrunr.jobs.details.JobDetailsGeneratorUtils.findParamTypesFromDescriptor;
+import static io.github.junhuhdev.dracarys.jobrunr.jobs.details.JobDetailsGeneratorUtils.findParamTypesFromDescriptorAsArray;
+import static io.github.junhuhdev.dracarys.jobrunr.jobs.details.JobDetailsGeneratorUtils.toFQClassName;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.isClassAssignableToObject;
 import static java.util.stream.Collectors.joining;
-import static org.jobrunr.JobRunrException.shouldNotHappenException;
-import static org.jobrunr.jobs.details.JobDetailsGeneratorUtils.createObjectViaMethod;
-import static org.jobrunr.jobs.details.JobDetailsGeneratorUtils.findParamTypesFromDescriptor;
-import static org.jobrunr.jobs.details.JobDetailsGeneratorUtils.findParamTypesFromDescriptorAsArray;
-import static org.jobrunr.jobs.details.JobDetailsGeneratorUtils.toFQClassName;
-import static org.jobrunr.utils.reflection.ReflectionUtils.isClassAssignableToObject;
 
 public class JobDetailsInstruction extends VisitMethodInstruction {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(org.jobrunr.jobs.details.instructions.JobDetailsInstruction.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JobDetailsInstruction.class);
 
     public JobDetailsInstruction(JobDetailsFinderContext jobDetailsBuilder) {
         super(jobDetailsBuilder);

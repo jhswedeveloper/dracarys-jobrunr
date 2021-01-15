@@ -1,6 +1,7 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs.details.instructions;
 
-import org.jobrunr.jobs.details.JobDetailsFinderContext;
+
+import io.github.junhuhdev.dracarys.jobrunr.jobs.details.JobDetailsFinderContext;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,13 +1,13 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs.details.instructions;
 
-import org.jobrunr.JobRunrException;
-import org.jobrunr.jobs.details.JobDetailsFinderContext;
-import org.jobrunr.utils.reflection.ReflectionUtils;
+import io.github.junhuhdev.dracarys.jobrunr.common.JobRunrException;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.details.JobDetailsFinderContext;
+import io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils;
 import org.objectweb.asm.Handle;
 
 import java.util.List;
 
-import static org.jobrunr.jobs.details.JobDetailsGeneratorUtils.findParamTypesFromDescriptor;
+import static io.github.junhuhdev.dracarys.jobrunr.jobs.details.JobDetailsGeneratorUtils.findParamTypesFromDescriptor;
 
 public class InvokeDynamicInstruction extends AbstractJVMInstruction {
 

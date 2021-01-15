@@ -5,6 +5,9 @@ import io.github.junhuhdev.dracarys.jobrunr.jobs.details.JobDetailsFinderContext
 
 import java.lang.reflect.Array;
 
+import static io.github.junhuhdev.dracarys.jobrunr.jobs.details.JobDetailsGeneratorUtils.toFQClassName;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.toClass;
+
 public class ANewArrayOperandInstruction extends VisitTypeInstruction {
 
     public ANewArrayOperandInstruction(JobDetailsFinderContext jobDetailsBuilder) {

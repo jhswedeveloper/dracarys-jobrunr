@@ -1,12 +1,13 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs.details.instructions;
 
-import org.jobrunr.jobs.details.JobDetailsFinderContext;
+
+import io.github.junhuhdev.dracarys.jobrunr.jobs.details.JobDetailsFinderContext;
 
 import java.util.List;
 
-import static org.jobrunr.jobs.details.JobDetailsGeneratorUtils.createObjectViaStaticMethod;
-import static org.jobrunr.jobs.details.JobDetailsGeneratorUtils.findParamTypesFromDescriptorAsArray;
-import static org.jobrunr.jobs.details.JobDetailsGeneratorUtils.toFQClassName;
+import static io.github.junhuhdev.dracarys.jobrunr.jobs.details.JobDetailsGeneratorUtils.createObjectViaStaticMethod;
+import static io.github.junhuhdev.dracarys.jobrunr.jobs.details.JobDetailsGeneratorUtils.findParamTypesFromDescriptorAsArray;
+import static io.github.junhuhdev.dracarys.jobrunr.jobs.details.JobDetailsGeneratorUtils.toFQClassName;
 
 public class InvokeStaticInstruction extends VisitMethodInstruction {
 

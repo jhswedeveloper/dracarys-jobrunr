@@ -1,17 +1,18 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs.details.instructions;
 
-import org.jobrunr.JobRunrException;
-import org.jobrunr.jobs.details.JobDetailsFinderContext;
-import org.jobrunr.utils.reflection.ReflectionUtils;
+
+import io.github.junhuhdev.dracarys.jobrunr.common.JobRunrException;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.details.JobDetailsFinderContext;
+import io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.List;
 
-import static org.jobrunr.jobs.details.JobDetailsGeneratorUtils.createObjectViaConstructor;
-import static org.jobrunr.jobs.details.JobDetailsGeneratorUtils.findParamTypesFromDescriptorAsArray;
-import static org.jobrunr.jobs.details.JobDetailsGeneratorUtils.toFQClassName;
-import static org.jobrunr.utils.reflection.ReflectionUtils.toClass;
+import static io.github.junhuhdev.dracarys.jobrunr.jobs.details.JobDetailsGeneratorUtils.createObjectViaConstructor;
+import static io.github.junhuhdev.dracarys.jobrunr.jobs.details.JobDetailsGeneratorUtils.findParamTypesFromDescriptorAsArray;
+import static io.github.junhuhdev.dracarys.jobrunr.jobs.details.JobDetailsGeneratorUtils.toFQClassName;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.toClass;
 
 public class InvokeSpecialInstruction extends VisitMethodInstruction {
 

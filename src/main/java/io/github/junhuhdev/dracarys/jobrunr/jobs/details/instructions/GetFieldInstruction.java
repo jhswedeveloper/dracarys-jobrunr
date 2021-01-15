@@ -1,8 +1,8 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs.details.instructions;
 
-import org.jobrunr.jobs.details.JobDetailsFinderContext;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.details.JobDetailsFinderContext;
 
-import static org.jobrunr.jobs.details.JobDetailsGeneratorUtils.getObjectViaField;
+import static io.github.junhuhdev.dracarys.jobrunr.jobs.details.JobDetailsGeneratorUtils.getObjectViaField;
 
 public class GetFieldInstruction extends VisitFieldInstruction {
 
