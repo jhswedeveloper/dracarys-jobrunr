@@ -9,7 +9,7 @@
     </parent>
     <groupId>io.github.junhuhdev</groupId>
     <artifactId>dracarys-jobrunr</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2-SNAPSHOT</version>
     <name>dracarys-jobrunr</name>
     <description>Abstraction over jobrnr</description>
 
@@ -22,7 +22,7 @@
         <connection>scm:git:git@github.com:junhuhdev/dracarys-jobrunr.git</connection>
         <developerConnection>scm:git:git@github.com:junhuhdev/dracarys-jobrunr.git</developerConnection>
         <url>https://github.com/junhuhdev/dracarys-jobrunr</url>
-        <tag>dracarys-jobrunr-1.0.1</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <dependencies>
