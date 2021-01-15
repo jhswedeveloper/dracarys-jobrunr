@@ -1,11 +1,11 @@
 package io.github.junhuhdev.dracarys.pipeline.chain;
 
 import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
-import io.github.junhuhdev.dracarys.pipeline.cmd.ExceptionHandlerCmd;
+import io.github.junhuhdev.dracarys.pipeline.cmd.ExceptionCmd;
 import io.github.junhuhdev.dracarys.pipeline.cmd.FinalizeCmd;
-import io.github.junhuhdev.dracarys.pipeline.cmd.TransactionLockCmd;
-import io.github.junhuhdev.dracarys.pipeline.cmd.TransactionSaveAsLastCmd;
-import io.github.junhuhdev.dracarys.pipeline.cmd.TransactionSuccessfulCmd;
+import io.github.junhuhdev.dracarys.pipeline.cmd.LockCmd;
+import io.github.junhuhdev.dracarys.pipeline.cmd.SaveAsLastCmd;
+import io.github.junhuhdev.dracarys.pipeline.cmd.SuccessfulCmd;
 import io.github.junhuhdev.dracarys.pipeline.common.Conditional;
 import io.github.junhuhdev.dracarys.pipeline.event.EventTransaction;
 import io.github.junhuhdev.dracarys.pipeline.jdbc.EventJdbcRepository;
@@ -67,7 +67,7 @@ public abstract class ChainBase implements Chainable, Conditional {
 
         @Override
         protected Class<?>[] getCommands() {
-            return new Class[]{TransactionLockCmd.class, ExceptionHandlerCmd.class, TransactionSaveAsLastCmd.class,};
+            return new Class[]{LockCmd.class, ExceptionCmd.class, SaveAsLastCmd.class,};
         }
 
         @Override
@@ -81,7 +81,7 @@ public abstract class ChainBase implements Chainable, Conditional {
 
         @Override
         protected Class<?>[] getCommands() {
-            return new Class[]{TransactionSuccessfulCmd.class, FinalizeCmd.class};
+            return new Class[]{SuccessfulCmd.class, FinalizeCmd.class};
         }
 
         @Override

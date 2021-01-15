@@ -14,7 +14,7 @@ import java.util.Optional;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class TransactionSuccessfulCmd implements Command {
+public class SuccessfulCmd implements Command {
 
 	@Override
 	public ChainContext execute(ChainContext ctx, Chain chain) throws Exception {

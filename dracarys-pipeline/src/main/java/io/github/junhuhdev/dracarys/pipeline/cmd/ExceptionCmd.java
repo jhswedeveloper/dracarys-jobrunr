@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 @Slf4j
-public class ExceptionHandlerCmd implements Command {
+public class ExceptionCmd implements Command {
 
     private final EventJdbcRepository eventJdbcRepository;
 

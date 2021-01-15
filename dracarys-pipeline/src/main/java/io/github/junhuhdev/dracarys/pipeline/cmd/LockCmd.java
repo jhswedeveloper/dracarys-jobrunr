@@ -15,7 +15,7 @@ import java.util.Optional;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class TransactionLockCmd implements Command {
+public class LockCmd implements Command {
 
 	private final EventJdbcRepository eventJdbcRepository;
 
