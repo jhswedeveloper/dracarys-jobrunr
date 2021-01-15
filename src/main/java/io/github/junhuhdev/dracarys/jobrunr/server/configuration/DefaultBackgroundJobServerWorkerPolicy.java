@@ -1,6 +1,5 @@
 package io.github.junhuhdev.dracarys.jobrunr.server.configuration;
 
-import org.jobrunr.server.configuration.BackgroundJobServerWorkerPolicy;
 
 public class DefaultBackgroundJobServerWorkerPolicy implements BackgroundJobServerWorkerPolicy {
 

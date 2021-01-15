@@ -1,12 +1,13 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs.filters;
 
-import org.jobrunr.jobs.Job;
-import org.jobrunr.jobs.states.FailedState;
-import org.jobrunr.jobs.states.JobState;
-import org.jobrunr.utils.JobUtils;
 
+import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.states.FailedState;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.states.JobState;
+import io.github.junhuhdev.dracarys.jobrunr.utils.JobUtils;
+
+import static io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName.FAILED_STATES;
 import static java.time.Instant.now;
-import static org.jobrunr.jobs.states.StateName.FAILED_STATES;
 
 /**
  * A JobFilter of type {@link ElectStateFilter} that will retry the job if it fails for up to 10 times.
@@ -52,7 +53,7 @@ public class RetryFilter implements ElectStateFilter {
     }
 
     private boolean maxAmountOfRetriesReached(Job job) {
-        int maxNumberOfRetries = JobUtils.getJobAnnotation(job.getJobDetails()).map(org.jobrunr.jobs.annotations.Job::retries).orElse(this.numberOfRetries);
+        int maxNumberOfRetries = JobUtils.getJobAnnotation(job.getJobDetails()).map(io.github.junhuhdev.dracarys.jobrunr.jobs.annotations.Job::retries).orElse(this.numberOfRetries);
         return getFailureCount(job) >= maxNumberOfRetries;
     }
 

@@ -1,9 +1,10 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs.states;
 
-import org.jobrunr.JobRunrException;
-import org.jobrunr.utils.reflection.ReflectionUtils;
 
-import static org.jobrunr.utils.exceptions.Exceptions.getStackTraceAsString;
+import io.github.junhuhdev.dracarys.jobrunr.common.JobRunrException;
+import io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils;
+
+import static io.github.junhuhdev.dracarys.jobrunr.utils.exceptions.Exceptions.getStackTraceAsString;
 
 @SuppressWarnings({"FieldMayBeFinal", "CanBeFinal"}) // because of JSON-B
 public class FailedState extends AbstractJobState {
