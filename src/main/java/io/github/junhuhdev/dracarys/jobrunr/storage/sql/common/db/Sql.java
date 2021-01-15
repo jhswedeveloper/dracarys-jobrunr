@@ -1,10 +1,9 @@
 package io.github.junhuhdev.dracarys.jobrunr.storage.sql.common.db;
 
-import org.jobrunr.storage.StorageException;
-import org.jobrunr.storage.sql.common.db.SqlResultSet;
-import org.jobrunr.storage.sql.common.db.SqlSpliterator;
-import org.jobrunr.storage.sql.common.db.dialect.Dialect;
-import org.jobrunr.storage.sql.common.db.dialect.DialectFactory;
+
+import io.github.junhuhdev.dracarys.jobrunr.storage.StorageException;
+import io.github.junhuhdev.dracarys.jobrunr.storage.sql.common.db.dialect.Dialect;
+import io.github.junhuhdev.dracarys.jobrunr.storage.sql.common.db.dialect.DialectFactory;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -15,11 +14,11 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+import static io.github.junhuhdev.dracarys.jobrunr.common.JobRunrException.shouldNotHappenException;
+import static io.github.junhuhdev.dracarys.jobrunr.storage.sql.common.db.ConcurrentSqlModificationException.concurrentDatabaseModificationException;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.getValueFromFieldOrProperty;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.objectContainsFieldOrProperty;
 import static java.util.Arrays.stream;
-import static org.jobrunr.JobRunrException.shouldNotHappenException;
-import static org.jobrunr.storage.sql.common.db.ConcurrentSqlModificationException.concurrentDatabaseModificationException;
-import static org.jobrunr.utils.reflection.ReflectionUtils.getValueFromFieldOrProperty;
-import static org.jobrunr.utils.reflection.ReflectionUtils.objectContainsFieldOrProperty;
 
 public class Sql<T> {
     private static final String INSERT = "insert ";
@@ -39,41 +38,41 @@ public class Sql<T> {
         paramSuppliers = new HashMap<>();
     }
 
-    public static <T> org.jobrunr.storage.sql.common.db.Sql<T> forType(Class<T> tClass) {
-        return new org.jobrunr.storage.sql.common.db.Sql<>();
+    public static <T> Sql<T> forType(Class<T> tClass) {
+        return new Sql<>();
     }
 
-    public static org.jobrunr.storage.sql.common.db.Sql<?> withoutType() {
-        return new org.jobrunr.storage.sql.common.db.Sql<>();
+    public static Sql<?> withoutType() {
+        return new Sql<>();
     }
 
-    public org.jobrunr.storage.sql.common.db.Sql<T> using(DataSource dataSource) {
+    public Sql<T> using(DataSource dataSource) {
         this.dataSource = dataSource;
         this.dialect = DialectFactory.forDataSource(dataSource);
         return this;
     }
 
-    public org.jobrunr.storage.sql.common.db.Sql<T> with(String name, Enum<?> value) {
+    public Sql<T> with(String name, Enum<?> value) {
         params.put(name, value.name());
         return this;
     }
 
-    public org.jobrunr.storage.sql.common.db.Sql<T> with(String name, Object value) {
+    public Sql<T> with(String name, Object value) {
         params.put(name, value);
         return this;
     }
 
-    public org.jobrunr.storage.sql.common.db.Sql<T> with(String name, Function<T, Object> function) {
+    public Sql<T> with(String name, Function<T, Object> function) {
         paramSuppliers.put(name, function);
         return this;
     }
 
-    public org.jobrunr.storage.sql.common.db.Sql<T> withVersion(Function<T, Integer> function) {
+    public Sql<T> withVersion(Function<T, Integer> function) {
         paramSuppliers.put("version", function);
         return this;
     }
 
-    public org.jobrunr.storage.sql.common.db.Sql<T> withOrderLimitAndOffset(String order, int limit, long offset) {
+    public Sql<T> withOrderLimitAndOffset(String order, int limit, long offset) {
         with("limit", limit);
         with("offset", offset);
         suffix = dialect.limitAndOffset(order);

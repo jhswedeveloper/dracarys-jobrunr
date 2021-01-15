@@ -1,7 +1,5 @@
 package io.github.junhuhdev.dracarys.jobrunr.storage;
 
-import org.jobrunr.storage.JobStats;
-import org.jobrunr.storage.JobStatsExtended;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

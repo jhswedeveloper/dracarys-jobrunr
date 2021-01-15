@@ -17,6 +17,17 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Stream;
 
+import static io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName.AWAITING;
+import static io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName.DELETED;
+import static io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName.ENQUEUED;
+import static io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName.FAILED;
+import static io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName.PROCESSING;
+import static io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName.SCHEDULED;
+import static io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName.SUCCEEDED;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.JobUtils.getJobSignature;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.getValueFromFieldOrProperty;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.setFieldUsingAutoboxing;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.resilience.RateLimiter.SECOND;
 import static java.util.Arrays.asList;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
@@ -31,7 +42,7 @@ public class InMemoryStorageProvider extends AbstractStorageProvider {
     private JobMapper jobMapper;
 
     public InMemoryStorageProvider() {
-        this(rateLimit().at1Request().per(SECOND));
+        this(RateLimiter.Builder.rateLimit().at1Request().per(SECOND));
     }
 
     public InMemoryStorageProvider(RateLimiter rateLimiter) {

@@ -1,19 +1,19 @@
 package io.github.junhuhdev.dracarys.jobrunr.storage.sql.common;
 
-import org.jobrunr.jobs.AbstractJob;
-import org.jobrunr.jobs.Job;
-import org.jobrunr.jobs.JobDetails;
-import org.jobrunr.jobs.mappers.JobMapper;
-import org.jobrunr.jobs.states.ScheduledState;
-import org.jobrunr.jobs.states.StateName;
-import org.jobrunr.storage.ConcurrentJobModificationException;
-import org.jobrunr.storage.PageRequest;
-import org.jobrunr.storage.StorageException;
-import org.jobrunr.storage.sql.common.SqlPageRequestMapper;
-import org.jobrunr.storage.sql.common.db.ConcurrentSqlModificationException;
-import org.jobrunr.storage.sql.common.db.Sql;
-import org.jobrunr.storage.sql.common.db.SqlResultSet;
-import org.jobrunr.utils.JobUtils;
+
+import io.github.junhuhdev.dracarys.jobrunr.jobs.AbstractJob;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.JobDetails;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.mappers.JobMapper;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.states.ScheduledState;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName;
+import io.github.junhuhdev.dracarys.jobrunr.storage.ConcurrentJobModificationException;
+import io.github.junhuhdev.dracarys.jobrunr.storage.PageRequest;
+import io.github.junhuhdev.dracarys.jobrunr.storage.StorageException;
+import io.github.junhuhdev.dracarys.jobrunr.storage.sql.common.db.ConcurrentSqlModificationException;
+import io.github.junhuhdev.dracarys.jobrunr.storage.sql.common.db.Sql;
+import io.github.junhuhdev.dracarys.jobrunr.storage.sql.common.db.SqlResultSet;
+import io.github.junhuhdev.dracarys.jobrunr.utils.JobUtils;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -29,11 +29,6 @@ import java.util.stream.Stream;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
-import static org.jobrunr.storage.StorageProviderUtils.areNewJobs;
-import static org.jobrunr.storage.StorageProviderUtils.notAllJobsAreExisting;
-import static org.jobrunr.storage.StorageProviderUtils.notAllJobsAreNew;
-import static org.jobrunr.utils.JobUtils.getJobSignature;
-import static org.jobrunr.utils.reflection.ReflectionUtils.cast;
 
 public class JobTable extends Sql<Job> {
 
@@ -53,32 +48,32 @@ public class JobTable extends Sql<Job> {
                 .with("recurringJobId", job -> job.hasState(StateName.SCHEDULED) ? job.<ScheduledState>getJobState().getRecurringJobId() : null);
     }
 
-    public org.jobrunr.storage.sql.common.JobTable withId(UUID id) {
+    public JobTable withId(UUID id) {
         with("id", id);
         return this;
     }
 
-    public org.jobrunr.storage.sql.common.JobTable withState(StateName state) {
+    public JobTable withState(StateName state) {
         with("state", state);
         return this;
     }
 
-    public org.jobrunr.storage.sql.common.JobTable withPriority(int priority) {
+    public JobTable withPriority(int priority) {
         with("priority", priority);
         return this;
     }
 
-    public org.jobrunr.storage.sql.common.JobTable withAwaitingOn(UUID awaitingOn) {
+    public JobTable withAwaitingOn(UUID awaitingOn) {
         with("awaitingOn", awaitingOn);
         return this;
     }
 
-    public org.jobrunr.storage.sql.common.JobTable withScheduledAt(Instant scheduledBefore) {
+    public JobTable withScheduledAt(Instant scheduledBefore) {
         with("scheduledAt", scheduledBefore);
         return this;
     }
 
-    public org.jobrunr.storage.sql.common.JobTable withUpdatedBefore(Instant updatedBefore) {
+    public JobTable withUpdatedBefore(Instant updatedBefore) {
         with("updatedBefore", updatedBefore);
         return this;
     }
@@ -187,7 +182,7 @@ public class JobTable extends Sql<Job> {
     }
 
     @Override
-    public org.jobrunr.storage.sql.common.JobTable withOrderLimitAndOffset(String order, int limit, long offset) {
+    public JobTable withOrderLimitAndOffset(String order, int limit, long offset) {
         super.withOrderLimitAndOffset(order, limit, offset);
         return this;
     }
@@ -209,7 +204,7 @@ public class JobTable extends Sql<Job> {
     }
 
     void insertAllJobs(List<Job> jobs) {
-        jobs.forEach(org.jobrunr.storage.sql.common.JobTable::setId);
+        jobs.forEach(JobTable::setId);
         insertAll(jobs, "into jobrunr_jobs values (:id, :version, :jobAsJson, :jobSignature, :state, :createdAt, :updatedAt, :scheduledAt, :recurringJobId)");
     }
 

@@ -1,9 +1,10 @@
 package io.github.junhuhdev.dracarys.jobrunr.storage.sql.common;
 
-import org.jobrunr.jobs.RecurringJob;
-import org.jobrunr.jobs.mappers.JobMapper;
-import org.jobrunr.storage.sql.common.db.Sql;
-import org.jobrunr.storage.sql.common.db.SqlResultSet;
+
+import io.github.junhuhdev.dracarys.jobrunr.jobs.RecurringJob;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.mappers.JobMapper;
+import io.github.junhuhdev.dracarys.jobrunr.storage.sql.common.db.Sql;
+import io.github.junhuhdev.dracarys.jobrunr.storage.sql.common.db.SqlResultSet;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -21,7 +22,7 @@ public class RecurringJobTable extends Sql<RecurringJob> {
                 .with("jobAsJson", jobMapper::serializeRecurringJob);
     }
 
-    public org.jobrunr.storage.sql.common.RecurringJobTable withId(String id) {
+    public RecurringJobTable withId(String id) {
         with("id", id);
         return this;
     }

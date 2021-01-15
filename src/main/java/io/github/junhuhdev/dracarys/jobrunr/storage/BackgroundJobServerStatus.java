@@ -1,6 +1,7 @@
 package io.github.junhuhdev.dracarys.jobrunr.storage;
 
-import org.jobrunr.server.jmx.BackgroundJobServerStatusMBean;
+
+import io.github.junhuhdev.dracarys.jobrunr.server.jmx.BackgroundJobServerStatusMBean;
 
 import java.time.Duration;
 import java.time.Instant;

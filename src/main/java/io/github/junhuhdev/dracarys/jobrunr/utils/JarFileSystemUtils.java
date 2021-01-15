@@ -1,5 +1,6 @@
 package io.github.junhuhdev.dracarys.jobrunr.utils;
 
+
 import java.io.IOException;
 import java.net.URI;
 import java.nio.file.FileSystem;
@@ -43,7 +44,7 @@ public class JarFileSystemUtils {
             } else {
                 FileSystem parent = getFileSystem(substringBeforeLast(fileSystemName, "!"));
                 Path path = parent.getPath(substringAfterLast(fileSystemName, "!"));
-                openFileSystems.put(fileSystemName, FileSystems.newFileSystem(path, null));
+                openFileSystems.put(fileSystemName, FileSystems.newFileSystem(path, (ClassLoader) null));
             }
         }
         return openFileSystems.get(fileSystemName);

@@ -1,6 +1,7 @@
 package io.github.junhuhdev.dracarys.jobrunr.storage.sql.common;
 
-import org.jobrunr.storage.PageRequest;
+
+import io.github.junhuhdev.dracarys.jobrunr.storage.PageRequest;
 
 import java.util.HashSet;
 import java.util.Set;

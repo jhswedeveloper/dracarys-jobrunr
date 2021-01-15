@@ -1,6 +1,7 @@
 package io.github.junhuhdev.dracarys.jobrunr.storage.sql.sqlite;
 
-import org.jobrunr.storage.sql.common.DefaultSqlStorageProvider;
+
+import io.github.junhuhdev.dracarys.jobrunr.storage.sql.common.DefaultSqlStorageProvider;
 
 import javax.sql.DataSource;
 

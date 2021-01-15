@@ -1,15 +1,16 @@
 package io.github.junhuhdev.dracarys.jobrunr.storage.sql.common;
 
-import org.jobrunr.JobRunrException;
-import org.jobrunr.storage.StorageProvider;
-import org.jobrunr.storage.sql.SqlStorageProvider;
+
+import io.github.junhuhdev.dracarys.jobrunr.common.JobRunrException;
+import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProvider;
+import io.github.junhuhdev.dracarys.jobrunr.storage.sql.SqlStorageProvider;
 
 import javax.sql.DataSource;
 import java.lang.reflect.Constructor;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import static org.jobrunr.utils.reflection.ReflectionUtils.cast;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.cast;
 
 public class SqlStorageProviderFactory {
 
@@ -17,7 +18,7 @@ public class SqlStorageProviderFactory {
     }
 
     public static StorageProvider using(DataSource dataSource) {
-        final org.jobrunr.storage.sql.common.SqlStorageProviderFactory sqlStorageProviderFactory = new org.jobrunr.storage.sql.common.SqlStorageProviderFactory();
+        final SqlStorageProviderFactory sqlStorageProviderFactory = new SqlStorageProviderFactory();
         return sqlStorageProviderFactory.getStorageProviderUsingDataSource(dataSource);
     }
 
