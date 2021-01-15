@@ -2,7 +2,7 @@ package io.github.junhuhdev.dracarys.jobrunr.utils.reflection.autobox;
 
 import java.math.BigDecimal;
 
-import static org.jobrunr.utils.reflection.ReflectionUtils.cast;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.cast;
 
 public class BooleanTypeAutoboxer implements TypeAutoboxer<Boolean> {
     @Override

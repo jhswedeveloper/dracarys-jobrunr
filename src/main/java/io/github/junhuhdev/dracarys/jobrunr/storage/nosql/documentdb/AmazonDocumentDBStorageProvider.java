@@ -1,8 +1,7 @@
 package io.github.junhuhdev.dracarys.jobrunr.storage.nosql.documentdb;
 
-import com.mongodb.client.MongoClient;
-import org.jobrunr.storage.nosql.mongo.MongoDBStorageProvider;
-import org.jobrunr.utils.resilience.RateLimiter;
+import io.github.junhuhdev.dracarys.jobrunr.storage.nosql.mongo.MongoDBStorageProvider;
+import io.github.junhuhdev.dracarys.jobrunr.utils.resilience.RateLimiter;
 
 public class AmazonDocumentDBStorageProvider extends MongoDBStorageProvider {
 

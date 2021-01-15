@@ -73,7 +73,7 @@ public class JobUtils {
         return cast(getJobAnnotations(jobDetails).filter(jobAnnotation -> jobAnnotation.annotationType().equals(Job.class)).findFirst());
     }
 
-    public static String getJobSignature(Job job) {
+    public static String getJobSignature(io.github.junhuhdev.dracarys.jobrunr.jobs.Job job) {
         return getJobSignature(job.getJobDetails());
     }
 

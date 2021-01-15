@@ -7,8 +7,6 @@ import org.bson.types.Binary;
 
 import java.util.UUID;
 
-import static org.bson.internal.UuidHelper.decodeBinaryToUuid;
-import static org.jobrunr.JobRunrException.shouldNotHappenException;
 
 public class MongoUtils {
 

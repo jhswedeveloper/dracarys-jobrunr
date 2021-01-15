@@ -1,8 +1,7 @@
 package io.github.junhuhdev.dracarys.jobrunr.storage.listeners;
 
-import org.jobrunr.jobs.Job;
-import org.jobrunr.jobs.JobId;
-import org.jobrunr.storage.listeners.StorageProviderChangeListener;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.JobId;
 
 public interface JobChangeListener extends StorageProviderChangeListener, AutoCloseable {
 

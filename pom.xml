@@ -39,6 +39,7 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- serialization -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
@@ -54,12 +55,58 @@
             <artifactId>yasson</artifactId>
             <version>1.0.8</version>
         </dependency>
+        <!-- asm -->
         <dependency>
             <groupId>org.ow2.asm</groupId>
             <artifactId>asm</artifactId>
             <version>9.0</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm-util</artifactId>
+            <version>9.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.18</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.cloud.sql</groupId>
+            <artifactId>postgres-socket-factory</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.oracle.ojdbc</groupId>
+            <artifactId>ojdbc8_g</artifactId>
+            <version>19.3.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <version>2.7.1</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.22</version>
+        </dependency>
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <version>8.4.0.jre8</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>3.4.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver-sync</artifactId>
+            <version>4.1.1</version>
+        </dependency>
     </dependencies>
 
     <build>

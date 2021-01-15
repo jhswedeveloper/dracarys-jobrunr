@@ -1,7 +1,7 @@
 package io.github.junhuhdev.dracarys.jobrunr.storage.listeners;
 
-import org.jobrunr.storage.BackgroundJobServerStatus;
-import org.jobrunr.storage.listeners.StorageProviderChangeListener;
+
+import io.github.junhuhdev.dracarys.jobrunr.storage.BackgroundJobServerStatus;
 
 import java.util.List;
 

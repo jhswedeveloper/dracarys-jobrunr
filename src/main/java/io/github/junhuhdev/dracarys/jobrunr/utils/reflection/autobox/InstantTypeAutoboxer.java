@@ -3,7 +3,7 @@ package io.github.junhuhdev.dracarys.jobrunr.utils.reflection.autobox;
 import java.sql.Timestamp;
 import java.time.Instant;
 
-import static org.jobrunr.utils.reflection.ReflectionUtils.cast;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.cast;
 
 public class InstantTypeAutoboxer implements TypeAutoboxer<Instant> {
     @Override

@@ -3,8 +3,8 @@ package io.github.junhuhdev.dracarys.jobrunr.utils.reflection.autobox;
 import java.sql.Clob;
 import java.sql.SQLException;
 
-import static org.jobrunr.JobRunrException.shouldNotHappenException;
-import static org.jobrunr.utils.reflection.ReflectionUtils.cast;
+import static io.github.junhuhdev.dracarys.jobrunr.common.JobRunrException.shouldNotHappenException;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.cast;
 
 public class StringTypeAutoboxer implements TypeAutoboxer<String> {
     @Override

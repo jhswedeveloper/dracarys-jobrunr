@@ -1,7 +1,6 @@
 package io.github.junhuhdev.dracarys.jobrunr.storage.listeners;
 
-import org.jobrunr.storage.JobStats;
-import org.jobrunr.storage.listeners.StorageProviderChangeListener;
+import io.github.junhuhdev.dracarys.jobrunr.storage.JobStats;
 
 public interface JobStatsChangeListener extends StorageProviderChangeListener {
 
