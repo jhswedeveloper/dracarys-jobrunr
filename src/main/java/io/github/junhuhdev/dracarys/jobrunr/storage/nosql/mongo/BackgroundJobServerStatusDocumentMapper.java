@@ -1,13 +1,14 @@
 package io.github.junhuhdev.dracarys.jobrunr.storage.nosql.mongo;
 
+import io.github.junhuhdev.dracarys.jobrunr.storage.BackgroundJobServerStatus;
+import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProviderUtils;
+import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProviderUtils.BackgroundJobServers;
 import org.bson.Document;
-import org.jobrunr.storage.BackgroundJobServerStatus;
-import org.jobrunr.storage.StorageProviderUtils.BackgroundJobServers;
 
 import java.time.Duration;
 import java.util.Date;
 
-import static org.jobrunr.storage.nosql.mongo.MongoUtils.getIdAsUUID;
+import static io.github.junhuhdev.dracarys.jobrunr.storage.nosql.mongo.MongoUtils.getIdAsUUID;
 
 public class BackgroundJobServerStatusDocumentMapper {
 

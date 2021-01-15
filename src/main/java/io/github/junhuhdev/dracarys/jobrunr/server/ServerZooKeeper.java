@@ -1,10 +1,9 @@
 package io.github.junhuhdev.dracarys.jobrunr.server;
 
-import org.jobrunr.server.BackgroundJobServer;
-import org.jobrunr.server.jmx.JobServerStats;
-import org.jobrunr.storage.BackgroundJobServerStatus;
-import org.jobrunr.storage.ServerTimedOutException;
-import org.jobrunr.storage.StorageProvider;
+import io.github.junhuhdev.dracarys.jobrunr.server.jmx.JobServerStats;
+import io.github.junhuhdev.dracarys.jobrunr.storage.BackgroundJobServerStatus;
+import io.github.junhuhdev.dracarys.jobrunr.storage.ServerTimedOutException;
+import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class ServerZooKeeper implements Runnable {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(org.jobrunr.server.ServerZooKeeper.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ServerZooKeeper.class);
 
     private final BackgroundJobServer backgroundJobServer;
     private final BackgroundJobServerStatusWriteModel backgroundJobServerStatus;

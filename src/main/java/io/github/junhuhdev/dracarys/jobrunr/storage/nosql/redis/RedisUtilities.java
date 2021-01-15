@@ -1,8 +1,9 @@
 package io.github.junhuhdev.dracarys.jobrunr.storage.nosql.redis;
 
-import org.jobrunr.jobs.Job;
-import org.jobrunr.jobs.states.StateName;
-import org.jobrunr.storage.BackgroundJobServerStatus;
+
+import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName;
+import io.github.junhuhdev.dracarys.jobrunr.storage.BackgroundJobServerStatus;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;

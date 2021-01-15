@@ -1,8 +1,8 @@
 package io.github.junhuhdev.dracarys.jobrunr.storage.nosql.mongo;
 
 import com.mongodb.client.model.Sorts;
+import io.github.junhuhdev.dracarys.jobrunr.storage.PageRequest;
 import org.bson.conversions.Bson;
-import org.jobrunr.storage.PageRequest;
 
 import java.util.ArrayList;
 import java.util.HashSet;

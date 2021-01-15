@@ -1,8 +1,7 @@
 package io.github.junhuhdev.dracarys.jobrunr.storage.sql.common;
 
-import org.jobrunr.JobRunrException;
-import org.jobrunr.storage.sql.SqlStorageProvider;
-import org.jobrunr.storage.sql.common.SqlStorageProviderFactory;
+import io.github.junhuhdev.dracarys.jobrunr.common.JobRunrException;
+import io.github.junhuhdev.dracarys.jobrunr.storage.sql.SqlStorageProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,13 +18,13 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Stream;
 
+import static io.github.junhuhdev.dracarys.jobrunr.utils.ClassPathUtils.listAllChildrenOnClasspath;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toMap;
-import static org.jobrunr.utils.ClassPathUtils.listAllChildrenOnClasspath;
 
 public class DatabaseCreator {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(org.jobrunr.storage.sql.common.DatabaseCreator.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseCreator.class);
 
     private final ConnectionProvider connectionProvider;
     private final Class<? extends SqlStorageProvider> sqlStorageProviderClass;
@@ -39,7 +38,7 @@ public class DatabaseCreator {
             System.out.println("==========================================================");
             System.out.println("================== JobRunr Table Creator =================");
             System.out.println("==========================================================");
-            new org.jobrunr.storage.sql.common.DatabaseCreator(() -> DriverManager.getConnection(url, userName, password), new SqlStorageProviderFactory().getStorageProviderClassByJdbcUrl(url)).runMigrations();
+            new DatabaseCreator(() -> DriverManager.getConnection(url, userName, password), new SqlStorageProviderFactory().getStorageProviderClassByJdbcUrl(url)).runMigrations();
             System.out.println("Successfully created all tables!");
         } catch (Exception e) {
             System.out.println("An error occurred: ");
@@ -90,7 +89,7 @@ public class DatabaseCreator {
     }
 
     protected Stream<Path> getMigrations() {
-        final Map<String, Path> commonMigrations = listAllChildrenOnClasspath(org.jobrunr.storage.sql.common.DatabaseCreator.class, "migrations").collect(toMap(p -> p.getFileName().toString(), p -> p));
+        final Map<String, Path> commonMigrations = listAllChildrenOnClasspath(DatabaseCreator.class, "migrations").collect(toMap(p -> p.getFileName().toString(), p -> p));
         final Map<String, Path> databaseSpecificMigrations = getDatabaseSpecificMigrations().collect(toMap(p -> p.getFileName().toString(), p -> p));
 
         final HashMap<String, Path> actualMigrations = new HashMap<>(commonMigrations);

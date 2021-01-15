@@ -3,22 +3,23 @@ package io.github.junhuhdev.dracarys.jobrunr.storage.nosql.mongo;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.UpdateOneModel;
 import com.mongodb.client.model.UpdateOptions;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.RecurringJob;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.mappers.JobMapper;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.states.ScheduledState;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName;
+import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProviderUtils;
+import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProviderUtils.Jobs;
 import org.bson.Document;
 import org.bson.conversions.Bson;
-import org.jobrunr.jobs.Job;
-import org.jobrunr.jobs.RecurringJob;
-import org.jobrunr.jobs.mappers.JobMapper;
-import org.jobrunr.jobs.states.ScheduledState;
-import org.jobrunr.jobs.states.StateName;
-import org.jobrunr.storage.StorageProviderUtils.Jobs;
-import org.jobrunr.storage.StorageProviderUtils.RecurringJobs;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.UUID;
 
-import static org.jobrunr.storage.nosql.mongo.MongoDBStorageProvider.toMongoId;
+import static io.github.junhuhdev.dracarys.jobrunr.storage.StorageProviderUtils.RecurringJobs.*;
+import static io.github.junhuhdev.dracarys.jobrunr.storage.nosql.mongo.MongoDBStorageProvider.toMongoId;
 
 public class JobDocumentMapper {
     private final JobMapper jobMapper;
@@ -77,9 +78,9 @@ public class JobDocumentMapper {
 
     public Document toInsertDocument(RecurringJob recurringJob) {
         final Document document = new Document();
-        document.put(toMongoId(RecurringJobs.FIELD_ID), recurringJob.getId());
-        document.put(RecurringJobs.FIELD_VERSION, recurringJob.getVersion());
-        document.put(RecurringJobs.FIELD_JOB_AS_JSON, jobMapper.serializeRecurringJob(recurringJob));
+        document.put(toMongoId(FIELD_ID), recurringJob.getId());
+        document.put(FIELD_VERSION, recurringJob.getVersion());
+        document.put(StorageProviderUtils.RecurringJobs.FIELD_JOB_AS_JSON, jobMapper.serializeRecurringJob(recurringJob));
         return document;
     }
 
@@ -88,7 +89,7 @@ public class JobDocumentMapper {
     }
 
     public RecurringJob toRecurringJob(Document document) {
-        return jobMapper.deserializeRecurringJob(document.get(RecurringJobs.FIELD_JOB_AS_JSON).toString());
+        return jobMapper.deserializeRecurringJob(document.get(StorageProviderUtils.RecurringJobs.FIELD_JOB_AS_JSON).toString());
     }
 
     private long toMicroSeconds(Instant instant) {

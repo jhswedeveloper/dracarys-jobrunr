@@ -1,5 +1,24 @@
 package io.github.junhuhdev.dracarys.jobrunr.storage.nosql.elasticsearch;
 
+import io.github.junhuhdev.dracarys.jobrunr.jobs.AbstractJob;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.JobDetails;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.RecurringJob;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.mappers.JobMapper;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName;
+import io.github.junhuhdev.dracarys.jobrunr.storage.AbstractStorageProvider;
+import io.github.junhuhdev.dracarys.jobrunr.storage.BackgroundJobServerStatus;
+import io.github.junhuhdev.dracarys.jobrunr.storage.ConcurrentJobModificationException;
+import io.github.junhuhdev.dracarys.jobrunr.storage.JobNotFoundException;
+import io.github.junhuhdev.dracarys.jobrunr.storage.JobStats;
+import io.github.junhuhdev.dracarys.jobrunr.storage.Page;
+import io.github.junhuhdev.dracarys.jobrunr.storage.PageRequest;
+import io.github.junhuhdev.dracarys.jobrunr.storage.ServerTimedOutException;
+import io.github.junhuhdev.dracarys.jobrunr.storage.StorageException;
+import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProviderUtils;
+import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProviderUtils.Jobs;
+import io.github.junhuhdev.dracarys.jobrunr.utils.JobUtils;
+import io.github.junhuhdev.dracarys.jobrunr.utils.resilience.RateLimiter;
 import org.apache.http.HttpHost;
 import org.elasticsearch.ElasticsearchStatusException;
 import org.elasticsearch.action.admin.indices.refresh.RefreshRequest;
@@ -34,19 +53,6 @@ import org.elasticsearch.search.aggregations.bucket.MultiBucketsAggregation;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.SortOrder;
-import org.jobrunr.jobs.AbstractJob;
-import org.jobrunr.jobs.Job;
-import org.jobrunr.jobs.JobDetails;
-import org.jobrunr.jobs.RecurringJob;
-import org.jobrunr.jobs.mappers.JobMapper;
-import org.jobrunr.jobs.states.StateName;
-import org.jobrunr.storage.*;
-import org.jobrunr.storage.StorageProviderUtils.BackgroundJobServers;
-import org.jobrunr.storage.StorageProviderUtils.Jobs;
-import org.jobrunr.storage.StorageProviderUtils.RecurringJobs;
-import org.jobrunr.storage.nosql.elasticsearch.ElasticSearchDocumentMapper;
-import org.jobrunr.utils.JobUtils;
-import org.jobrunr.utils.resilience.RateLimiter;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -54,6 +60,19 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
+import static io.github.junhuhdev.dracarys.jobrunr.storage.StorageProviderUtils.areNewJobs;
+import static io.github.junhuhdev.dracarys.jobrunr.storage.StorageProviderUtils.notAllJobsAreExisting;
+import static io.github.junhuhdev.dracarys.jobrunr.storage.StorageProviderUtils.notAllJobsAreNew;
+import static io.github.junhuhdev.dracarys.jobrunr.storage.nosql.elasticsearch.ElasticSearchUtils.backgroundJobServerIndexName;
+import static io.github.junhuhdev.dracarys.jobrunr.storage.nosql.elasticsearch.ElasticSearchUtils.backgroundJobServersIndex;
+import static io.github.junhuhdev.dracarys.jobrunr.storage.nosql.elasticsearch.ElasticSearchUtils.jobIndex;
+import static io.github.junhuhdev.dracarys.jobrunr.storage.nosql.elasticsearch.ElasticSearchUtils.jobIndexName;
+import static io.github.junhuhdev.dracarys.jobrunr.storage.nosql.elasticsearch.ElasticSearchUtils.jobStatsIndex;
+import static io.github.junhuhdev.dracarys.jobrunr.storage.nosql.elasticsearch.ElasticSearchUtils.recurringJobIndex;
+import static io.github.junhuhdev.dracarys.jobrunr.storage.nosql.elasticsearch.ElasticSearchUtils.recurringJobIndexName;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.cast;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.resilience.RateLimiter.Builder.rateLimit;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.resilience.RateLimiter.SECOND;
 import static java.util.Collections.singletonMap;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
@@ -61,19 +80,6 @@ import static org.elasticsearch.action.support.WriteRequest.RefreshPolicy.IMMEDI
 import static org.elasticsearch.index.query.QueryBuilders.boolQuery;
 import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 import static org.elasticsearch.index.query.QueryBuilders.rangeQuery;
-import static org.jobrunr.storage.StorageProviderUtils.areNewJobs;
-import static org.jobrunr.storage.StorageProviderUtils.notAllJobsAreExisting;
-import static org.jobrunr.storage.StorageProviderUtils.notAllJobsAreNew;
-import static org.jobrunr.storage.nosql.elasticsearch.ElasticSearchUtils.backgroundJobServerIndexName;
-import static org.jobrunr.storage.nosql.elasticsearch.ElasticSearchUtils.backgroundJobServersIndex;
-import static org.jobrunr.storage.nosql.elasticsearch.ElasticSearchUtils.jobIndex;
-import static org.jobrunr.storage.nosql.elasticsearch.ElasticSearchUtils.jobIndexName;
-import static org.jobrunr.storage.nosql.elasticsearch.ElasticSearchUtils.jobStatsIndex;
-import static org.jobrunr.storage.nosql.elasticsearch.ElasticSearchUtils.recurringJobIndex;
-import static org.jobrunr.storage.nosql.elasticsearch.ElasticSearchUtils.recurringJobIndexName;
-import static org.jobrunr.utils.reflection.ReflectionUtils.cast;
-import static org.jobrunr.utils.resilience.RateLimiter.Builder.rateLimit;
-import static org.jobrunr.utils.resilience.RateLimiter.SECOND;
 
 public class ElasticSearchStorageProvider extends AbstractStorageProvider {
 
@@ -124,7 +130,7 @@ public class ElasticSearchStorageProvider extends AbstractStorageProvider {
                     .fetchSource(true)
                     .doc(elasticSearchDocumentMapper.toXContentBuilderForUpdate(serverStatus));
             UpdateResponse updateResponse = client.update(updateRequest, RequestOptions.DEFAULT);
-            return cast(updateResponse.getGetResult().getSource().getOrDefault(BackgroundJobServers.FIELD_IS_RUNNING, false));
+            return cast(updateResponse.getGetResult().getSource().getOrDefault(StorageProviderUtils.BackgroundJobServers.FIELD_IS_RUNNING, false));
         } catch (ElasticsearchStatusException e) {
             if (e.status().getStatus() == 404) {
                 throw new ServerTimedOutException(serverStatus, new StorageException(e));
@@ -152,7 +158,7 @@ public class ElasticSearchStorageProvider extends AbstractStorageProvider {
             SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
             searchSourceBuilder.query(QueryBuilders.matchAllQuery());
             searchSourceBuilder.fetchSource(true);
-            searchSourceBuilder.sort(BackgroundJobServers.FIELD_FIRST_HEARTBEAT, SortOrder.ASC);
+            searchSourceBuilder.sort(StorageProviderUtils.BackgroundJobServers.FIELD_FIRST_HEARTBEAT, SortOrder.ASC);
             searchRequest.source(searchSourceBuilder);
             SearchResponse search = client.search(searchRequest, RequestOptions.DEFAULT);
 
@@ -171,7 +177,7 @@ public class ElasticSearchStorageProvider extends AbstractStorageProvider {
             SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
             searchSourceBuilder.query(QueryBuilders.matchAllQuery());
             searchSourceBuilder.fetchSource(false);
-            searchSourceBuilder.sort(BackgroundJobServers.FIELD_FIRST_HEARTBEAT, SortOrder.ASC);
+            searchSourceBuilder.sort(StorageProviderUtils.BackgroundJobServers.FIELD_FIRST_HEARTBEAT, SortOrder.ASC);
             searchSourceBuilder.size(1);
             searchRequest.source(searchSourceBuilder);
             SearchResponse search = client.search(searchRequest, RequestOptions.DEFAULT);
@@ -186,7 +192,7 @@ public class ElasticSearchStorageProvider extends AbstractStorageProvider {
     public int removeTimedOutBackgroundJobServers(Instant heartbeatOlderThan) {
         try {
             DeleteByQueryRequest deleteByQueryRequest = new DeleteByQueryRequest(backgroundJobServerIndexName());
-            deleteByQueryRequest.setQuery(rangeQuery(BackgroundJobServers.FIELD_LAST_HEARTBEAT).to(heartbeatOlderThan));
+            deleteByQueryRequest.setQuery(rangeQuery(StorageProviderUtils.BackgroundJobServers.FIELD_LAST_HEARTBEAT).to(heartbeatOlderThan));
             BulkByScrollResponse bulkByScrollResponse = client.deleteByQuery(deleteByQueryRequest, RequestOptions.DEFAULT);
             int amountDeleted = (int) bulkByScrollResponse.getDeleted();
             if (amountDeleted > 0) {
@@ -454,7 +460,7 @@ public class ElasticSearchStorageProvider extends AbstractStorageProvider {
             SearchRequest searchRequest = new SearchRequest(recurringJobIndexName());
             SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
             searchSourceBuilder.query(QueryBuilders.matchAllQuery());
-            searchSourceBuilder.storedField(RecurringJobs.FIELD_JOB_AS_JSON);
+            searchSourceBuilder.storedField(StorageProviderUtils.RecurringJobs.FIELD_JOB_AS_JSON);
             searchRequest.source(searchSourceBuilder);
             SearchResponse search = client.search(searchRequest, RequestOptions.DEFAULT);
             return Stream.of(search.getHits().getHits())

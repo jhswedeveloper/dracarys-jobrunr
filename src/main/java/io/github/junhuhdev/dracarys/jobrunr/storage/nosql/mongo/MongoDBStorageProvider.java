@@ -7,27 +7,28 @@ import com.mongodb.client.*;
 import com.mongodb.client.model.*;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.JobDetails;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.RecurringJob;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.mappers.JobMapper;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName;
+import io.github.junhuhdev.dracarys.jobrunr.storage.AbstractStorageProvider;
+import io.github.junhuhdev.dracarys.jobrunr.storage.BackgroundJobServerStatus;
+import io.github.junhuhdev.dracarys.jobrunr.storage.ConcurrentJobModificationException;
+import io.github.junhuhdev.dracarys.jobrunr.storage.JobNotFoundException;
+import io.github.junhuhdev.dracarys.jobrunr.storage.Page;
+import io.github.junhuhdev.dracarys.jobrunr.storage.PageRequest;
+import io.github.junhuhdev.dracarys.jobrunr.storage.ServerTimedOutException;
+import io.github.junhuhdev.dracarys.jobrunr.storage.StorageException;
+import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProviderUtils;
+import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProviderUtils.BackgroundJobServers;
+import io.github.junhuhdev.dracarys.jobrunr.utils.resilience.RateLimiter;
 import org.bson.Document;
 import org.bson.UuidRepresentation;
 import org.bson.codecs.UuidCodec;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.conversions.Bson;
-import org.jobrunr.jobs.Job;
-import org.jobrunr.jobs.JobDetails;
-import org.jobrunr.jobs.RecurringJob;
-import org.jobrunr.jobs.mappers.JobMapper;
-import org.jobrunr.jobs.states.StateName;
-import org.jobrunr.storage.*;
-import org.jobrunr.storage.StorageProviderUtils.BackgroundJobServers;
-import org.jobrunr.storage.StorageProviderUtils.Jobs;
-import org.jobrunr.storage.StorageProviderUtils.RecurringJobs;
-import org.jobrunr.storage.nosql.mongo.BackgroundJobServerStatusDocumentMapper;
-import org.jobrunr.storage.nosql.mongo.JobDocumentMapper;
-import org.jobrunr.storage.nosql.mongo.MongoDBPageRequestMapper;
-import org.jobrunr.storage.nosql.mongo.MongoUtils;
-import org.jobrunr.utils.reflection.ReflectionUtils;
-import org.jobrunr.utils.resilience.RateLimiter;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -48,29 +49,19 @@ import static com.mongodb.client.model.Filters.lt;
 import static com.mongodb.client.model.Filters.ne;
 import static com.mongodb.client.model.Projections.include;
 import static com.mongodb.client.model.Sorts.ascending;
+import static io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName.SCHEDULED;
+import static io.github.junhuhdev.dracarys.jobrunr.storage.StorageProviderUtils.Jobs.NAME;
+import static io.github.junhuhdev.dracarys.jobrunr.storage.StorageProviderUtils.areNewJobs;
+import static io.github.junhuhdev.dracarys.jobrunr.storage.StorageProviderUtils.notAllJobsAreExisting;
+import static io.github.junhuhdev.dracarys.jobrunr.storage.StorageProviderUtils.notAllJobsAreNew;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.resilience.RateLimiter.Builder.rateLimit;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.resilience.RateLimiter.SECOND;
 import static java.util.Arrays.asList;
 import static java.util.Arrays.stream;
 import static java.util.Collections.singletonList;
 import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
-import static org.jobrunr.JobRunrException.shouldNotHappenException;
-import static org.jobrunr.jobs.states.StateName.AWAITING;
-import static org.jobrunr.jobs.states.StateName.DELETED;
-import static org.jobrunr.jobs.states.StateName.ENQUEUED;
-import static org.jobrunr.jobs.states.StateName.FAILED;
-import static org.jobrunr.jobs.states.StateName.PROCESSING;
-import static org.jobrunr.jobs.states.StateName.SCHEDULED;
-import static org.jobrunr.jobs.states.StateName.SUCCEEDED;
-import static org.jobrunr.storage.StorageProviderUtils.JobStats.FIELD_ID;
-import static org.jobrunr.storage.StorageProviderUtils.JobStats.FIELD_STATS;
-import static org.jobrunr.storage.StorageProviderUtils.JobStats.NAME;
-import static org.jobrunr.storage.StorageProviderUtils.areNewJobs;
-import static org.jobrunr.storage.StorageProviderUtils.notAllJobsAreExisting;
-import static org.jobrunr.storage.StorageProviderUtils.notAllJobsAreNew;
-import static org.jobrunr.utils.JobUtils.getJobSignature;
-import static org.jobrunr.utils.resilience.RateLimiter.Builder.rateLimit;
-import static org.jobrunr.utils.resilience.RateLimiter.SECOND;
 
 public class MongoDBStorageProvider extends AbstractStorageProvider {
 
@@ -116,26 +107,26 @@ public class MongoDBStorageProvider extends AbstractStorageProvider {
 
         if (jobRunrDatabaseExists(mongoClient, dbName)) {
             jobrunrDatabase = mongoClient.getDatabase(dbName);
-            jobCollection = jobrunrDatabase.getCollection(Jobs.NAME, Document.class);
-            recurringJobCollection = jobrunrDatabase.getCollection(RecurringJobs.NAME, Document.class);
+            jobCollection = jobrunrDatabase.getCollection(StorageProviderUtils.Jobs.NAME, Document.class);
+            recurringJobCollection = jobrunrDatabase.getCollection(StorageProviderUtils.RecurringJobs.NAME, Document.class);
             backgroundJobServerCollection = jobrunrDatabase.getCollection(BackgroundJobServers.NAME, Document.class);
             jobStatsCollection = jobrunrDatabase.getCollection(NAME, Document.class);
         } else {
             jobrunrDatabase = mongoClient.getDatabase(dbName);
 
-            jobrunrDatabase.createCollection(Jobs.NAME);
-            jobrunrDatabase.createCollection(RecurringJobs.NAME);
+            jobrunrDatabase.createCollection(StorageProviderUtils.Jobs.NAME);
+            jobrunrDatabase.createCollection(StorageProviderUtils.RecurringJobs.NAME);
             jobrunrDatabase.createCollection(BackgroundJobServers.NAME);
             jobrunrDatabase.createCollection(NAME);
 
-            jobCollection = jobrunrDatabase.getCollection(Jobs.NAME, Document.class);
-            jobCollection.createIndex(Indexes.compoundIndex(Indexes.ascending(Jobs.FIELD_STATE), Indexes.ascending(Jobs.FIELD_SCHEDULED_AT)));
-            jobCollection.createIndex(Indexes.compoundIndex(Indexes.ascending(Jobs.FIELD_STATE), Indexes.ascending(Jobs.FIELD_UPDATED_AT)));
-            jobCollection.createIndex(Indexes.compoundIndex(Indexes.ascending(Jobs.FIELD_STATE), Indexes.descending(Jobs.FIELD_UPDATED_AT)));
-            jobCollection.createIndex(Indexes.compoundIndex(Indexes.ascending(Jobs.FIELD_STATE), Indexes.ascending(Jobs.FIELD_CREATED_AT)));
-            jobCollection.createIndex(Indexes.compoundIndex(Indexes.ascending(Jobs.FIELD_STATE), Indexes.ascending(Jobs.FIELD_JOB_SIGNATURE)));
+            jobCollection = jobrunrDatabase.getCollection(StorageProviderUtils.Jobs.NAME, Document.class);
+            jobCollection.createIndex(Indexes.compoundIndex(Indexes.ascending(StorageProviderUtils.Jobs.FIELD_STATE), Indexes.ascending(StorageProviderUtils.Jobs.FIELD_SCHEDULED_AT)));
+            jobCollection.createIndex(Indexes.compoundIndex(Indexes.ascending(StorageProviderUtils.Jobs.FIELD_STATE), Indexes.ascending(StorageProviderUtils.Jobs.FIELD_UPDATED_AT)));
+            jobCollection.createIndex(Indexes.compoundIndex(Indexes.ascending(StorageProviderUtils.Jobs.FIELD_STATE), Indexes.descending(StorageProviderUtils.Jobs.FIELD_UPDATED_AT)));
+            jobCollection.createIndex(Indexes.compoundIndex(Indexes.ascending(StorageProviderUtils.Jobs.FIELD_STATE), Indexes.ascending(StorageProviderUtils.Jobs.FIELD_CREATED_AT)));
+            jobCollection.createIndex(Indexes.compoundIndex(Indexes.ascending(StorageProviderUtils.Jobs.FIELD_STATE), Indexes.ascending(StorageProviderUtils.Jobs.FIELD_JOB_SIGNATURE)));
 
-            recurringJobCollection = jobrunrDatabase.getCollection(RecurringJobs.NAME, Document.class);
+            recurringJobCollection = jobrunrDatabase.getCollection(StorageProviderUtils.RecurringJobs.NAME, Document.class);
             backgroundJobServerCollection = jobrunrDatabase.getCollection(BackgroundJobServers.NAME, Document.class);
             jobStatsCollection = jobrunrDatabase.getCollection(NAME, Document.class);
         }
@@ -158,7 +149,7 @@ public class MongoDBStorageProvider extends AbstractStorageProvider {
         if (updateResult.getModifiedCount() < 1) {
             throw new ServerTimedOutException(serverStatus, new StorageException("BackgroundJobServer with id " + serverStatus.getId() + " was not found"));
         }
-        final Document document = this.backgroundJobServerCollection.find(eq(toMongoId(Jobs.FIELD_ID), serverStatus.getId())).projection(include(BackgroundJobServers.FIELD_IS_RUNNING)).first();
+        final Document document = this.backgroundJobServerCollection.find(eq(toMongoId(StorageProviderUtils.Jobs.FIELD_ID), serverStatus.getId())).projection(include(BackgroundJobServers.FIELD_IS_RUNNING)).first();
         return document != null && document.getBoolean(BackgroundJobServers.FIELD_IS_RUNNING);
     }
 
@@ -210,7 +201,7 @@ public class MongoDBStorageProvider extends AbstractStorageProvider {
 
     @Override
     public int deletePermanently(UUID id) {
-        final DeleteResult result = jobCollection.deleteOne(eq(toMongoId(Jobs.FIELD_ID), id));
+        final DeleteResult result = jobCollection.deleteOne(eq(toMongoId(StorageProviderUtils.Jobs.FIELD_ID), id));
         final int deletedCount = (int) result.getDeletedCount();
         notifyJobStatsOnChangeListenersIf(deletedCount > 0);
         return deletedCount;
@@ -218,7 +209,7 @@ public class MongoDBStorageProvider extends AbstractStorageProvider {
 
     @Override
     public Job getJobById(UUID id) {
-        final Document document = jobCollection.find(eq(toMongoId(Jobs.FIELD_ID), id)).projection(include(Jobs.FIELD_JOB_AS_JSON)).first();
+        final Document document = jobCollection.find(eq(toMongoId(StorageProviderUtils.Jobs.FIELD_ID), id)).projection(include(StorageProviderUtils.Jobs.FIELD_JOB_AS_JSON)).first();
         if (document != null) {
             return jobDocumentMapper.toJob(document);
         }
@@ -248,8 +239,8 @@ public class MongoDBStorageProvider extends AbstractStorageProvider {
                 //ugly workaround as we do not know which document did not update due to concurrent modification exception. So, we download them all and compare the lastUpdated
                 final Map<UUID, Job> mongoDbDocuments = new HashMap<>();
                 jobCollection
-                        .find(in(toMongoId(Jobs.FIELD_ID), jobs.stream().map(Job::getId).collect(toList())))
-                        .projection(include(Jobs.FIELD_JOB_AS_JSON))
+                        .find(in(toMongoId(StorageProviderUtils.Jobs.FIELD_ID), jobs.stream().map(Job::getId).collect(toList())))
+                        .projection(include(StorageProviderUtils.Jobs.FIELD_JOB_AS_JSON))
                         .map(jobDocumentMapper::toJob)
                         .forEach((Consumer<Job>) job -> mongoDbDocuments.put(job.getId(), job));
 
@@ -266,32 +257,32 @@ public class MongoDBStorageProvider extends AbstractStorageProvider {
 
     @Override
     public List<Job> getJobs(StateName state, Instant updatedBefore, PageRequest pageRequest) {
-        return findJobs(and(eq(Jobs.FIELD_STATE, state.name()), lt(Jobs.FIELD_UPDATED_AT, toMicroSeconds(updatedBefore))), pageRequest);
+        return findJobs(and(eq(StorageProviderUtils.Jobs.FIELD_STATE, state.name()), lt(StorageProviderUtils.Jobs.FIELD_UPDATED_AT, toMicroSeconds(updatedBefore))), pageRequest);
     }
 
     @Override
     public List<Job> getScheduledJobs(Instant scheduledBefore, PageRequest pageRequest) {
-        return findJobs(and(eq(Jobs.FIELD_STATE, SCHEDULED.name()), lt(Jobs.FIELD_SCHEDULED_AT, toMicroSeconds(scheduledBefore))), pageRequest);
+        return findJobs(and(eq(StorageProviderUtils.Jobs.FIELD_STATE, SCHEDULED.name()), lt(StorageProviderUtils.Jobs.FIELD_SCHEDULED_AT, toMicroSeconds(scheduledBefore))), pageRequest);
     }
 
     @Override
     public Long countJobs(StateName state) {
-        return jobCollection.countDocuments(eq(Jobs.FIELD_STATE, state.name()));
+        return jobCollection.countDocuments(eq(StorageProviderUtils.Jobs.FIELD_STATE, state.name()));
     }
 
     @Override
     public List<Job> getJobs(StateName state, PageRequest pageRequest) {
-        return findJobs(eq(Jobs.FIELD_STATE, state.name()), pageRequest);
+        return findJobs(eq(StorageProviderUtils.Jobs.FIELD_STATE, state.name()), pageRequest);
     }
 
     @Override
     public Page<Job> getJobPage(StateName state, PageRequest pageRequest) {
-        return getJobPage(eq(Jobs.FIELD_STATE, state.name()), pageRequest);
+        return getJobPage(eq(StorageProviderUtils.Jobs.FIELD_STATE, state.name()), pageRequest);
     }
 
     @Override
     public int deleteJobsPermanently(StateName state, Instant updatedBefore) {
-        final DeleteResult deleteResult = jobCollection.deleteMany(and(eq(Jobs.FIELD_STATE, state.name()), lt(Jobs.FIELD_CREATED_AT, toMicroSeconds(updatedBefore))));
+        final DeleteResult deleteResult = jobCollection.deleteMany(and(eq(StorageProviderUtils.Jobs.FIELD_STATE, state.name()), lt(StorageProviderUtils.Jobs.FIELD_CREATED_AT, toMicroSeconds(updatedBefore))));
         final long deletedCount = deleteResult.getDeletedCount();
         notifyJobStatsOnChangeListenersIf(deletedCount > 0);
         return (int) deletedCount;
@@ -300,7 +291,7 @@ public class MongoDBStorageProvider extends AbstractStorageProvider {
     @Override
     public Set<String> getDistinctJobSignatures(StateName... states) {
         return jobCollection
-                .distinct(Jobs.FIELD_JOB_SIGNATURE, in(Jobs.FIELD_STATE, stream(states).map(Enum::name).collect(toSet())), String.class)
+                .distinct(StorageProviderUtils.Jobs.FIELD_JOB_SIGNATURE, in(StorageProviderUtils.Jobs.FIELD_STATE, stream(states).map(Enum::name).collect(toSet())), String.class)
                 .into(new HashSet<>());
     }
 

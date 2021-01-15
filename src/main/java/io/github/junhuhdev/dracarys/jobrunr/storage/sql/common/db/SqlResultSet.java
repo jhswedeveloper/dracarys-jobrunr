@@ -8,7 +8,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
 
-import static org.jobrunr.utils.reflection.ReflectionUtils.autobox;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.autobox;
 
 public class SqlResultSet {
 

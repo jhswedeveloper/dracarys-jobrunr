@@ -1,14 +1,14 @@
 package io.github.junhuhdev.dracarys.jobrunr.storage.nosql.elasticsearch;
 
-import org.elasticsearch.action.index.IndexRequest;
+import com.mongodb.internal.bulk.IndexRequest;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName;
+import io.github.junhuhdev.dracarys.jobrunr.storage.StorageException;
+import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProviderUtils;
+import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProviderUtils.Jobs;
+import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProviderUtils.RecurringJobs;
 import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.json.JsonXContent;
-import org.jobrunr.jobs.states.StateName;
-import org.jobrunr.storage.StorageException;
-import org.jobrunr.storage.StorageProviderUtils.BackgroundJobServers;
-import org.jobrunr.storage.StorageProviderUtils.Jobs;
-import org.jobrunr.storage.StorageProviderUtils.RecurringJobs;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -61,17 +61,17 @@ public class ElasticSearchUtils {
         return new CreateIndexRequest(backgroundJobServerIndexName())
                 .mapping(mapping(
                         (sb, map) -> {
-                            sb.append(BackgroundJobServers.FIELD_FIRST_HEARTBEAT);
+                            sb.append(StorageProviderUtils.BackgroundJobServers.FIELD_FIRST_HEARTBEAT);
                             map.put("type", "date_nanos");
                         },
                         (sb, map) -> {
-                            sb.append(BackgroundJobServers.FIELD_LAST_HEARTBEAT);
+                            sb.append(StorageProviderUtils.BackgroundJobServers.FIELD_LAST_HEARTBEAT);
                             map.put("type", "date_nanos");
                         }
                 ));
     }
 
-    public static IndexRequest jobStatsIndex() {
+    public static com.mongodb.internal.bulk.IndexRequest jobStatsIndex() {
         try {
             XContentBuilder builder = JsonXContent.contentBuilder().prettyPrint();
             builder.startObject();
@@ -100,7 +100,7 @@ public class ElasticSearchUtils {
     }
 
     public static String backgroundJobServerIndexName() {
-        return "jobrunr_" + BackgroundJobServers.NAME;
+        return "jobrunr_" + StorageProviderUtils.BackgroundJobServers.NAME;
     }
 
     private static Map<String, Object> mapping(BiConsumer<StringBuilder, Map<String, Object>>... consumers) {

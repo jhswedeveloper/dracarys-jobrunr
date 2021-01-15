@@ -1,7 +1,6 @@
 package io.github.junhuhdev.dracarys.jobrunr.storage.sql.common.db;
 
-import org.jobrunr.storage.StorageException;
-import org.jobrunr.storage.sql.common.db.SqlResultSet;
+import io.github.junhuhdev.dracarys.jobrunr.storage.StorageException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +14,7 @@ import java.util.function.Consumer;
 
 public class SqlSpliterator implements Spliterator<SqlResultSet>, AutoCloseable {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(org.jobrunr.storage.sql.common.db.SqlSpliterator.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SqlSpliterator.class);
 
     private final DataSource dataSource;
     private final String sqlStatement;

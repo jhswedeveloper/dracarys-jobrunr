@@ -1,19 +1,21 @@
 package io.github.junhuhdev.dracarys.jobrunr.storage.sql.common;
 
-import org.jobrunr.jobs.Job;
-import org.jobrunr.jobs.JobDetails;
-import org.jobrunr.jobs.RecurringJob;
-import org.jobrunr.jobs.mappers.JobMapper;
-import org.jobrunr.jobs.states.StateName;
-import org.jobrunr.storage.*;
-import org.jobrunr.storage.sql.SqlStorageProvider;
-import org.jobrunr.storage.sql.common.BackgroundJobServerTable;
-import org.jobrunr.storage.sql.common.DatabaseCreator;
-import org.jobrunr.storage.sql.common.JobTable;
-import org.jobrunr.storage.sql.common.RecurringJobTable;
-import org.jobrunr.storage.sql.common.db.Sql;
-import org.jobrunr.storage.sql.common.db.SqlResultSet;
-import org.jobrunr.utils.resilience.RateLimiter;
+
+import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.JobDetails;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.RecurringJob;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.mappers.JobMapper;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName;
+import io.github.junhuhdev.dracarys.jobrunr.storage.AbstractStorageProvider;
+import io.github.junhuhdev.dracarys.jobrunr.storage.BackgroundJobServerStatus;
+import io.github.junhuhdev.dracarys.jobrunr.storage.JobNotFoundException;
+import io.github.junhuhdev.dracarys.jobrunr.storage.JobStats;
+import io.github.junhuhdev.dracarys.jobrunr.storage.Page;
+import io.github.junhuhdev.dracarys.jobrunr.storage.PageRequest;
+import io.github.junhuhdev.dracarys.jobrunr.storage.sql.SqlStorageProvider;
+import io.github.junhuhdev.dracarys.jobrunr.storage.sql.common.db.Sql;
+import io.github.junhuhdev.dracarys.jobrunr.storage.sql.common.db.SqlResultSet;
+import io.github.junhuhdev.dracarys.jobrunr.utils.resilience.RateLimiter;
 
 import javax.sql.DataSource;
 import java.time.Instant;
@@ -22,9 +24,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import static org.jobrunr.storage.sql.common.DefaultSqlStorageProvider.DatabaseOptions.CREATE;
-import static org.jobrunr.utils.resilience.RateLimiter.Builder.rateLimit;
-import static org.jobrunr.utils.resilience.RateLimiter.SECOND;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.resilience.RateLimiter.Builder.rateLimit;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.resilience.RateLimiter.SECOND;
 
 public class DefaultSqlStorageProvider extends AbstractStorageProvider implements SqlStorageProvider {
 
@@ -38,7 +39,7 @@ public class DefaultSqlStorageProvider extends AbstractStorageProvider implement
     protected JobMapper jobMapper;
 
     public DefaultSqlStorageProvider(DataSource dataSource) {
-        this(dataSource, CREATE, rateLimit().at1Request().per(SECOND));
+        this(dataSource, DatabaseOptions.CREATE, rateLimit().at1Request().per(SECOND));
     }
 
     public DefaultSqlStorageProvider(DataSource dataSource, DatabaseOptions databaseOptions) {
@@ -53,7 +54,7 @@ public class DefaultSqlStorageProvider extends AbstractStorageProvider implement
     }
 
     protected void createDBIfNecessary() {
-        if (databaseOptions == CREATE) {
+        if (databaseOptions == DatabaseOptions.CREATE) {
             getDatabaseCreator()
                     .runMigrations();
         } else {
