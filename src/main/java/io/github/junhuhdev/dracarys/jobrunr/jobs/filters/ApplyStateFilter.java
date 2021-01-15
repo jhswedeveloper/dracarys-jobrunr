@@ -6,7 +6,7 @@ import io.github.junhuhdev.dracarys.jobrunr.jobs.states.JobState;
 /**
  * A filter that is triggered each time that the state of a Job has changed.
  * Can be useful for adding extra logging, ... .
- * This filter will be called after that the job has been saved to a {@link org.jobrunr.storage.StorageProvider}.
+ * This filter will be called after that the job has been saved to a {@link io.github.junhuhdev.dracarys.jobrunr.storage.StorageProvider}.
  * Altering the job will not have any influence as it is not saved.
  */
 public interface ApplyStateFilter extends JobFilter {

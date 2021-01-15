@@ -248,7 +248,7 @@ public class BackgroundJob {
      * @param job  the lambda which defines the fire-and-forget job
      * @param cron The cron expression defining when to run this recurring job
      * @return the id of this recurring job which can be used to alter or delete it
-     * @see org.jobrunr.scheduling.cron.Cron
+     * @see io.github.junhuhdev.dracarys.jobrunr.scheduling.cron.Cron
      */
     public static String scheduleRecurrently(JobLambda job, String cron) {
         verifyJobScheduler();
@@ -265,7 +265,7 @@ public class BackgroundJob {
      * @param iocJob the lambda which defines the fire-and-forget job
      * @param cron   The cron expression defining when to run this recurring job
      * @return the id of this recurring job which can be used to alter or delete it
-     * @see org.jobrunr.scheduling.cron.Cron
+     * @see io.github.junhuhdev.dracarys.jobrunr.scheduling.cron.Cron
      */
     public static <S> String scheduleRecurrently(IocJobLambda<S> iocJob, String cron) {
         verifyJobScheduler();
@@ -284,7 +284,7 @@ public class BackgroundJob {
      * @param job  the lambda which defines the fire-and-forget job
      * @param cron The cron expression defining when to run this recurring job
      * @return the id of this recurring job which can be used to alter or delete it
-     * @see org.jobrunr.scheduling.cron.Cron
+     * @see io.github.junhuhdev.dracarys.jobrunr.scheduling.cron.Cron
      */
     public static String scheduleRecurrently(String id, JobLambda job, String cron) {
         verifyJobScheduler();
