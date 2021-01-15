@@ -1,18 +1,18 @@
 package io.github.junhuhdev.dracarys.jobrunr.storage.nosql.elasticsearch;
 
+import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.RecurringJob;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.mappers.JobMapper;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.states.ScheduledState;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName;
+import io.github.junhuhdev.dracarys.jobrunr.storage.BackgroundJobServerStatus;
+import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProviderUtils;
+import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProviderUtils.BackgroundJobServers;
+import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProviderUtils.Jobs;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.json.JsonXContent;
 import org.elasticsearch.search.SearchHit;
-import org.jobrunr.jobs.Job;
-import org.jobrunr.jobs.RecurringJob;
-import org.jobrunr.jobs.mappers.JobMapper;
-import org.jobrunr.jobs.states.ScheduledState;
-import org.jobrunr.jobs.states.StateName;
-import org.jobrunr.storage.BackgroundJobServerStatus;
-import org.jobrunr.storage.StorageProviderUtils.BackgroundJobServers;
-import org.jobrunr.storage.StorageProviderUtils.Jobs;
-import org.jobrunr.storage.StorageProviderUtils.RecurringJobs;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -20,7 +20,7 @@ import java.time.Instant;
 import java.util.Map;
 import java.util.UUID;
 
-import static org.jobrunr.utils.reflection.ReflectionUtils.autobox;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.autobox;
 
 public class ElasticSearchDocumentMapper {
 
@@ -96,7 +96,7 @@ public class ElasticSearchDocumentMapper {
         try {
             XContentBuilder builder = JsonXContent.contentBuilder().prettyPrint();
             builder.startObject();
-            builder.field(RecurringJobs.FIELD_JOB_AS_JSON, jobMapper.serializeRecurringJob(job));
+            builder.field(StorageProviderUtils.RecurringJobs.FIELD_JOB_AS_JSON, jobMapper.serializeRecurringJob(job));
             builder.endObject();
             return builder;
         } catch (IOException e) {
@@ -135,7 +135,7 @@ public class ElasticSearchDocumentMapper {
     }
 
     public RecurringJob toRecurringJob(SearchHit hit) {
-        String jobAsJson = hit.getFields().get(RecurringJobs.FIELD_JOB_AS_JSON).getValue().toString();
+        String jobAsJson = hit.getFields().get(StorageProviderUtils.RecurringJobs.FIELD_JOB_AS_JSON).getValue().toString();
         return jobMapper.deserializeRecurringJob(jobAsJson);
     }
 }

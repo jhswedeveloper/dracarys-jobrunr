@@ -1,11 +1,11 @@
 package io.github.junhuhdev.dracarys.jobrunr.storage.nosql.elasticsearch;
 
-import com.mongodb.internal.bulk.IndexRequest;
 import io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName;
 import io.github.junhuhdev.dracarys.jobrunr.storage.StorageException;
 import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProviderUtils;
 import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProviderUtils.Jobs;
 import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProviderUtils.RecurringJobs;
+import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.json.JsonXContent;
@@ -71,7 +71,7 @@ public class ElasticSearchUtils {
                 ));
     }
 
-    public static com.mongodb.internal.bulk.IndexRequest jobStatsIndex() {
+    public static IndexRequest jobStatsIndex() {
         try {
             XContentBuilder builder = JsonXContent.contentBuilder().prettyPrint();
             builder.startObject();

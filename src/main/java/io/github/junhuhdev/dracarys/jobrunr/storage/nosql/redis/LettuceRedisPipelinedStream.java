@@ -1,10 +1,10 @@
 package io.github.junhuhdev.dracarys.jobrunr.storage.nosql.redis;
 
+import io.github.junhuhdev.dracarys.jobrunr.utils.exceptions.Exceptions;
 import io.lettuce.core.LettuceFutures;
 import io.lettuce.core.RedisFuture;
 import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.api.async.RedisAsyncCommands;
-import org.jobrunr.utils.exceptions.Exceptions;
 
 import java.time.Duration;
 import java.util.*;
@@ -27,7 +27,7 @@ public class LettuceRedisPipelinedStream<T> implements Stream<T> {
         this.connection = connection;
     }
 
-    public <R> org.jobrunr.storage.nosql.redis.LettuceRedisPipelinedStream<R> mapUsingPipeline(BiFunction<RedisAsyncCommands, T, R> biFunction) {
+    public <R> LettuceRedisPipelinedStream<R> mapUsingPipeline(BiFunction<RedisAsyncCommands, T, R> biFunction) {
         connection.setAutoFlushCommands(false);
         RedisAsyncCommands redisAsyncCommands = connection.async();
         List<R> collect = initialStream
@@ -35,14 +35,14 @@ public class LettuceRedisPipelinedStream<T> implements Stream<T> {
                 .collect(toList()); // must collect otherwise map is not executed
         connection.flushCommands();
         LettuceFutures.awaitAll(Duration.ofSeconds(10), collect.toArray(new RedisFuture[collect.size()]));
-        return new org.jobrunr.storage.nosql.redis.LettuceRedisPipelinedStream<>(collect, connection);
+        return new LettuceRedisPipelinedStream<>(collect, connection);
     }
 
-    public org.jobrunr.storage.nosql.redis.LettuceRedisPipelinedStream<Map<String, String>> mapToValues() {
+    public LettuceRedisPipelinedStream<Map<String, String>> mapToValues() {
         return mapAfterSync(redisFuture -> (Map<String, String>) ((RedisFuture) redisFuture).get());
     }
 
-    public <R> org.jobrunr.storage.nosql.redis.LettuceRedisPipelinedStream<R> mapAfterSync(Exceptions.ThrowingFunction<? super T, ? extends R> function) {
+    public <R> LettuceRedisPipelinedStream<R> mapAfterSync(Exceptions.ThrowingFunction<? super T, ? extends R> function) {
         Stream<R> rStream = initialStream.map(x -> {
             try {
                 return function.apply(x);
@@ -50,7 +50,7 @@ public class LettuceRedisPipelinedStream<T> implements Stream<T> {
                 throw new IllegalStateException(e);
             }
         });
-        return new org.jobrunr.storage.nosql.redis.LettuceRedisPipelinedStream<>(rStream, connection);
+        return new LettuceRedisPipelinedStream<>(rStream, connection);
     }
 
     @Override
@@ -119,13 +119,13 @@ public class LettuceRedisPipelinedStream<T> implements Stream<T> {
     }
 
     @Override
-    public org.jobrunr.storage.nosql.redis.LettuceRedisPipelinedStream<T> limit(long l) {
-        return new org.jobrunr.storage.nosql.redis.LettuceRedisPipelinedStream<>(initialStream.limit(l), connection);
+    public LettuceRedisPipelinedStream<T> limit(long l) {
+        return new LettuceRedisPipelinedStream<>(initialStream.limit(l), connection);
     }
 
     @Override
-    public org.jobrunr.storage.nosql.redis.LettuceRedisPipelinedStream<T> skip(long l) {
-        return new org.jobrunr.storage.nosql.redis.LettuceRedisPipelinedStream<>(initialStream.skip(l), connection);
+    public LettuceRedisPipelinedStream<T> skip(long l) {
+        return new LettuceRedisPipelinedStream<>(initialStream.skip(l), connection);
     }
 
     @Override

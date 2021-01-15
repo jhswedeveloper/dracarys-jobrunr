@@ -43,7 +43,7 @@ public class JedisRedisPipelinedStream<T> implements Stream<T> {
         this.jedis = jedis;
     }
 
-    public <R> org.jobrunr.storage.nosql.redis.JedisRedisPipelinedStream<R> mapUsingPipeline(BiFunction<Pipeline, T, R> biFunction) {
+    public <R> JedisRedisPipelinedStream<R> mapUsingPipeline(BiFunction<Pipeline, T, R> biFunction) {
         List<R> collect;
         try (final Pipeline pipeline = jedis.pipelined()) {
             collect = initialStream
@@ -51,11 +51,11 @@ public class JedisRedisPipelinedStream<T> implements Stream<T> {
                     .collect(toList()); // must collect otherwise map is not executed
             pipeline.sync();
         }
-        return new org.jobrunr.storage.nosql.redis.JedisRedisPipelinedStream<>(collect, jedis);
+        return new JedisRedisPipelinedStream<>(collect, jedis);
     }
 
-    public <R> org.jobrunr.storage.nosql.redis.JedisRedisPipelinedStream<R> mapAfterSync(Function<? super T, ? extends R> function) {
-        return new org.jobrunr.storage.nosql.redis.JedisRedisPipelinedStream<>(initialStream.map(function), jedis);
+    public <R> JedisRedisPipelinedStream<R> mapAfterSync(Function<? super T, ? extends R> function) {
+        return new JedisRedisPipelinedStream<>(initialStream.map(function), jedis);
     }
 
     @Override
@@ -124,13 +124,13 @@ public class JedisRedisPipelinedStream<T> implements Stream<T> {
     }
 
     @Override
-    public org.jobrunr.storage.nosql.redis.JedisRedisPipelinedStream<T> limit(long l) {
-        return new org.jobrunr.storage.nosql.redis.JedisRedisPipelinedStream<>(initialStream.limit(l), jedis);
+    public JedisRedisPipelinedStream<T> limit(long l) {
+        return new JedisRedisPipelinedStream<>(initialStream.limit(l), jedis);
     }
 
     @Override
-    public org.jobrunr.storage.nosql.redis.JedisRedisPipelinedStream<T> skip(long l) {
-        return new org.jobrunr.storage.nosql.redis.JedisRedisPipelinedStream<>(initialStream.skip(l), jedis);
+    public JedisRedisPipelinedStream<T> skip(long l) {
+        return new JedisRedisPipelinedStream<>(initialStream.skip(l), jedis);
     }
 
     @Override
