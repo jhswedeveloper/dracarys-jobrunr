@@ -1,13 +1,13 @@
-package io.github.junhuhdev.dracarys.jobrunr;
+package io.github.junhuhdev.dracarys.jobrunr.examples;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DracarysJobrunrApplication {
+public class DracarysJobrunrExamplesApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DracarysJobrunrApplication.class, args);
+		SpringApplication.run(DracarysJobrunrExamplesApplication.class, args);
 	}
 
 }

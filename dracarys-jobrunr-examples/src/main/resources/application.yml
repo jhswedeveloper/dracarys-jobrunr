@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/family"
+    username: user
+    password: test
+
+
+  flyway:
+    clean-on-validation-error: true
+  mvc:
+    converters:
+      preferred-json-mapper: gson
+org:
+  jobrunr:
+    enabled: true
+    database:
+      skip-create: false
+
+server:
+  port: 8080
