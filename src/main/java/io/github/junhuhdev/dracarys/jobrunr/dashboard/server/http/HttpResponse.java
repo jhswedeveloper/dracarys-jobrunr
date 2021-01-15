@@ -19,21 +19,21 @@ public class HttpResponse {
 
     }
 
-    public org.jobrunr.dashboard.server.http.HttpResponse asJson(Object object) {
+    public HttpResponse asJson(Object object) {
         return data(ContentType.APPLICATION_JSON, outputStream -> jsonMapper.serialize(outputStream, object));
     }
 
-    public org.jobrunr.dashboard.server.http.HttpResponse error(Throwable t) {
+    public HttpResponse error(Throwable t) {
         data(500, ContentType.TEXT_PLAIN, stream -> t.printStackTrace(new PrintStream(stream)));
         return this;
     }
 
-    private org.jobrunr.dashboard.server.http.HttpResponse data(String contentType, Consumer<OutputStream> streamConsumer) {
+    private HttpResponse data(String contentType, Consumer<OutputStream> streamConsumer) {
         data(200, contentType, streamConsumer);
         return this;
     }
 
-    private org.jobrunr.dashboard.server.http.HttpResponse data(int status, String contentType, Consumer<OutputStream> streamConsumer) {
+    private HttpResponse data(int status, String contentType, Consumer<OutputStream> streamConsumer) {
         httpExchange.getResponseHeaders().add(ContentType._HEADER_NAME, contentType);
         httpExchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
         try (OutputStream outputStream = httpExchange.getResponseBody()) {

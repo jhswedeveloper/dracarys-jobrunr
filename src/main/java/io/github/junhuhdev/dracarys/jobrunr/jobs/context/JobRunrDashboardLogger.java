@@ -1,8 +1,8 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs.context;
 
-import org.jobrunr.jobs.Job;
-import org.jobrunr.jobs.context.JobDashboardLogger.Level;
-import org.jobrunr.server.runner.RunnerJobContext;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.context.JobDashboardLogger.Level;
+import io.github.junhuhdev.dracarys.jobrunr.server.runner.RunnerJobContext;
 import org.slf4j.Logger;
 import org.slf4j.Marker;
 import org.slf4j.helpers.FormattingTuple;

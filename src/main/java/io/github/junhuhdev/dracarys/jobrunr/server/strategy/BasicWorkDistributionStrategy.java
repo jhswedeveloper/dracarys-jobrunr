@@ -1,17 +1,17 @@
 package io.github.junhuhdev.dracarys.jobrunr.server.strategy;
 
-import org.jobrunr.server.BackgroundJobServer;
-import org.jobrunr.server.JobZooKeeper;
-import org.jobrunr.storage.BackgroundJobServerStatus;
-import org.jobrunr.storage.PageRequest;
+import io.github.junhuhdev.dracarys.jobrunr.server.BackgroundJobServer;
+import io.github.junhuhdev.dracarys.jobrunr.server.JobZooKeeper;
+import io.github.junhuhdev.dracarys.jobrunr.storage.BackgroundJobServerStatus;
+import io.github.junhuhdev.dracarys.jobrunr.storage.PageRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.jobrunr.storage.PageRequest.ascOnUpdatedAt;
+import static io.github.junhuhdev.dracarys.jobrunr.storage.PageRequest.ascOnUpdatedAt;
 
 public class BasicWorkDistributionStrategy implements WorkDistributionStrategy {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(org.jobrunr.server.strategy.BasicWorkDistributionStrategy.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BasicWorkDistributionStrategy.class);
 
     private final BackgroundJobServerStatus backgroundJobServerStatus;
     private final JobZooKeeper jobZooKeeper;

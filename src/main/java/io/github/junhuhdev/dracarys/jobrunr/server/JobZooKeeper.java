@@ -1,18 +1,17 @@
 package io.github.junhuhdev.dracarys.jobrunr.server;
 
-import org.jobrunr.JobRunrException;
-import org.jobrunr.jobs.Job;
-import org.jobrunr.jobs.RecurringJob;
-import org.jobrunr.jobs.filters.JobFilterUtils;
-import org.jobrunr.jobs.states.StateName;
-import org.jobrunr.server.BackgroundJobServer;
-import org.jobrunr.server.concurrent.ConcurrentJobModificationResolver;
-import org.jobrunr.server.strategy.BasicWorkDistributionStrategy;
-import org.jobrunr.server.strategy.WorkDistributionStrategy;
-import org.jobrunr.storage.BackgroundJobServerStatus;
-import org.jobrunr.storage.ConcurrentJobModificationException;
-import org.jobrunr.storage.PageRequest;
-import org.jobrunr.storage.StorageProvider;
+import io.github.junhuhdev.dracarys.jobrunr.common.JobRunrException;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.RecurringJob;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.filters.JobFilterUtils;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName;
+import io.github.junhuhdev.dracarys.jobrunr.server.concurrent.ConcurrentJobModificationResolver;
+import io.github.junhuhdev.dracarys.jobrunr.server.strategy.BasicWorkDistributionStrategy;
+import io.github.junhuhdev.dracarys.jobrunr.server.strategy.WorkDistributionStrategy;
+import io.github.junhuhdev.dracarys.jobrunr.storage.BackgroundJobServerStatus;
+import io.github.junhuhdev.dracarys.jobrunr.storage.ConcurrentJobModificationException;
+import io.github.junhuhdev.dracarys.jobrunr.storage.PageRequest;
+import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,16 +25,16 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import static io.github.junhuhdev.dracarys.jobrunr.common.JobRunrException.shouldNotHappenException;
+import static io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName.PROCESSING;
+import static io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName.SUCCEEDED;
+import static io.github.junhuhdev.dracarys.jobrunr.storage.PageRequest.ascOnUpdatedAt;
 import static java.time.Duration.ofSeconds;
 import static java.time.Instant.now;
-import static org.jobrunr.JobRunrException.shouldNotHappenException;
-import static org.jobrunr.jobs.states.StateName.PROCESSING;
-import static org.jobrunr.jobs.states.StateName.SUCCEEDED;
-import static org.jobrunr.storage.PageRequest.ascOnUpdatedAt;
 
 public class JobZooKeeper implements Runnable {
 
-    static final Logger LOGGER = LoggerFactory.getLogger(org.jobrunr.server.JobZooKeeper.class);
+    static final Logger LOGGER = LoggerFactory.getLogger(JobZooKeeper.class);
 
     private final BackgroundJobServer backgroundJobServer;
     private final StorageProvider storageProvider;
@@ -167,7 +166,7 @@ public class JobZooKeeper implements Runnable {
 
     boolean mustSchedule(RecurringJob recurringJob) {
         return recurringJob.getNextRun().isBefore(now().plusSeconds(60))
-                && !storageProvider.recurringJobExists(recurringJob.getId(), StateName.SCHEDULED, StateName.ENQUEUED, StateName.PROCESSING);
+                && !storageProvider.recurringJobExists(recurringJob.getId(), StateName.SCHEDULED, StateName.ENQUEUED, PROCESSING);
 
     }
 

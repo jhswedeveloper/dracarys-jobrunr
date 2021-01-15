@@ -1,7 +1,7 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs.filters;
 
-import org.jobrunr.jobs.Job;
-import org.jobrunr.utils.streams.StreamUtils;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
+import io.github.junhuhdev.dracarys.jobrunr.utils.streams.StreamUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 public class JobPerformingFilters extends AbstractJobFilters {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(org.jobrunr.jobs.filters.JobPerformingFilters.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JobPerformingFilters.class);
 
     private Job job;
 

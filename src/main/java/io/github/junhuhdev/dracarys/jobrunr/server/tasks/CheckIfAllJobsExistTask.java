@@ -1,17 +1,17 @@
 package io.github.junhuhdev.dracarys.jobrunr.server.tasks;
 
-import org.jobrunr.jobs.states.StateName;
-import org.jobrunr.server.BackgroundJobServer;
-import org.jobrunr.storage.StorageProvider;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName;
+import io.github.junhuhdev.dracarys.jobrunr.server.BackgroundJobServer;
+import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static io.github.junhuhdev.dracarys.jobrunr.common.JobRunrException.shouldNotHappenException;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.JobUtils.jobExists;
 import static java.util.stream.Collectors.toSet;
-import static org.jobrunr.JobRunrException.shouldNotHappenException;
-import static org.jobrunr.utils.JobUtils.jobExists;
 
 public class CheckIfAllJobsExistTask implements Runnable {
 

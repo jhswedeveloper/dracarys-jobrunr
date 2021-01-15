@@ -1,8 +1,8 @@
 package io.github.junhuhdev.dracarys.jobrunr.server;
 
-import org.jobrunr.server.configuration.BackgroundJobServerWorkerPolicy;
-import org.jobrunr.server.configuration.DefaultBackgroundJobServerWorkerPolicy;
-import org.jobrunr.server.configuration.FixedSizeBackgroundJobServerWorkerPolicy;
+import io.github.junhuhdev.dracarys.jobrunr.server.configuration.BackgroundJobServerWorkerPolicy;
+import io.github.junhuhdev.dracarys.jobrunr.server.configuration.DefaultBackgroundJobServerWorkerPolicy;
+import io.github.junhuhdev.dracarys.jobrunr.server.configuration.FixedSizeBackgroundJobServerWorkerPolicy;
 
 import java.time.Duration;
 
@@ -29,8 +29,8 @@ public class BackgroundJobServerConfiguration {
      *
      * @return the default JobRunrDashboard configuration
      */
-    public static org.jobrunr.server.BackgroundJobServerConfiguration usingStandardBackgroundJobServerConfiguration() {
-        return new org.jobrunr.server.BackgroundJobServerConfiguration();
+    public static BackgroundJobServerConfiguration usingStandardBackgroundJobServerConfiguration() {
+        return new BackgroundJobServerConfiguration();
     }
 
     /**
@@ -39,7 +39,7 @@ public class BackgroundJobServerConfiguration {
      * @param pollIntervalInSeconds the pollIntervalInSeconds
      * @return the same configuration instance which provides a fluent api
      */
-    public org.jobrunr.server.BackgroundJobServerConfiguration andPollIntervalInSeconds(int pollIntervalInSeconds) {
+    public BackgroundJobServerConfiguration andPollIntervalInSeconds(int pollIntervalInSeconds) {
         this.pollIntervalInSeconds = pollIntervalInSeconds;
         return this;
     }
@@ -50,12 +50,12 @@ public class BackgroundJobServerConfiguration {
      * @param workerCount the workerCount for the BackgroundJobServer
      * @return the same configuration instance which provides a fluent api
      */
-    public org.jobrunr.server.BackgroundJobServerConfiguration andWorkerCount(int workerCount) {
+    public BackgroundJobServerConfiguration andWorkerCount(int workerCount) {
         this.backgroundJobServerWorkerPolicy = new FixedSizeBackgroundJobServerWorkerPolicy(workerCount);
         return this;
     }
 
-    public org.jobrunr.server.BackgroundJobServerConfiguration andWorkerCountPolicy(BackgroundJobServerWorkerPolicy backgroundJobServerWorkerPolicy) {
+    public BackgroundJobServerConfiguration andWorkerCountPolicy(BackgroundJobServerWorkerPolicy backgroundJobServerWorkerPolicy) {
         this.backgroundJobServerWorkerPolicy = backgroundJobServerWorkerPolicy;
         return this;
     }
@@ -66,7 +66,7 @@ public class BackgroundJobServerConfiguration {
      * @param duration the duration to wait before deleting successful jobs
      * @return the same configuration instance which provides a fluent api
      */
-    public org.jobrunr.server.BackgroundJobServerConfiguration andDeleteSucceededJobsAfter(Duration duration) {
+    public BackgroundJobServerConfiguration andDeleteSucceededJobsAfter(Duration duration) {
         this.deleteSucceededJobsAfter = duration;
         return this;
     }
@@ -77,7 +77,7 @@ public class BackgroundJobServerConfiguration {
      * @param duration the duration to wait before permanently deleting successful jobs
      * @return the same configuration instance which provides a fluent api
      */
-    public org.jobrunr.server.BackgroundJobServerConfiguration andPermanentlyDeleteDeletedJobsAfter(Duration duration) {
+    public BackgroundJobServerConfiguration andPermanentlyDeleteDeletedJobsAfter(Duration duration) {
         this.permanentlyDeleteDeletedJobsAfter = duration;
         return this;
     }

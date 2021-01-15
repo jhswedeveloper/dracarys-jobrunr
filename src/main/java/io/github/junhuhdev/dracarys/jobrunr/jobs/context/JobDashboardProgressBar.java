@@ -1,10 +1,11 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs.context;
 
-import org.jobrunr.jobs.Job;
+
+import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
 
 import java.util.Map;
 
-import static org.jobrunr.utils.reflection.ReflectionUtils.cast;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.cast;
 
 public class JobDashboardProgressBar {
 

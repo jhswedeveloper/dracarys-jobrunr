@@ -1,25 +1,20 @@
 package io.github.junhuhdev.dracarys.jobrunr.server;
 
-import org.jobrunr.jobs.Job;
-import org.jobrunr.jobs.RecurringJob;
-import org.jobrunr.jobs.filters.JobDefaultFilters;
-import org.jobrunr.jobs.filters.JobFilter;
-import org.jobrunr.server.BackgroundJobPerformer;
-import org.jobrunr.server.BackgroundJobServerConfiguration;
-import org.jobrunr.server.JobActivator;
-import org.jobrunr.server.JobZooKeeper;
-import org.jobrunr.server.ServerZooKeeper;
-import org.jobrunr.server.jmx.BackgroundJobServerMBean;
-import org.jobrunr.server.runner.BackgroundJobRunner;
-import org.jobrunr.server.runner.BackgroundJobWithIocRunner;
-import org.jobrunr.server.runner.BackgroundJobWithoutIocRunner;
-import org.jobrunr.server.runner.BackgroundStaticJobWithoutIocRunner;
-import org.jobrunr.server.tasks.CheckIfAllJobsExistTask;
-import org.jobrunr.server.threadpool.JobRunrExecutor;
-import org.jobrunr.server.threadpool.ScheduledThreadPoolJobRunrExecutor;
-import org.jobrunr.storage.BackgroundJobServerStatus;
-import org.jobrunr.storage.StorageProvider;
-import org.jobrunr.storage.ThreadSafeStorageProvider;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.RecurringJob;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.filters.JobDefaultFilters;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.filters.JobFilter;
+import io.github.junhuhdev.dracarys.jobrunr.server.jmx.BackgroundJobServerMBean;
+import io.github.junhuhdev.dracarys.jobrunr.server.runner.BackgroundJobRunner;
+import io.github.junhuhdev.dracarys.jobrunr.server.runner.BackgroundJobWithIocRunner;
+import io.github.junhuhdev.dracarys.jobrunr.server.runner.BackgroundJobWithoutIocRunner;
+import io.github.junhuhdev.dracarys.jobrunr.server.runner.BackgroundStaticJobWithoutIocRunner;
+import io.github.junhuhdev.dracarys.jobrunr.server.tasks.CheckIfAllJobsExistTask;
+import io.github.junhuhdev.dracarys.jobrunr.server.threadpool.JobRunrExecutor;
+import io.github.junhuhdev.dracarys.jobrunr.server.threadpool.ScheduledThreadPoolJobRunrExecutor;
+import io.github.junhuhdev.dracarys.jobrunr.storage.BackgroundJobServerStatus;
+import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProvider;
+import io.github.junhuhdev.dracarys.jobrunr.storage.ThreadSafeStorageProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,16 +26,16 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import static io.github.junhuhdev.dracarys.jobrunr.common.JobRunrException.problematicConfigurationException;
+import static io.github.junhuhdev.dracarys.jobrunr.server.BackgroundJobServerConfiguration.usingStandardBackgroundJobServerConfiguration;
 import static java.lang.Integer.compare;
 import static java.util.Arrays.asList;
 import static java.util.Spliterators.spliteratorUnknownSize;
 import static java.util.stream.StreamSupport.stream;
-import static org.jobrunr.JobRunrException.problematicConfigurationException;
-import static org.jobrunr.server.BackgroundJobServerConfiguration.usingStandardBackgroundJobServerConfiguration;
 
 public class BackgroundJobServer implements BackgroundJobServerMBean {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(org.jobrunr.server.BackgroundJobServer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BackgroundJobServer.class);
 
     private final BackgroundJobServerStatus serverStatus;
     private final StorageProvider storageProvider;

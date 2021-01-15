@@ -8,6 +8,7 @@ import io.github.junhuhdev.dracarys.jobrunr.dashboard.ui.model.problems.Problems
 import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
 import io.github.junhuhdev.dracarys.jobrunr.jobs.RecurringJob;
 import io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName;
+import io.github.junhuhdev.dracarys.jobrunr.storage.JobNotFoundException;
 import io.github.junhuhdev.dracarys.jobrunr.storage.PageRequest;
 import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProvider;
 import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.JsonMapper;

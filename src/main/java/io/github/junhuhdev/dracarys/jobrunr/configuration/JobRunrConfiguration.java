@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.classExists;
 
 /**
  * The main class to cofigure JobRunr
@@ -99,7 +100,7 @@ public class JobRunrConfiguration {
      * @return the same configuration instance which provides a fluent api
      */
     public JobRunrConfiguration useDefaultBackgroundJobServerIf(boolean guard, int workerCount) {
-        return useDefaultBackgroundJobServerIf(guard, usingStandardBackgroundJobServerConfiguration().andWorkerCount(workerCount));
+        return useDefaultBackgroundJobServerIf(guard, BackgroundJobServerConfiguration.usingStandardBackgroundJobServerConfiguration().andWorkerCount(workerCount));
     }
 
     /**

@@ -1,11 +1,15 @@
 package io.github.junhuhdev.dracarys.jobrunr.server.concurrent;
 
-import org.jobrunr.jobs.Job;
-import org.jobrunr.server.JobZooKeeper;
-import org.jobrunr.server.concurrent.ConcurrentJobModificationResolveResult;
-import org.jobrunr.server.concurrent.statechanges.*;
-import org.jobrunr.storage.ConcurrentJobModificationException;
-import org.jobrunr.storage.StorageProvider;
+
+import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
+import io.github.junhuhdev.dracarys.jobrunr.server.JobZooKeeper;
+import io.github.junhuhdev.dracarys.jobrunr.server.concurrent.statechanges.AllowedConcurrentStateChange;
+import io.github.junhuhdev.dracarys.jobrunr.server.concurrent.statechanges.DeletedWhileFailedConcurrentStateChange;
+import io.github.junhuhdev.dracarys.jobrunr.server.concurrent.statechanges.DeletedWhileProcessingConcurrentStateChange;
+import io.github.junhuhdev.dracarys.jobrunr.server.concurrent.statechanges.DeletedWhileScheduledConcurrentStateChange;
+import io.github.junhuhdev.dracarys.jobrunr.server.concurrent.statechanges.DeletedWhileSucceededConcurrentStateChange;
+import io.github.junhuhdev.dracarys.jobrunr.storage.ConcurrentJobModificationException;
+import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProvider;
 
 import java.util.Arrays;
 import java.util.List;

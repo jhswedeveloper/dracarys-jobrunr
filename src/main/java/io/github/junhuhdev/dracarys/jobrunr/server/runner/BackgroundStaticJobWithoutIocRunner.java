@@ -1,8 +1,9 @@
 package io.github.junhuhdev.dracarys.jobrunr.server.runner;
 
-import org.jobrunr.JobRunrException;
-import org.jobrunr.jobs.Job;
-import org.jobrunr.jobs.JobDetails;
+
+import io.github.junhuhdev.dracarys.jobrunr.common.JobRunrException;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.JobDetails;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

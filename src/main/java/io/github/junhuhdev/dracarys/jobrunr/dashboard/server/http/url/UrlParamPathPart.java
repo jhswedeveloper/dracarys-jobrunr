@@ -1,6 +1,5 @@
 package io.github.junhuhdev.dracarys.jobrunr.dashboard.server.http.url;
 
-import org.jobrunr.dashboard.server.http.url.UrlPathPart;
 
 public class UrlParamPathPart implements UrlPathPart {
     private final String paramName;

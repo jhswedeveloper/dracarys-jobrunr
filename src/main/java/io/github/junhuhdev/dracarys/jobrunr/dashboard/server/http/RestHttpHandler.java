@@ -13,6 +13,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import static io.github.junhuhdev.dracarys.jobrunr.dashboard.server.http.handlers.HttpRequestHandlers.RequestMethod.DELETE;
+import static io.github.junhuhdev.dracarys.jobrunr.dashboard.server.http.handlers.HttpRequestHandlers.RequestMethod.GET;
+import static io.github.junhuhdev.dracarys.jobrunr.dashboard.server.http.handlers.HttpRequestHandlers.RequestMethod.HEAD;
+import static io.github.junhuhdev.dracarys.jobrunr.dashboard.server.http.handlers.HttpRequestHandlers.RequestMethod.OPTIONS;
+import static io.github.junhuhdev.dracarys.jobrunr.dashboard.server.http.handlers.HttpRequestHandlers.RequestMethod.POST;
+import static io.github.junhuhdev.dracarys.jobrunr.dashboard.server.http.handlers.HttpRequestHandlers.RequestMethod.PUT;
 
 public class RestHttpHandler extends AbstractTeenyHttpHandler {
 

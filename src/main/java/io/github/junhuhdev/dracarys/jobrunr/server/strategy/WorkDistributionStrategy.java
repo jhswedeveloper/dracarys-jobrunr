@@ -1,6 +1,6 @@
 package io.github.junhuhdev.dracarys.jobrunr.server.strategy;
 
-import org.jobrunr.storage.PageRequest;
+import io.github.junhuhdev.dracarys.jobrunr.storage.PageRequest;
 
 public interface WorkDistributionStrategy {
 

@@ -1,6 +1,6 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs.filters;
 
-import org.jobrunr.jobs.AbstractJob;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.AbstractJob;
 
 /**
  * A filter that is triggered each time that a Job

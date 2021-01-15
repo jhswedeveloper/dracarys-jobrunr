@@ -1,6 +1,5 @@
 package io.github.junhuhdev.dracarys.jobrunr.server.threadpool;
 
-import org.jobrunr.server.threadpool.JobRunrExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ScheduledThreadPoolJobRunrExecutor extends java.util.concurrent.ScheduledThreadPoolExecutor implements JobRunrExecutor {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(org.jobrunr.server.threadpool.ScheduledThreadPoolJobRunrExecutor.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ScheduledThreadPoolJobRunrExecutor.class);
 
     public ScheduledThreadPoolJobRunrExecutor(int corePoolSize, String threadNamePrefix) {
         super(corePoolSize, new NamedThreadFactory(threadNamePrefix));

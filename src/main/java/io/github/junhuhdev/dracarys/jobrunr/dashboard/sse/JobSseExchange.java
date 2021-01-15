@@ -1,6 +1,7 @@
 package io.github.junhuhdev.dracarys.jobrunr.dashboard.sse;
 
 import com.sun.net.httpserver.HttpExchange;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
 import io.github.junhuhdev.dracarys.jobrunr.jobs.JobId;
 import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProvider;
 import io.github.junhuhdev.dracarys.jobrunr.storage.listeners.JobChangeListener;
@@ -8,6 +9,9 @@ import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.JsonMapper;
 
 import java.io.IOException;
 
+import static io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName.DELETED;
+import static io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName.FAILED;
+import static io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName.SUCCEEDED;
 
 public class JobSseExchange extends AbstractObjectSseExchange implements JobChangeListener {
 

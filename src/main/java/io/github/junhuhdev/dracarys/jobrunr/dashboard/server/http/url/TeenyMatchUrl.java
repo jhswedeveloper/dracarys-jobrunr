@@ -34,7 +34,7 @@ public class TeenyMatchUrl {
     public boolean matches(String matchUrl) {
         if (url.equals(matchUrl)) return true;
 
-        Iterator<UrlPathPart> iter1 = new org.jobrunr.dashboard.server.http.url.TeenyMatchUrl(matchUrl).pathParts.iterator();
+        Iterator<UrlPathPart> iter1 = new TeenyMatchUrl(matchUrl).pathParts.iterator();
         Iterator<UrlPathPart> iter2 = pathParts.iterator();
         while (iter1.hasNext() && iter2.hasNext())
             if (!(iter1.next().matches(iter2.next()))) return false;
@@ -44,7 +44,7 @@ public class TeenyMatchUrl {
 
     public TeenyRequestUrl toRequestUrl(String matchUrl) {
         Map<String, String> params = new HashMap<>();
-        Iterator<UrlPathPart> iter1 = new org.jobrunr.dashboard.server.http.url.TeenyMatchUrl(matchUrl).pathParts.iterator();
+        Iterator<UrlPathPart> iter1 = new TeenyMatchUrl(matchUrl).pathParts.iterator();
         Iterator<UrlPathPart> iter2 = pathParts.iterator();
         while (iter1.hasNext() && iter2.hasNext()) {
             UrlPathPart matchUrlPathPart = iter1.next();

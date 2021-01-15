@@ -1,12 +1,11 @@
 package io.github.junhuhdev.dracarys.jobrunr.server.concurrent.statechanges;
 
-import org.jobrunr.jobs.Job;
-import org.jobrunr.server.JobZooKeeper;
-import org.jobrunr.server.concurrent.ConcurrentJobModificationResolveResult;
-import org.jobrunr.server.concurrent.statechanges.AbstractAllowedConcurrentStateChange;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
+import io.github.junhuhdev.dracarys.jobrunr.server.JobZooKeeper;
+import io.github.junhuhdev.dracarys.jobrunr.server.concurrent.ConcurrentJobModificationResolveResult;
 
-import static org.jobrunr.jobs.states.StateName.DELETED;
-import static org.jobrunr.jobs.states.StateName.PROCESSING;
+import static io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName.DELETED;
+import static io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName.PROCESSING;
 
 public class DeletedWhileProcessingConcurrentStateChange extends AbstractAllowedConcurrentStateChange {
 

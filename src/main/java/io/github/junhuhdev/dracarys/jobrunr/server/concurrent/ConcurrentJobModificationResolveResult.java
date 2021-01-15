@@ -1,6 +1,6 @@
 package io.github.junhuhdev.dracarys.jobrunr.server.concurrent;
 
-import org.jobrunr.jobs.Job;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
 
 public class ConcurrentJobModificationResolveResult {
 
@@ -12,12 +12,12 @@ public class ConcurrentJobModificationResolveResult {
         this.job = job;
     }
 
-    public static org.jobrunr.server.concurrent.ConcurrentJobModificationResolveResult succeeded(Job job) {
-        return new org.jobrunr.server.concurrent.ConcurrentJobModificationResolveResult(true, job);
+    public static ConcurrentJobModificationResolveResult succeeded(Job job) {
+        return new ConcurrentJobModificationResolveResult(true, job);
     }
 
-    public static org.jobrunr.server.concurrent.ConcurrentJobModificationResolveResult failed(Job job) {
-        return new org.jobrunr.server.concurrent.ConcurrentJobModificationResolveResult(false, job);
+    public static ConcurrentJobModificationResolveResult failed(Job job) {
+        return new ConcurrentJobModificationResolveResult(false, job);
     }
 
     public boolean failed() {

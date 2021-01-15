@@ -1,10 +1,10 @@
 package io.github.junhuhdev.dracarys.jobrunr.server.runner;
 
-import org.jobrunr.jobs.Job;
-import org.jobrunr.server.JobActivator;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
+import io.github.junhuhdev.dracarys.jobrunr.server.JobActivator;
 
-import static org.jobrunr.utils.JobUtils.assertJobExists;
-import static org.jobrunr.utils.reflection.ReflectionUtils.toClass;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.JobUtils.assertJobExists;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.toClass;
 
 public class BackgroundJobWithIocRunner extends AbstractBackgroundJobRunner {
 

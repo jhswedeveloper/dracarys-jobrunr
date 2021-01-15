@@ -1,8 +1,8 @@
 package io.github.junhuhdev.dracarys.jobrunr.server.concurrent.statechanges;
 
-import org.jobrunr.jobs.Job;
-import org.jobrunr.jobs.states.StateName;
-import org.jobrunr.server.concurrent.ConcurrentJobModificationResolveResult;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName;
+import io.github.junhuhdev.dracarys.jobrunr.server.concurrent.ConcurrentJobModificationResolveResult;
 
 public abstract class AbstractAllowedConcurrentStateChange implements AllowedConcurrentStateChange {
 

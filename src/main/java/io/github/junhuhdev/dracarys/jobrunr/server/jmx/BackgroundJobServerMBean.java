@@ -1,6 +1,7 @@
 package io.github.junhuhdev.dracarys.jobrunr.server.jmx;
 
-import org.jobrunr.storage.BackgroundJobServerStatus;
+
+import io.github.junhuhdev.dracarys.jobrunr.storage.BackgroundJobServerStatus;
 
 import java.util.UUID;
 

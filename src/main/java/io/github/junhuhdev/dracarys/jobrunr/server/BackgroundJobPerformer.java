@@ -1,24 +1,23 @@
 package io.github.junhuhdev.dracarys.jobrunr.server;
 
-import org.jobrunr.jobs.Job;
-import org.jobrunr.jobs.context.JobRunrDashboardLogger;
-import org.jobrunr.jobs.filters.JobPerformingFilters;
-import org.jobrunr.jobs.states.StateName;
-import org.jobrunr.scheduling.exceptions.JobNotFoundException;
-import org.jobrunr.server.BackgroundJobServer;
-import org.jobrunr.server.runner.BackgroundJobRunner;
-import org.jobrunr.storage.ConcurrentJobModificationException;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.context.JobRunrDashboardLogger;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.filters.JobPerformingFilters;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName;
+import io.github.junhuhdev.dracarys.jobrunr.server.runner.BackgroundJobRunner;
+import io.github.junhuhdev.dracarys.jobrunr.storage.ConcurrentJobModificationException;
+import io.github.junhuhdev.dracarys.jobrunr.storage.JobNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.jobrunr.jobs.states.StateName.PROCESSING;
-import static org.jobrunr.utils.exceptions.Exceptions.hasCause;
+import static io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName.PROCESSING;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.exceptions.Exceptions.hasCause;
 
 public class BackgroundJobPerformer implements Runnable {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(org.jobrunr.server.BackgroundJobPerformer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BackgroundJobPerformer.class);
 
     private static final AtomicInteger concurrentModificationExceptionCounter = new AtomicInteger();
     private final BackgroundJobServer backgroundJobServer;

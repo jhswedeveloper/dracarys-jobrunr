@@ -1,6 +1,6 @@
 package io.github.junhuhdev.dracarys.jobrunr.server.runner;
 
-import org.jobrunr.jobs.Job;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
 
 public interface BackgroundJobRunner {
 
