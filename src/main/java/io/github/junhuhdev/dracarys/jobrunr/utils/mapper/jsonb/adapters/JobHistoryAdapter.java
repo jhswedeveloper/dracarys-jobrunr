@@ -1,15 +1,16 @@
 package io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb.adapters;
 
-import org.jobrunr.jobs.states.JobState;
-import org.jobrunr.utils.mapper.jsonb.JobRunrJsonb;
+
+import io.github.junhuhdev.dracarys.jobrunr.jobs.states.JobState;
+import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb.JobRunrJsonb;
 
 import javax.json.*;
 import javax.json.bind.adapter.JsonbAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.jobrunr.utils.mapper.jsonb.NullSafeJsonBuilder.nullSafeJsonObjectBuilder;
-import static org.jobrunr.utils.reflection.ReflectionUtils.toClass;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.mapper.jsonb.NullSafeJsonBuilder.nullSafeJsonObjectBuilder;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.toClass;
 
 public class JobHistoryAdapter implements JsonbAdapter<List<JobState>, JsonArray> {
 

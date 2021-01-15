@@ -1,6 +1,7 @@
 package io.github.junhuhdev.dracarys.jobrunr.utils;
 
-import org.jobrunr.JobRunrException;
+
+import io.github.junhuhdev.dracarys.jobrunr.common.JobRunrException;
 
 import java.io.IOException;
 import java.net.URI;
@@ -21,20 +22,20 @@ public class ClassPathUtils {
     }
 
     public static Stream<Path> listAllChildrenOnClasspath(String... subFolder) {
-        return listAllChildrenOnClasspath(org.jobrunr.utils.ClassPathUtils.class, subFolder);
+        return listAllChildrenOnClasspath(ClassPathUtils.class, subFolder);
     }
 
     public static Stream<Path> listAllChildrenOnClasspath(Class<?> clazz, String... subFolder) {
         try {
             return toPathsOnClasspath(clazz, subFolder)
-                    .flatMap(org.jobrunr.utils.ClassPathUtils::listAllChildrenOnClasspath);
+                    .flatMap(ClassPathUtils::listAllChildrenOnClasspath);
         } catch (Exception e) {
             throw JobRunrException.shouldNotHappenException(e);
         }
     }
 
     public static Stream<Path> toPathsOnClasspath(String... subFolder) {
-        return toPathsOnClasspath(org.jobrunr.utils.ClassPathUtils.class, subFolder).collect(toList()).stream();
+        return toPathsOnClasspath(ClassPathUtils.class, subFolder).collect(toList()).stream();
     }
 
     public static Stream<Path> toPathsOnClasspath(Class<?> clazz, String... subFolders) {
@@ -45,10 +46,10 @@ public class ClassPathUtils {
         final String joinedSubfolders = String.join("/", subFolders);
         if (joinedSubfolders.startsWith("/")) {
             return toUrls(joinedSubfolders.substring(1))
-                    .map(org.jobrunr.utils.ClassPathUtils::toPath);
+                    .map(ClassPathUtils::toPath);
         }
         return toUrls(pkg.getName().replace(".", "/") + "/" + joinedSubfolders)
-                .map(org.jobrunr.utils.ClassPathUtils::toPath);
+                .map(ClassPathUtils::toPath);
     }
 
     private static Stream<URL> toUrls(String folder) {

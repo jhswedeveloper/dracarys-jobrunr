@@ -73,18 +73,18 @@ public class RateLimiter {
             return this;
         }
 
-        public org.jobrunr.utils.resilience.RateLimiter per(int time, ChronoUnit unit) {
+        public RateLimiter per(int time, ChronoUnit unit) {
             return per(Duration.of(time, unit));
         }
 
-        public org.jobrunr.utils.resilience.RateLimiter per(Duration duration) {
+        public RateLimiter per(Duration duration) {
             Duration perDuration = duration.dividedBy(amount);
             Instant lastAllowed = now().minus(duration);
-            return new org.jobrunr.utils.resilience.RateLimiter(perDuration, lastAllowed);
+            return new RateLimiter(perDuration, lastAllowed);
         }
 
-        public org.jobrunr.utils.resilience.RateLimiter withoutLimits() {
-            return new org.jobrunr.utils.resilience.RateLimiter(Duration.ofNanos(1), now());
+        public RateLimiter withoutLimits() {
+            return new RateLimiter(Duration.ofNanos(1), now());
         }
     }
 }

@@ -10,8 +10,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.jobrunr.utils.StringUtils.substringAfterLast;
-import static org.jobrunr.utils.StringUtils.substringBeforeLast;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.StringUtils.substringAfterLast;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.StringUtils.substringBeforeLast;
 
 public class JarFileSystemUtils {
 

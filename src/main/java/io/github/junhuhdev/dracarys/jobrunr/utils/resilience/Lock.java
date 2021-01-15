@@ -10,7 +10,7 @@ public class Lock implements AutoCloseable {
         this.semaphore = new Semaphore(1);
     }
 
-    public org.jobrunr.utils.resilience.Lock lock() {
+    public Lock lock() {
         semaphore.acquireUninterruptibly();
         return this;
     }

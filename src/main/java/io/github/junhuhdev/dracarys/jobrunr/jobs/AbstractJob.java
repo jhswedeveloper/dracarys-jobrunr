@@ -1,6 +1,7 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs;
 
 import io.github.junhuhdev.dracarys.jobrunr.utils.JobUtils;
+import io.github.junhuhdev.dracarys.jobrunr.utils.resilience.Lock;
 import io.github.junhuhdev.dracarys.jobrunr.utils.resilience.Lockable;
 
 public abstract class AbstractJob implements Lockable {

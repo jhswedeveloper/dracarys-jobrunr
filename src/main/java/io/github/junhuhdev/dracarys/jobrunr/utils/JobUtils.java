@@ -1,12 +1,13 @@
 package io.github.junhuhdev.dracarys.jobrunr.utils;
 
-import org.jobrunr.jobs.JobDetails;
-import org.jobrunr.jobs.JobParameter;
-import org.jobrunr.jobs.annotations.Job;
-import org.jobrunr.jobs.context.JobContext;
-import org.jobrunr.scheduling.exceptions.JobClassNotFoundException;
-import org.jobrunr.scheduling.exceptions.JobMethodNotFoundException;
-import org.jobrunr.utils.reflection.ReflectionUtils;
+
+import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.JobDetails;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.JobParameter;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.context.JobContext;
+import io.github.junhuhdev.dracarys.jobrunr.scheduling.exceptions.JobClassNotFoundException;
+import io.github.junhuhdev.dracarys.jobrunr.scheduling.exceptions.JobMethodNotFoundException;
+import io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -14,10 +15,10 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.cast;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.findMethod;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.toClass;
 import static java.util.stream.Collectors.joining;
-import static org.jobrunr.utils.reflection.ReflectionUtils.cast;
-import static org.jobrunr.utils.reflection.ReflectionUtils.findMethod;
-import static org.jobrunr.utils.reflection.ReflectionUtils.toClass;
 
 public class JobUtils {
 
@@ -26,7 +27,7 @@ public class JobUtils {
 
     public static String getReadableNameFromJobDetails(JobDetails jobDetails) {
         String result = getJobClassAndMethodName(jobDetails);
-        result += "(" + jobDetails.getJobParameters().stream().map(org.jobrunr.utils.JobUtils::getJobParameterValue).collect(joining(",")) + ")";
+        result += "(" + jobDetails.getJobParameters().stream().map(JobUtils::getJobParameterValue).collect(joining(",")) + ")";
         return result;
     }
 
@@ -72,13 +73,13 @@ public class JobUtils {
         return cast(getJobAnnotations(jobDetails).filter(jobAnnotation -> jobAnnotation.annotationType().equals(Job.class)).findFirst());
     }
 
-    public static String getJobSignature(org.jobrunr.jobs.Job job) {
+    public static String getJobSignature(Job job) {
         return getJobSignature(job.getJobDetails());
     }
 
     public static String getJobSignature(JobDetails jobDetails) {
         String result = getJobClassAndMethodName(jobDetails);
-        result += "(" + jobDetails.getJobParameters().stream().map(org.jobrunr.utils.JobUtils::getJobParameterForSignature).collect(joining(",")) + ")";
+        result += "(" + jobDetails.getJobParameters().stream().map(JobUtils::getJobParameterForSignature).collect(joining(",")) + ")";
         return result;
     }
 

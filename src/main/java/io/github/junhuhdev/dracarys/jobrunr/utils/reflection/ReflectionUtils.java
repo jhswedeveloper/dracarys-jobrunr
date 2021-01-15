@@ -1,8 +1,9 @@
 package io.github.junhuhdev.dracarys.jobrunr.utils.reflection;
 
-import org.jobrunr.scheduling.exceptions.FieldNotFoundException;
-import org.jobrunr.scheduling.exceptions.JobNotFoundException;
-import org.jobrunr.utils.reflection.autobox.Autoboxer;
+
+import io.github.junhuhdev.dracarys.jobrunr.scheduling.exceptions.FieldNotFoundException;
+import io.github.junhuhdev.dracarys.jobrunr.scheduling.exceptions.JobNotFoundException;
+import io.github.junhuhdev.dracarys.jobrunr.utils.reflection.autobox.Autoboxer;
 
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
@@ -17,10 +18,10 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+import static io.github.junhuhdev.dracarys.jobrunr.common.JobRunrException.shouldNotHappenException;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.StringUtils.capitalize;
 import static java.lang.Thread.currentThread;
 import static java.util.Arrays.stream;
-import static org.jobrunr.JobRunrException.shouldNotHappenException;
-import static org.jobrunr.utils.StringUtils.capitalize;
 
 public class ReflectionUtils {
 

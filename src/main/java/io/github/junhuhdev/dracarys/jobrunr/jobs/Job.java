@@ -3,6 +3,7 @@ package io.github.junhuhdev.dracarys.jobrunr.jobs;
 import io.github.junhuhdev.dracarys.jobrunr.jobs.states.DeletedState;
 import io.github.junhuhdev.dracarys.jobrunr.jobs.states.EnqueuedState;
 import io.github.junhuhdev.dracarys.jobrunr.jobs.states.FailedState;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.states.JobState;
 import io.github.junhuhdev.dracarys.jobrunr.jobs.states.ProcessingState;
 import io.github.junhuhdev.dracarys.jobrunr.jobs.states.ScheduledState;
 import io.github.junhuhdev.dracarys.jobrunr.jobs.states.StateName;
@@ -22,6 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Stream;
 
+import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.cast;
 import static java.util.Collections.singletonList;
 import static java.util.Collections.unmodifiableList;
 

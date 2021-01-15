@@ -21,37 +21,37 @@ public class WaitUntilBuilder implements Callable<Void> {
         this.async = async;
     }
 
-    public static org.jobrunr.utils.resilience.WaitUntilBuilder awaitAsync() {
-        return new org.jobrunr.utils.resilience.WaitUntilBuilder(true);
+    public static WaitUntilBuilder awaitAsync() {
+        return new WaitUntilBuilder(true);
     }
 
-    public static org.jobrunr.utils.resilience.WaitUntilBuilder awaitSync() {
-        return new org.jobrunr.utils.resilience.WaitUntilBuilder(false);
+    public static WaitUntilBuilder awaitSync() {
+        return new WaitUntilBuilder(false);
     }
 
-    public org.jobrunr.utils.resilience.WaitUntilBuilder atMost(long amount, TemporalUnit temporalUnit) {
+    public WaitUntilBuilder atMost(long amount, TemporalUnit temporalUnit) {
         this.duration = Duration.of(amount, temporalUnit);
         return this;
     }
 
-    public org.jobrunr.utils.resilience.WaitUntilBuilder atMost(Duration duration) {
+    public WaitUntilBuilder atMost(Duration duration) {
         this.duration = duration;
         return this;
     }
 
-    public org.jobrunr.utils.resilience.WaitUntilBuilder until(BooleanSupplier condition) {
+    public WaitUntilBuilder until(BooleanSupplier condition) {
         this.condition = condition;
         return this;
     }
 
-    public org.jobrunr.utils.resilience.WaitUntilBuilder andThen(Runnable conditionMetRunnable) {
+    public WaitUntilBuilder andThen(Runnable conditionMetRunnable) {
         this.conditionMetRunnable = conditionMetRunnable;
         futureTask = new FutureTask<>(this);
         new Thread(futureTask).start();
         return this;
     }
 
-    public org.jobrunr.utils.resilience.WaitUntilBuilder orElse(Runnable conditionNotMetRunnable) {
+    public WaitUntilBuilder orElse(Runnable conditionNotMetRunnable) {
         this.conditionNotMetRunnable = conditionNotMetRunnable;
         if (!async) {
             try {
