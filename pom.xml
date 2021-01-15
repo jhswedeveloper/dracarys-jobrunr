@@ -14,6 +14,7 @@
     <description>Abstraction over jobrnr</description>
 
     <properties>
+        <maven.javadoc.skip>true</maven.javadoc.skip>
         <java.version>15</java.version>
     </properties>
 
