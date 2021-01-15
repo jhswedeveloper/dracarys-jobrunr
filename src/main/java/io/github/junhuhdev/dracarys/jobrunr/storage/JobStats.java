@@ -16,15 +16,15 @@ public class JobStats {
     private final int recurringJobs;
     private final int backgroundJobServers;
 
-    public static org.jobrunr.storage.JobStats empty() {
-        return new org.jobrunr.storage.JobStats(Instant.now(), 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0, 0);
+    public static JobStats empty() {
+        return new JobStats(Instant.now(), 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0, 0);
     }
 
-    public static org.jobrunr.storage.JobStats of(Instant instant, org.jobrunr.storage.JobStats jobStats) {
-        return new org.jobrunr.storage.JobStats(instant, jobStats.getTotal(), jobStats.getAwaiting(), jobStats.getScheduled(), jobStats.getEnqueued(), jobStats.getProcessing(), jobStats.getFailed(), jobStats.getSucceeded(), jobStats.getDeleted(), jobStats.getRecurringJobs(), jobStats.getBackgroundJobServers());
+    public static JobStats of(Instant instant, JobStats jobStats) {
+        return new JobStats(instant, jobStats.getTotal(), jobStats.getAwaiting(), jobStats.getScheduled(), jobStats.getEnqueued(), jobStats.getProcessing(), jobStats.getFailed(), jobStats.getSucceeded(), jobStats.getDeleted(), jobStats.getRecurringJobs(), jobStats.getBackgroundJobServers());
     }
 
-    protected JobStats(org.jobrunr.storage.JobStats jobStats) {
+    protected JobStats(JobStats jobStats) {
         this(jobStats.getTimeStamp(), jobStats.getTotal(), jobStats.getAwaiting(), jobStats.getScheduled(), jobStats.getEnqueued(), jobStats.getProcessing(), jobStats.getFailed(), jobStats.getSucceeded(), jobStats.getDeleted(), jobStats.getRecurringJobs(), jobStats.getBackgroundJobServers());
     }
 

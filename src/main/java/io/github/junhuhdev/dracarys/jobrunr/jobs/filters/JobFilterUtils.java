@@ -1,7 +1,8 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs.filters;
 
-import org.jobrunr.jobs.AbstractJob;
-import org.jobrunr.jobs.Job;
+
+import io.github.junhuhdev.dracarys.jobrunr.jobs.AbstractJob;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
 
 import java.util.List;
 

@@ -1,6 +1,5 @@
 package io.github.junhuhdev.dracarys.jobrunr.storage;
 
-import org.jobrunr.storage.StorageException;
 
 import java.util.UUID;
 

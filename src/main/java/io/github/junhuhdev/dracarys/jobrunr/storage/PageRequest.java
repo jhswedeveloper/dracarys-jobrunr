@@ -12,20 +12,20 @@ public class PageRequest {
     private int limit = 20;
     private String order = DEFAULT_ORDER_FIELD + ":" + Order.ASC.name();
 
-    public static org.jobrunr.storage.PageRequest ascOnUpdatedAt(int amount) {
+    public static PageRequest ascOnUpdatedAt(int amount) {
         return ascOnUpdatedAt(0, amount);
     }
 
-    public static org.jobrunr.storage.PageRequest ascOnUpdatedAt(long offset, int limit) {
-        return new org.jobrunr.storage.PageRequest(DEFAULT_ORDER_FIELD + ":" + Order.ASC, offset, limit);
+    public static PageRequest ascOnUpdatedAt(long offset, int limit) {
+        return new PageRequest(DEFAULT_ORDER_FIELD + ":" + Order.ASC, offset, limit);
     }
 
-    public static org.jobrunr.storage.PageRequest descOnUpdatedAt(int amount) {
+    public static PageRequest descOnUpdatedAt(int amount) {
         return descOnUpdatedAt(0, amount);
     }
 
-    public static org.jobrunr.storage.PageRequest descOnUpdatedAt(long offset, int limit) {
-        return new org.jobrunr.storage.PageRequest(DEFAULT_ORDER_FIELD + ":" + Order.DESC, offset, limit);
+    public static PageRequest descOnUpdatedAt(long offset, int limit) {
+        return new PageRequest(DEFAULT_ORDER_FIELD + ":" + Order.DESC, offset, limit);
     }
 
     private PageRequest() {

@@ -1,7 +1,5 @@
 package io.github.junhuhdev.dracarys.jobrunr.storage;
 
-import org.jobrunr.storage.BackgroundJobServerStatus;
-import org.jobrunr.storage.StorageException;
 
 public class ServerTimedOutException extends StorageException {
 

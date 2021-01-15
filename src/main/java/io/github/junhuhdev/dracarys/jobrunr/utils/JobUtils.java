@@ -1,9 +1,9 @@
 package io.github.junhuhdev.dracarys.jobrunr.utils;
 
 
-import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
 import io.github.junhuhdev.dracarys.jobrunr.jobs.JobDetails;
 import io.github.junhuhdev.dracarys.jobrunr.jobs.JobParameter;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.annotations.Job;
 import io.github.junhuhdev.dracarys.jobrunr.jobs.context.JobContext;
 import io.github.junhuhdev.dracarys.jobrunr.scheduling.exceptions.JobClassNotFoundException;
 import io.github.junhuhdev.dracarys.jobrunr.scheduling.exceptions.JobMethodNotFoundException;

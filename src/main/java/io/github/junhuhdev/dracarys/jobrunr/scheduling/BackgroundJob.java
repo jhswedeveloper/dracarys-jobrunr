@@ -302,7 +302,6 @@ public class BackgroundJob {
      * @param iocJob the lambda which defines the fire-and-forget job
      * @param cron   The cron expression defining when to run this recurring job
      * @return the id of this recurring job which can be used to alter or delete it
-     * @see org.jobrunr.scheduling.cron.Cron
      */
     public static <S> String scheduleRecurrently(String id, IocJobLambda<S> iocJob, String cron) {
         verifyJobScheduler();
@@ -322,7 +321,6 @@ public class BackgroundJob {
      * @param cron   The cron expression defining when to run this recurring job
      * @param zoneId The zoneId (timezone) of when to run this recurring job
      * @return the id of this recurring job which can be used to alter or delete it
-     * @see org.jobrunr.scheduling.cron.Cron
      */
     public static String scheduleRecurrently(String id, JobLambda job, String cron, ZoneId zoneId) {
         verifyJobScheduler();
@@ -341,7 +339,6 @@ public class BackgroundJob {
      * @param cron   The cron expression defining when to run this recurring job
      * @param zoneId The zoneId (timezone) of when to run this recurring job
      * @return the id of this recurring job which can be used to alter or delete it
-     * @see org.jobrunr.scheduling.cron.Cron
      */
     public static <S> String scheduleRecurrently(String id, IocJobLambda<S> iocJob, String cron, ZoneId zoneId) {
         verifyJobScheduler();
@@ -368,6 +365,6 @@ public class BackgroundJob {
     }
 
     public static void setJobScheduler(JobScheduler jobScheduler) {
-        org.jobrunr.scheduling.BackgroundJob.jobScheduler = jobScheduler;
+        BackgroundJob.jobScheduler = jobScheduler;
     }
 }

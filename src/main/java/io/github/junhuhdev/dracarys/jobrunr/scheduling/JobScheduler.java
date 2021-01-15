@@ -2,6 +2,7 @@ package io.github.junhuhdev.dracarys.jobrunr.scheduling;
 
 
 import io.github.junhuhdev.dracarys.jobrunr.configuration.JobRunr;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
 import io.github.junhuhdev.dracarys.jobrunr.jobs.JobDetails;
 import io.github.junhuhdev.dracarys.jobrunr.jobs.JobId;
 import io.github.junhuhdev.dracarys.jobrunr.jobs.RecurringJob;
@@ -23,6 +24,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
 
+import static io.github.junhuhdev.dracarys.jobrunr.utils.streams.StreamUtils.batchCollector;
 import static java.time.ZoneId.systemDefault;
 import static java.util.Collections.emptyList;
 
@@ -285,7 +287,6 @@ public class JobScheduler {
      * @param job  the lambda which defines the fire-and-forget job
      * @param cron The cron expression defining when to run this recurring job
      * @return the id of this recurring job which can be used to alter or delete it
-     * @see org.jobrunr.scheduling.cron.Cron
      */
     public String scheduleRecurrently(JobLambda job, String cron) {
         return scheduleRecurrently(null, job, cron);
@@ -301,7 +302,6 @@ public class JobScheduler {
      * @param iocJob the lambda which defines the fire-and-forget job
      * @param cron   The cron expression defining when to run this recurring job
      * @return the id of this recurring job which can be used to alter or delete it
-     * @see org.jobrunr.scheduling.cron.Cron
      */
     public <S> String scheduleRecurrently(IocJobLambda<S> iocJob, String cron) {
         return scheduleRecurrently(null, iocJob, cron);
@@ -319,7 +319,6 @@ public class JobScheduler {
      * @param job  the lambda which defines the fire-and-forget job
      * @param cron The cron expression defining when to run this recurring job
      * @return the id of this recurring job which can be used to alter or delete it
-     * @see org.jobrunr.scheduling.cron.Cron
      */
     public String scheduleRecurrently(String id, JobLambda job, String cron) {
         return scheduleRecurrently(id, job, cron, systemDefault());
@@ -336,7 +335,6 @@ public class JobScheduler {
      * @param iocJob the lambda which defines the fire-and-forget job
      * @param cron   The cron expression defining when to run this recurring job
      * @return the id of this recurring job which can be used to alter or delete it
-     * @see org.jobrunr.scheduling.cron.Cron
      */
     public <S> String scheduleRecurrently(String id, IocJobLambda<S> iocJob, String cron) {
         return scheduleRecurrently(id, iocJob, cron, systemDefault());
@@ -355,7 +353,6 @@ public class JobScheduler {
      * @param cron   The cron expression defining when to run this recurring job
      * @param zoneId The zoneId (timezone) of when to run this recurring job
      * @return the id of this recurring job which can be used to alter or delete it
-     * @see org.jobrunr.scheduling.cron.Cron
      */
     public String scheduleRecurrently(String id, JobLambda job, String cron, ZoneId zoneId) {
         JobDetails jobDetails = jobDetailsGenerator.toJobDetails(job);
@@ -374,7 +371,6 @@ public class JobScheduler {
      * @param cron   The cron expression defining when to run this recurring job
      * @param zoneId The zoneId (timezone) of when to run this recurring job
      * @return the id of this recurring job which can be used to alter or delete it
-     * @see org.jobrunr.scheduling.cron.Cron
      */
     public <S> String scheduleRecurrently(String id, IocJobLambda<S> iocJob, String cron, ZoneId zoneId) {
         JobDetails jobDetails = jobDetailsGenerator.toJobDetails(iocJob);

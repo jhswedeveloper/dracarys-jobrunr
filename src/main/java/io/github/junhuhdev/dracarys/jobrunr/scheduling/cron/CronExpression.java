@@ -97,7 +97,7 @@ public class CronExpression implements Comparable<CronExpression> {
      *                                        never has 30 days and a schedule like this
      *                                        never occurs.
      */
-    public static org.jobrunr.scheduling.cron.CronExpression create(String expression) {
+    public static CronExpression create(String expression) {
         if (expression.isEmpty()) {
             throw new InvalidCronExpressionException("empty expression");
         }
@@ -107,34 +107,34 @@ public class CronExpression implements Comparable<CronExpression> {
             throw new InvalidCronExpressionException(
                     "crontab expression should have 6 fields for (seconds resolution) or 5 fields for (minutes resolution)");
         }
-        org.jobrunr.scheduling.cron.CronExpression cronExpression = new org.jobrunr.scheduling.cron.CronExpression();
+        CronExpression cronExpression = new CronExpression();
         cronExpression.hasSecondsField = count == 6;
         String token;
         int index = 0;
         if (cronExpression.hasSecondsField) {
             token = fields[index++];
-            cronExpression.seconds = org.jobrunr.scheduling.cron.CronExpression.SECONDS_FIELD_PARSER.parse(token);
+            cronExpression.seconds = CronExpression.SECONDS_FIELD_PARSER.parse(token);
         } else {
             cronExpression.seconds = new BitSet(1);
             cronExpression.seconds.set(0);
         }
         token = fields[index++];
-        cronExpression.minutes = org.jobrunr.scheduling.cron.CronExpression.MINUTES_FIELD_PARSER.parse(token);
+        cronExpression.minutes = CronExpression.MINUTES_FIELD_PARSER.parse(token);
 
         token = fields[index++];
-        cronExpression.hours = org.jobrunr.scheduling.cron.CronExpression.HOURS_FIELD_PARSER.parse(token);
+        cronExpression.hours = CronExpression.HOURS_FIELD_PARSER.parse(token);
 
         token = fields[index++];
-        cronExpression.days = org.jobrunr.scheduling.cron.CronExpression.DAYS_FIELD_PARSER.parse(token);
+        cronExpression.days = CronExpression.DAYS_FIELD_PARSER.parse(token);
         boolean daysStartWithAsterisk = false;
         if (token.startsWith("*"))
             daysStartWithAsterisk = true;
 
         token = fields[index++];
-        cronExpression.months = org.jobrunr.scheduling.cron.CronExpression.MONTHS_FIELD_PARSER.parse(token);
+        cronExpression.months = CronExpression.MONTHS_FIELD_PARSER.parse(token);
 
         token = fields[index++];
-        cronExpression.daysOfWeek = org.jobrunr.scheduling.cron.CronExpression.DAY_OF_WEEK_FIELD_PARSER.parse(token);
+        cronExpression.daysOfWeek = CronExpression.DAY_OF_WEEK_FIELD_PARSER.parse(token);
         boolean daysOfWeekStartAsterisk = false;
         if (token.startsWith("*"))
             daysOfWeekStartAsterisk = true;
@@ -275,7 +275,7 @@ public class CronExpression implements Comparable<CronExpression> {
      * argument {@code Schedule} next occurrence.
      */
     @Override
-    public int compareTo(org.jobrunr.scheduling.cron.CronExpression anotherCronExpression) {
+    public int compareTo(CronExpression anotherCronExpression) {
         if (anotherCronExpression == this) {
             return 0;
         }
@@ -301,12 +301,12 @@ public class CronExpression implements Comparable<CronExpression> {
      */
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof org.jobrunr.scheduling.cron.CronExpression))
+        if (!(obj instanceof CronExpression))
             return false;
         if (this == obj)
             return true;
 
-        org.jobrunr.scheduling.cron.CronExpression cronExpression = (org.jobrunr.scheduling.cron.CronExpression) obj;
+        CronExpression cronExpression = (CronExpression) obj;
         return this.seconds.equals(cronExpression.seconds) && this.minutes.equals(cronExpression.minutes)
                 && this.hours.equals(cronExpression.hours) && this.days.equals(cronExpression.days)
                 && this.months.equals(cronExpression.months) && this.daysOfWeek.equals(cronExpression.daysOfWeek);

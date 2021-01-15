@@ -1,18 +1,13 @@
 package io.github.junhuhdev.dracarys.jobrunr.storage;
 
-import org.jobrunr.jobs.Job;
-import org.jobrunr.jobs.JobId;
-import org.jobrunr.storage.BackgroundJobServerStatus;
-import org.jobrunr.storage.JobNotFoundException;
-import org.jobrunr.storage.JobStatsEnricher;
-import org.jobrunr.storage.JobStatsExtended;
-import org.jobrunr.storage.StorageProvider;
-import org.jobrunr.storage.listeners.BackgroundJobServerStatusChangeListener;
-import org.jobrunr.storage.listeners.JobChangeListener;
-import org.jobrunr.storage.listeners.JobStatsChangeListener;
-import org.jobrunr.storage.listeners.StorageProviderChangeListener;
-import org.jobrunr.utils.resilience.RateLimiter;
-import org.jobrunr.utils.streams.StreamUtils;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.JobId;
+import io.github.junhuhdev.dracarys.jobrunr.storage.listeners.BackgroundJobServerStatusChangeListener;
+import io.github.junhuhdev.dracarys.jobrunr.storage.listeners.JobChangeListener;
+import io.github.junhuhdev.dracarys.jobrunr.storage.listeners.JobStatsChangeListener;
+import io.github.junhuhdev.dracarys.jobrunr.storage.listeners.StorageProviderChangeListener;
+import io.github.junhuhdev.dracarys.jobrunr.utils.resilience.RateLimiter;
+import io.github.junhuhdev.dracarys.jobrunr.utils.streams.StreamUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +20,7 @@ import static java.util.stream.Collectors.toList;
 
 public abstract class AbstractStorageProvider implements StorageProvider, AutoCloseable {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(org.jobrunr.storage.AbstractStorageProvider.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractStorageProvider.class);
 
     private final Set<StorageProviderChangeListener> onChangeListeners;
     private final JobStatsEnricher jobStatsEnricher;

@@ -1,10 +1,11 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs.filters;
 
-import org.jobrunr.jobs.AbstractJob;
-import org.jobrunr.jobs.JobDetails;
-import org.jobrunr.jobs.annotations.Job;
-import org.jobrunr.utils.JobUtils;
-import org.jobrunr.utils.StringUtils;
+
+import io.github.junhuhdev.dracarys.jobrunr.jobs.AbstractJob;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.JobDetails;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.annotations.Job;
+import io.github.junhuhdev.dracarys.jobrunr.utils.JobUtils;
+import io.github.junhuhdev.dracarys.jobrunr.utils.StringUtils;
 
 import java.util.Optional;
 

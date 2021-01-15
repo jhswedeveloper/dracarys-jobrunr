@@ -1,7 +1,7 @@
 package io.github.junhuhdev.dracarys.jobrunr.storage;
 
-import org.jobrunr.jobs.Job;
-import org.jobrunr.storage.StorageException;
+
+import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
 
 import java.util.List;
 import java.util.stream.Collectors;

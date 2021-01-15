@@ -1,7 +1,7 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs.filters;
 
-import org.jobrunr.jobs.Job;
-import org.jobrunr.jobs.states.JobState;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.Job;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.states.JobState;
 
 /**
  * A filter that is triggered each time that the state of a Job has changed.
