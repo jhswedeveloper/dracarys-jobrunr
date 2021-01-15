@@ -1,7 +1,6 @@
 package io.github.junhuhdev.dracarys.jobrunr.scheduling.exceptions;
 
-import org.jobrunr.jobs.JobDetails;
-import org.jobrunr.scheduling.exceptions.JobNotFoundException;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.JobDetails;
 
 public class JobMethodNotFoundException extends JobNotFoundException {
 

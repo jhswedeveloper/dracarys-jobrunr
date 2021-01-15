@@ -1,22 +1,22 @@
 package io.github.junhuhdev.dracarys.jobrunr.scheduling;
 
-import org.jobrunr.configuration.JobRunr;
-import org.jobrunr.jobs.Job;
-import org.jobrunr.jobs.JobDetails;
-import org.jobrunr.jobs.JobId;
-import org.jobrunr.jobs.RecurringJob;
-import org.jobrunr.jobs.details.JobDetailsAsmGenerator;
-import org.jobrunr.jobs.details.JobDetailsGenerator;
-import org.jobrunr.jobs.filters.JobDefaultFilters;
-import org.jobrunr.jobs.filters.JobFilter;
-import org.jobrunr.jobs.filters.JobFilterUtils;
-import org.jobrunr.jobs.lambdas.IocJobLambda;
-import org.jobrunr.jobs.lambdas.IocJobLambdaFromStream;
-import org.jobrunr.jobs.lambdas.JobLambda;
-import org.jobrunr.jobs.lambdas.JobLambdaFromStream;
-import org.jobrunr.jobs.states.ScheduledState;
-import org.jobrunr.scheduling.cron.CronExpression;
-import org.jobrunr.storage.StorageProvider;
+
+import io.github.junhuhdev.dracarys.jobrunr.configuration.JobRunr;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.JobDetails;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.JobId;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.RecurringJob;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.details.JobDetailsAsmGenerator;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.details.JobDetailsGenerator;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.filters.JobDefaultFilters;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.filters.JobFilter;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.filters.JobFilterUtils;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.lambdas.IocJobLambda;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.lambdas.IocJobLambdaFromStream;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.lambdas.JobLambda;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.lambdas.JobLambdaFromStream;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.states.ScheduledState;
+import io.github.junhuhdev.dracarys.jobrunr.scheduling.cron.CronExpression;
+import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProvider;
 
 import java.time.*;
 import java.util.List;
@@ -25,7 +25,6 @@ import java.util.stream.Stream;
 
 import static java.time.ZoneId.systemDefault;
 import static java.util.Collections.emptyList;
-import static org.jobrunr.utils.streams.StreamUtils.batchCollector;
 
 /**
  * Provides methods for creating fire-and-forget, delayed and recurring jobs as well as to delete existing background jobs.

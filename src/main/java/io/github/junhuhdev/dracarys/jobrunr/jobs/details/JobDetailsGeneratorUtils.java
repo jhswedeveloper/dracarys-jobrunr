@@ -1,5 +1,6 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs.details;
 
+import io.github.junhuhdev.dracarys.jobrunr.common.JobRunrException;
 import io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils;
 
 import java.io.InputStream;
@@ -14,6 +15,7 @@ import java.util.regex.Pattern;
 import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.getField;
 import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.getMethod;
 import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.loadClass;
+import static io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils.toClass;
 
 public class JobDetailsGeneratorUtils {
 

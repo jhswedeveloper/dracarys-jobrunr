@@ -1,9 +1,9 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs.details;
 
-import org.jobrunr.jobs.JobDetails;
-import org.jobrunr.jobs.lambdas.IocJobLambdaFromStream;
-import org.jobrunr.jobs.lambdas.JobLambdaFromStream;
-import org.jobrunr.jobs.lambdas.JobRunrJob;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.JobDetails;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.lambdas.IocJobLambdaFromStream;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.lambdas.JobLambdaFromStream;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.lambdas.JobRunrJob;
 
 public interface JobDetailsGenerator {
 

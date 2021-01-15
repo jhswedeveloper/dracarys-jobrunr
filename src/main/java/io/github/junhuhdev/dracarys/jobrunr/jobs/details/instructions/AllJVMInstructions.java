@@ -1,14 +1,13 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs.details.instructions;
 
-import org.jobrunr.JobRunrException;
-import org.jobrunr.jobs.details.JobDetailsFinderContext;
+import io.github.junhuhdev.dracarys.jobrunr.common.JobRunrException;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.details.JobDetailsFinderContext;
 import org.objectweb.asm.Opcodes;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import static org.jobrunr.utils.reflection.ReflectionUtils.cast;
 
 public class AllJVMInstructions {
 

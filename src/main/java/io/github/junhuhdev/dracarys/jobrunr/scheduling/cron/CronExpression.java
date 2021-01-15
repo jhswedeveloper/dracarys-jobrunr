@@ -1,7 +1,5 @@
 package io.github.junhuhdev.dracarys.jobrunr.scheduling.cron;
 
-import org.jobrunr.scheduling.cron.CronFieldType;
-import org.jobrunr.scheduling.cron.InvalidCronExpressionException;
 
 import java.time.*;
 import java.util.BitSet;
@@ -22,7 +20,7 @@ import static java.time.Instant.now;
  * @author Ahmed AlSahaf
  * @author Ronald Dehuysser (minor modifications)
  */
-public class CronExpression implements Comparable<org.jobrunr.scheduling.cron.CronExpression> {
+public class CronExpression implements Comparable<CronExpression> {
 
     private enum DaysAndDaysOfWeekRelation {
         INTERSECT, UNION

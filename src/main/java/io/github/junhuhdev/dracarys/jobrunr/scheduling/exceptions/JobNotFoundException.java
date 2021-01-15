@@ -1,7 +1,8 @@
 package io.github.junhuhdev.dracarys.jobrunr.scheduling.exceptions;
 
-import org.jobrunr.jobs.JobDetails;
-import org.jobrunr.jobs.JobParameter;
+
+import io.github.junhuhdev.dracarys.jobrunr.jobs.JobDetails;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.JobParameter;
 
 import java.util.stream.Stream;
 

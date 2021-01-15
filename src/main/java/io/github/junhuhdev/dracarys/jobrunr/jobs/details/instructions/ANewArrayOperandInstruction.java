@@ -1,11 +1,9 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs.details.instructions;
 
-import org.jobrunr.jobs.details.JobDetailsFinderContext;
+
+import io.github.junhuhdev.dracarys.jobrunr.jobs.details.JobDetailsFinderContext;
 
 import java.lang.reflect.Array;
-
-import static org.jobrunr.jobs.details.JobDetailsGeneratorUtils.toFQClassName;
-import static org.jobrunr.utils.reflection.ReflectionUtils.toClass;
 
 public class ANewArrayOperandInstruction extends VisitTypeInstruction {
 

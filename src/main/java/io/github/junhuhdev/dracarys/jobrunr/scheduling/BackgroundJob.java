@@ -1,11 +1,11 @@
 package io.github.junhuhdev.dracarys.jobrunr.scheduling;
 
-import org.jobrunr.jobs.JobId;
-import org.jobrunr.jobs.lambdas.IocJobLambda;
-import org.jobrunr.jobs.lambdas.IocJobLambdaFromStream;
-import org.jobrunr.jobs.lambdas.JobLambda;
-import org.jobrunr.jobs.lambdas.JobLambdaFromStream;
-import org.jobrunr.scheduling.JobScheduler;
+
+import io.github.junhuhdev.dracarys.jobrunr.jobs.JobId;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.lambdas.IocJobLambda;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.lambdas.IocJobLambdaFromStream;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.lambdas.JobLambda;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.lambdas.JobLambdaFromStream;
 
 import java.time.*;
 import java.util.UUID;

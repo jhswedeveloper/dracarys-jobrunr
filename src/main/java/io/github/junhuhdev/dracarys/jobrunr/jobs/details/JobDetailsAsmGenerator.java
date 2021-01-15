@@ -1,15 +1,25 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs.details;
 
-import org.jobrunr.jobs.JobDetails;
-import org.jobrunr.jobs.details.instructions.*;
-import org.jobrunr.jobs.lambdas.IocJobLambdaFromStream;
-import org.jobrunr.jobs.lambdas.JobLambdaFromStream;
-import org.jobrunr.jobs.lambdas.JobRunrJob;
 
 import java.io.IOException;
 import java.lang.invoke.SerializedLambda;
 
-import static org.jobrunr.JobRunrException.shouldNotHappenException;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.JobDetails;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.details.instructions.AllJVMInstructions;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.details.instructions.InvokeDynamicInstruction;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.details.instructions.LdcInstruction;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.details.instructions.SingleIntOperandInstruction;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.details.instructions.VisitFieldInstruction;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.details.instructions.VisitLocalVariableInstruction;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.details.instructions.VisitMethodInstruction;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.details.instructions.VisitTypeInstruction;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.details.instructions.ZeroOperandInstruction;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.lambdas.IocJobLambdaFromStream;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.lambdas.JobLambdaFromStream;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.lambdas.JobRunrJob;
+import org.objectweb.asm.*;
+
+import static io.github.junhuhdev.dracarys.jobrunr.common.JobRunrException.shouldNotHappenException;
 
 public class JobDetailsAsmGenerator implements JobDetailsGenerator {
     private final SerializedLambdaConverter serializedLambdaConverter;

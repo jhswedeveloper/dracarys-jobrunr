@@ -1,10 +1,11 @@
 package io.github.junhuhdev.dracarys.jobrunr.jobs.details;
 
-import org.jobrunr.JobRunrException;
-import org.jobrunr.jobs.JobDetails;
-import org.jobrunr.jobs.JobParameter;
-import org.jobrunr.jobs.details.instructions.AbstractJVMInstruction;
-import org.jobrunr.jobs.lambdas.IocJobLambda;
+
+import io.github.junhuhdev.dracarys.jobrunr.common.JobRunrException;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.JobDetails;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.JobParameter;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.details.instructions.AbstractJVMInstruction;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.lambdas.IocJobLambda;
 
 import java.lang.invoke.SerializedLambda;
 import java.util.ArrayList;
@@ -12,7 +13,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.jobrunr.jobs.details.JobDetailsGeneratorUtils.toFQClassName;
 
 public class JobDetailsFinderContext {
 

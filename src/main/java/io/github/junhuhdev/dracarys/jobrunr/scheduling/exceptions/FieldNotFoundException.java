@@ -1,6 +1,6 @@
 package io.github.junhuhdev.dracarys.jobrunr.scheduling.exceptions;
 
-import org.jobrunr.JobRunrException;
+import io.github.junhuhdev.dracarys.jobrunr.common.JobRunrException;
 
 public class FieldNotFoundException extends JobRunrException {
 
