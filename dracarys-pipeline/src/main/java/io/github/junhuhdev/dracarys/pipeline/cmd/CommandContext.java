@@ -25,7 +25,7 @@ public class CommandContext {
 
 	@SuppressWarnings("unchecked")
 	public <R extends Command.Request> R getFirst(Class<R> type) {
-		for (var req : requests) {
+		for (Command.Request req : requests) {
 			if (type.isInstance(req)) {
 				return (R) req;
 			}
