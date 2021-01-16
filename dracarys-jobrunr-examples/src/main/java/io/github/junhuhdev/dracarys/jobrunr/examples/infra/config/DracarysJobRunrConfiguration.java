@@ -1,4 +1,4 @@
-package io.github.junhuhdev.dracarys.jobrunr.examples.config;
+package io.github.junhuhdev.dracarys.jobrunr.examples.infra.config;
 
 import io.github.junhuhdev.dracarys.jobrunr.dashboard.JobRunrDashboardWebServer;
 import io.github.junhuhdev.dracarys.jobrunr.jobs.mappers.JobMapper;

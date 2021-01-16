@@ -1,12 +1,10 @@
-package io.github.junhuhdev.dracarys.debezium.config;
+package io.github.junhuhdev.dracarys.jobrunr.examples.infra;
 
 import com.google.gson.Gson;
-import io.debezium.config.Configuration;
-import io.debezium.data.Envelope.Operation;
-import io.debezium.embedded.Connect;
-import io.debezium.engine.DebeziumEngine;
+import io.debezium.data.Envelope;
 import io.debezium.engine.RecordChangeEvent;
-import io.debezium.engine.format.ChangeEventFormat;
+import io.github.junhuhdev.dracarys.debezium.config.DebeziumConsumer;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.kafka.connect.data.Field;
@@ -14,51 +12,25 @@ import org.apache.kafka.connect.data.Struct;
 import org.apache.kafka.connect.source.SourceRecord;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
+import static io.debezium.data.Envelope.*;
 import static io.debezium.data.Envelope.FieldName.AFTER;
 import static io.debezium.data.Envelope.FieldName.BEFORE;
 import static io.debezium.data.Envelope.FieldName.OPERATION;
 import static java.util.stream.Collectors.toMap;
 
 @Slf4j
+@RequiredArgsConstructor
 @Component
-public class DebeziumEmbeddedEngine {
+public class DracarysDebeziumConsumer implements DebeziumConsumer {
 
-	private final Configuration configuration;
 	private final Gson gson;
-	private final DebeziumConsumer consumer;
 
-	public DebeziumEmbeddedEngine(Configuration configuration, Gson gson, DebeziumConsumer consumer) {
-		this.configuration = configuration;
-		this.gson = gson;
-		this.consumer = consumer;
-	}
-
-	@PostConstruct
-	public void start() {
-		try (DebeziumEngine<RecordChangeEvent<SourceRecord>> engine =
-				     DebeziumEngine.create(ChangeEventFormat.of(Connect.class))
-						     .using(configuration.asProperties())
-						     .notifying(consumer.handle())
-//						     .notifying(getConsumer())
-						     .build()) {
-			// Run the engine asynchronously...
-			ExecutorService executor = Executors.newSingleThreadExecutor();
-			executor.execute(engine);
-		} catch (IOException e) {
-			log.error("Unexpected error", e);
-			throw new RuntimeException(e);
-		}
-	}
-
-	private Consumer<RecordChangeEvent<SourceRecord>> getConsumer() {
+	@Override
+	public Consumer<RecordChangeEvent<SourceRecord>> handle() {
 		return this::handleCommand;
 	}
 
