@@ -55,6 +55,7 @@ public class DracarysDebeziumConsumer implements DebeziumConsumer {
 	@SuppressWarnings("unchecked")
 	private void handleCommand(RecordChangeEvent<SourceRecord> sourceRecord) {
 		try {
+			log.info("Incomfing ... {}", sourceRecord);
 			Struct sourceRecordValue = (Struct) sourceRecord.record().value();
 			if (sourceRecordValue != null) {
 				Operation operation = Operation.forCode((String) sourceRecordValue.get(OPERATION));
@@ -89,7 +90,7 @@ public class DracarysDebeziumConsumer implements DebeziumConsumer {
 											jobScheduler.enqueue(() -> router.dispatch((Command.Request) cmd));
 										}
 									});
-						} catch (ClassNotFoundException e) {
+						} catch (ClassNotFoundException  | NoClassDefFoundError e) {
 							log.error("Command class has been moved or renamed {}", message, e);
 						}
 					}
