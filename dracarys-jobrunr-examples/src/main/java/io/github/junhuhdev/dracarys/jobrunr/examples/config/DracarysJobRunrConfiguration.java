@@ -11,8 +11,6 @@ import io.github.junhuhdev.dracarys.jobrunr.storage.sql.common.DefaultSqlStorage
 import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.JsonMapper;
 import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.gson.GsonJsonMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +22,7 @@ import static io.github.junhuhdev.dracarys.jobrunr.server.BackgroundJobServerCon
 
 @Configuration
 @Slf4j
-public class JobRunrConfig {
+public class DracarysJobRunrConfiguration {
 
 	@Bean
 	public JobActivator jobActivator(ApplicationContext applicationContext) {
