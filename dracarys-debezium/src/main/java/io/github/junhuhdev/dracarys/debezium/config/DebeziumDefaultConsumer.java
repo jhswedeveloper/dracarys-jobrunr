@@ -10,12 +10,13 @@ import java.util.function.Consumer;
 public class DebeziumDefaultConsumer implements DebeziumConsumer{
 	private final static Logger log = LoggerFactory.getLogger(DebeziumDefaultConsumer.class);
 
-	@Override
-	public Consumer<RecordChangeEvent<SourceRecord>> handle() {
-		return this::handleCommand;
+
+	private void handleCommand(SourceRecord sourceRecord) {
+		log.info("Incoming {}", sourceRecord);
 	}
 
-	private void handleCommand(RecordChangeEvent<SourceRecord> sourceRecord) {
-		log.info("Incoming {}", sourceRecord);
+	@Override
+	public Consumer<SourceRecord> handle() {
+		return this::handleCommand;
 	}
 }

@@ -8,6 +8,6 @@ import java.util.function.Consumer;
 
 public interface DebeziumConsumer {
 
-	Consumer<RecordChangeEvent<SourceRecord>> handle();
+	Consumer<SourceRecord> handle();
 
 }
