@@ -20,7 +20,7 @@ public class UserValidateCmd implements Command {
 
 		@Override
 		public ChainContext execute(ChainContext ctx, Chain chain) throws Exception {
-			return null;
+			return chain.proceed(ctx);
 		}
 
 	}
