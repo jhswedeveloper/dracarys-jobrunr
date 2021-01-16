@@ -16,7 +16,7 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 @Component
 public class ChainRouter implements Chainable {
 
-	private final List<ChainBase> chains;
+	private final List<ChainBase<?>> chains;
 
 	@Override
 	public ChainContext dispatch(EventTransaction event) throws Exception {

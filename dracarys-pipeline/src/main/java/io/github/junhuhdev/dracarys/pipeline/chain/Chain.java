@@ -9,9 +9,9 @@ import java.util.ListIterator;
 public class Chain {
 
 	private static final Logger log = LoggerFactory.getLogger(Chain.class);
-	private final ListIterator<Command> commands;
+	private final ListIterator<Command.Handler> commands;
 
-	public Chain(ListIterator<Command> commands) {
+	public Chain(ListIterator<Command.Handler> commands) {
 		this.commands = commands;
 	}
 
@@ -20,7 +20,7 @@ public class Chain {
 		if (!commands.hasNext()) {
 			return completeChain();
 		}
-		Command command = commands.next();
+		Command.Handler command = commands.next();
 		String cmdClazz = command.getClass().getSimpleName();
 		try {
 			log.info("Processing command={} id={} state={} workflow={}", cmdClazz, ctx.getId(), ctx.getState(), ctx.getWorkflow());

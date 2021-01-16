@@ -14,11 +14,11 @@ public class SaveAsLastCmd implements Command {
 
 	private final EventJdbcRepository eventJdbcRepository;
 
-	@Override
-	public ChainContext execute(ChainContext ctx, Chain chain) throws Exception {
-		ctx = chain.proceed(ctx);
-		eventJdbcRepository.update(ctx.getEventTransaction());
-		return ctx;
-	}
+//	@Override
+//	public ChainContext execute(ChainContext ctx, Chain chain) throws Exception {
+//		ctx = chain.proceed(ctx);
+//		eventJdbcRepository.update(ctx.getEventTransaction());
+//		return ctx;
+//	}
 
 }

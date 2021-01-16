@@ -1,12 +1,8 @@
 package io.github.junhuhdev.dracarys.pipeline.chain;
 
 import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
-import io.github.junhuhdev.dracarys.pipeline.cmd.ExceptionCmd;
-import io.github.junhuhdev.dracarys.pipeline.cmd.FinalizeCmd;
-import io.github.junhuhdev.dracarys.pipeline.cmd.LockCmd;
-import io.github.junhuhdev.dracarys.pipeline.cmd.SaveAsLastCmd;
-import io.github.junhuhdev.dracarys.pipeline.cmd.SuccessfulCmd;
 import io.github.junhuhdev.dracarys.pipeline.common.Conditional;
+import io.github.junhuhdev.dracarys.pipeline.common.FirstGenericArgOf;
 import io.github.junhuhdev.dracarys.pipeline.event.EventTransaction;
 import io.github.junhuhdev.dracarys.pipeline.jdbc.EventJdbcRepository;
 import org.springframework.beans.factory.ListableBeanFactory;
@@ -21,30 +17,30 @@ import java.util.ListIterator;
 /**
  * One chain per event to process
  */
-public abstract class ChainBase implements Chainable, Conditional {
+public abstract class ChainBase<R extends Command.Request> implements Chainable, Conditional {
 
 	@Resource
 	private ListableBeanFactory beanFactory;
-	@Autowired
-	private PreChain preChain;
-	@Autowired
-	private PostChain postChain;
 	@Autowired
 	private EventJdbcRepository eventJdbcRepository;
 
 	protected abstract List<Class<? extends Command>> getCommands();
 
-	private ListIterator<Command> createCommands() {
-		List<Command> commands = new ArrayList<>();
-		addCommands(commands, preChain.getCommands());
+	public boolean matches(R request) {
+		Class handlerType = getClass();
+		Class commandType = request.getClass();
+		return new FirstGenericArgOf(handlerType).isAssignableFrom(commandType);
+	}
+
+	private ListIterator<Command.Handler> createCommands() {
+		List<Command.Handler> commands = new ArrayList<>();
 		addCommands(commands, this.getCommands());
-		addCommands(commands, postChain.getCommands());
 		return commands.listIterator();
 	}
 
-	private void addCommands(List<Command> commands, List<Class<? extends Command>> listOfCmds) {
+	private void addCommands(List<Command.Handler> commands, List<Class<? extends Command>> listOfCmds) {
 		for (var cmd : listOfCmds) {
-			Command bean = (Command) beanFactory.getBean(cmd);
+			Command.Handler bean = (Command.Handler) beanFactory.getBean(cmd);
 			commands.add(bean);
 		}
 	}
@@ -57,44 +53,9 @@ public abstract class ChainBase implements Chainable, Conditional {
 
 	@Override
 	public ChainContext dispatch(EventTransaction event) throws Exception {
-		ListIterator<Command> commands = this.createCommands();
+		ListIterator<Command.Handler> commands = this.createCommands();
 		Chain chain = new Chain(commands);
 		return chain.proceed(new ChainContext(event));
-	}
-
-	@Component
-	static class PreChain extends ChainBase {
-
-		@Override
-		protected List<Class<? extends Command>> getCommands() {
-			return List.of(
-					LockCmd.class,
-					ExceptionCmd.class,
-					SaveAsLastCmd.class);
-		}
-
-		@Override
-		public boolean isMixable() {
-			return false;
-		}
-
-	}
-
-	@Component
-	static class PostChain extends ChainBase {
-
-		@Override
-		protected List<Class<? extends Command>> getCommands() {
-			return List.of(
-					SuccessfulCmd.class,
-					FinalizeCmd.class);
-		}
-
-		@Override
-		public boolean isMixable() {
-			return false;
-		}
-
 	}
 
 }
