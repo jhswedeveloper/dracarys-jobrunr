@@ -23,70 +23,78 @@ import java.util.ListIterator;
  */
 public abstract class ChainBase implements Chainable, Conditional {
 
-    @Resource
-    private ListableBeanFactory beanFactory;
-    @Autowired
-    private PreChain preChain;
-    @Autowired
-    private PostChain postChain;
-    @Autowired
-    private EventJdbcRepository eventJdbcRepository;
+	@Resource
+	private ListableBeanFactory beanFactory;
+	@Autowired
+	private PreChain preChain;
+	@Autowired
+	private PostChain postChain;
+	@Autowired
+	private EventJdbcRepository eventJdbcRepository;
 
-    protected abstract Class<?>[] getCommands();
+	protected abstract List<Class<? extends Command>> getCommands();
 
-    private ListIterator<Command> createCommands() {
-        List<Command> commands = new ArrayList<>();
-        addCommands(commands, preChain.getCommands());
-        addCommands(commands, this.getCommands());
-        addCommands(commands, postChain.getCommands());
-        return commands.listIterator();
-    }
+	private ListIterator<Command> createCommands() {
+		List<Command> commands = new ArrayList<>();
+		addCommands(commands, preChain.getCommands());
+		addCommands(commands, this.getCommands());
+		addCommands(commands, postChain.getCommands());
+		return commands.listIterator();
+	}
 
-    private void addCommands(List<Command> commands, Class<?>[] listOfCmds) {
-        for (Class<?> clazz : listOfCmds) {
-            Command bean = (Command) beanFactory.getBean(clazz);
-            commands.add(bean);
-        }
-    }
+	private void addCommands(List<Command> commands, List<Class<? extends Command>> listOfCmds) {
+		for (var cmd : listOfCmds) {
+			Command bean = (Command) beanFactory.getBean(cmd);
+			commands.add(bean);
+		}
+	}
 
-    @Override
-    public ChainContext resume(String referenceId) throws Exception {
-        var event = eventJdbcRepository.findByReferenceId(referenceId);
-        return dispatch(event);
-    }
+	@Override
+	public ChainContext resume(String referenceId) throws Exception {
+		var event = eventJdbcRepository.findByReferenceId(referenceId);
+		return dispatch(event);
+	}
 
-    @Override
-    public ChainContext dispatch(EventTransaction event) throws Exception {
-        ListIterator<Command> commands = this.createCommands();
-        Chain chain = new Chain(commands);
-        return chain.proceed(new ChainContext(event));
-    }
+	@Override
+	public ChainContext dispatch(EventTransaction event) throws Exception {
+		ListIterator<Command> commands = this.createCommands();
+		Chain chain = new Chain(commands);
+		return chain.proceed(new ChainContext(event));
+	}
 
-    @Component
-    static class PreChain extends ChainBase {
+	@Component
+	static class PreChain extends ChainBase {
 
-        @Override
-        protected Class<?>[] getCommands() {
-            return new Class[]{LockCmd.class, ExceptionCmd.class, SaveAsLastCmd.class,};
-        }
+		@Override
+		protected List<Class<? extends Command>> getCommands() {
+			return List.of(
+					LockCmd.class,
+					ExceptionCmd.class,
+					SaveAsLastCmd.class);
+		}
 
-        @Override
-        public boolean isMixable() {
-            return false;
-        }
-    }
+		@Override
+		public boolean isMixable() {
+			return false;
+		}
 
-    @Component
-    static class PostChain extends ChainBase {
+	}
 
-        @Override
-        protected Class<?>[] getCommands() {
-            return new Class[]{SuccessfulCmd.class, FinalizeCmd.class};
-        }
+	@Component
+	static class PostChain extends ChainBase {
 
-        @Override
-        public boolean isMixable() {
-            return false;
-        }
-    }
+		@Override
+		protected List<Class<? extends Command>> getCommands() {
+			return List.of(
+					SuccessfulCmd.class,
+					FinalizeCmd.class);
+		}
+
+		@Override
+		public boolean isMixable() {
+			return false;
+		}
+
+	}
+
 }
