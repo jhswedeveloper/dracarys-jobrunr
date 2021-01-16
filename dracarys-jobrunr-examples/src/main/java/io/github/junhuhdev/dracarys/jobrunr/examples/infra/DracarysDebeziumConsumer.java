@@ -6,6 +6,7 @@ import io.debezium.engine.RecordChangeEvent;
 import io.github.junhuhdev.dracarys.debezium.config.DebeziumConsumer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.kafka.connect.data.Field;
 import org.apache.kafka.connect.data.Struct;
@@ -24,7 +25,7 @@ import static io.debezium.data.Envelope.FieldName.OPERATION;
 import static java.util.stream.Collectors.toMap;
 
 @Primary
-@Log4j2
+@Slf4j
 @RequiredArgsConstructor
 @Component
 public class DracarysDebeziumConsumer implements DebeziumConsumer {

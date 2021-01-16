@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.support.SqlLobValue;
 import org.springframework.jdbc.support.lob.DefaultLobHandler;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
 
@@ -29,6 +30,7 @@ import java.util.Optional;
 
 import static java.util.Objects.isNull;
 
+@Repository
 public class EventJdbcRepository extends BaseJdbcRepository<EventQuery, EventTransaction> {
 
 	private final Tx tx;

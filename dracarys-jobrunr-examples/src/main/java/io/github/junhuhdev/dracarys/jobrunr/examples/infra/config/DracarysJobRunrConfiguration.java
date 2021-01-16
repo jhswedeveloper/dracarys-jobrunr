@@ -1,5 +1,7 @@
 package io.github.junhuhdev.dracarys.jobrunr.examples.infra.config;
 
+import io.github.junhuhdev.dracarys.jobrunr.configuration.JobRunr;
+import io.github.junhuhdev.dracarys.jobrunr.configuration.JobRunrConfiguration;
 import io.github.junhuhdev.dracarys.jobrunr.dashboard.JobRunrDashboardWebServer;
 import io.github.junhuhdev.dracarys.jobrunr.jobs.mappers.JobMapper;
 import io.github.junhuhdev.dracarys.jobrunr.scheduling.BackgroundJob;
@@ -10,19 +12,20 @@ import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProvider;
 import io.github.junhuhdev.dracarys.jobrunr.storage.sql.common.DefaultSqlStorageProvider;
 import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.JsonMapper;
 import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.gson.GsonJsonMapper;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
+import javax.annotation.PreDestroy;
 import javax.sql.DataSource;
 
 import static io.github.junhuhdev.dracarys.jobrunr.server.BackgroundJobServerConfiguration.usingStandardBackgroundJobServerConfiguration;
 
 @Configuration
-@Log4j2
+@Slf4j
 public class DracarysJobRunrConfiguration {
 
 	@Bean
@@ -68,7 +71,14 @@ public class DracarysJobRunrConfiguration {
 	public JobScheduler initJobRunr(StorageProvider storageProvider, JobActivator jobActivator) {
 		JobScheduler jobScheduler = new JobScheduler(storageProvider);
 		BackgroundJob.setJobScheduler(jobScheduler);
+		Runtime.getRuntime().addShutdownHook(new Thread(JobRunr::destroy, "extShutdownHook"));
 		return jobScheduler;
+	}
+
+	@PreDestroy
+	public void stop() {
+		log.info("Shutting down Dracarys JobRunr...");
+		JobRunr.destroy();
 	}
 
 }
