@@ -12,7 +12,7 @@ import java.util.ListIterator;
 /**
  * One chain per event to process
  */
-public abstract class ChainBase<R extends Command.Request, C extends Command> implements Chainable<R, C> {
+public abstract class ChainBase<R extends Command.Request> implements Chainable<R> {
 
 	@Resource
 	private ListableBeanFactory beanFactory;
@@ -39,7 +39,7 @@ public abstract class ChainBase<R extends Command.Request, C extends Command> im
 	}
 
 	@Override
-	public ChainContext<C> dispatch(R event) throws Exception {
+	public <C extends Command> ChainContext<C> dispatch(R event) throws Exception {
 		ListIterator<Command.Handler> commands = this.createCommands();
 		Chain chain = new Chain(commands);
 		return chain.proceed(new ChainContext(event));

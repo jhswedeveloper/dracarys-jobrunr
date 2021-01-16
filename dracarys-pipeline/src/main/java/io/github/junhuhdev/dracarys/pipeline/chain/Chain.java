@@ -23,7 +23,7 @@ public class Chain {
 		Command.Handler command = commands.next();
 		String cmdClazz = command.getClass().getSimpleName();
 		try {
-			log.info("Processing command={} id={} state={} workflow={}", cmdClazz, ctx.getId(), ctx.getState(), ctx.getWorkflow());
+			log.info("Processing command={} id={} ", cmdClazz, ctx.getId());
 			return command.execute(ctx, this);
 		} catch (Exception e) {
 			log.error("Failed to process command={}, event={}", cmdClazz, ctx.getEventTransaction(), e);

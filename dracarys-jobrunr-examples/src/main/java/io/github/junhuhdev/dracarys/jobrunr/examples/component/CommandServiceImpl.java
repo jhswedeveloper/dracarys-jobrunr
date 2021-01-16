@@ -18,9 +18,10 @@ public class CommandServiceImpl implements CommandService {
 
 	@Override
 	public void save(Command.Request request) {
+		var json = gson.toJson(request);
 		var cmd = CommandEntity.builder()
-				.commandClass()
-				.command()
+				.commandClass(request.getClass().getName())
+				.command(json)
 				.build();
 		commandRepository.save(cmd);
 	}

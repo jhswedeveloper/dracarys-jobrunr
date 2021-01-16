@@ -1,8 +1,6 @@
 package io.github.junhuhdev.dracarys.pipeline.chain;
 
 import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
-import io.github.junhuhdev.dracarys.pipeline.event.EventLambda;
-import io.github.junhuhdev.dracarys.pipeline.event.EventTransaction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -15,12 +13,13 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class ChainRouter<R extends Command.Request, C extends Command> implements Chainable<R, C> {
+public class ChainRouter<R extends Command.Request> implements Chainable<R> {
 
-	private final List<ChainBase<R, C>> chains;
+	private final List<ChainBase<R>> chains;
+
 
 	@Override
-	public ChainContext<C> dispatch(R event) throws Exception {
+	public <C extends Command> ChainContext<C> dispatch(R event) throws Exception {
 		var chainMatches = chains.stream()
 				.filter(chain -> chain.matches(event))
 				.collect(toList());
@@ -38,11 +37,5 @@ public class ChainRouter<R extends Command.Request, C extends Command> implement
 		}
 		return ctx;
 	}
-
-
-	public void enqueue(EventLambda event) {
-
-	}
-
 
 }

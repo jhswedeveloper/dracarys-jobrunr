@@ -13,62 +13,26 @@ import static java.util.Objects.requireNonNull;
 
 public class ChainContext<C extends Command> {
 
-    private final C command;
+    private final List<C> command;
 
     public ChainContext(C command) {
-        this.command = command;
+        this.command = Lists.newArrayList(command);
     }
 
     public C getEventTransaction() {
-        return command;
+        return command.stream().findFirst().get();
     }
 
 
-    public Long getId() {
-        return command.getId();
+    public String getId() {
+        return command.stream().findFirst().get().getId();
     }
 
-    public Long getParentId() {
-        return command.getParentId();
-    }
+    /**
+     * Command can store command
+     * @param command
+     */
+    public void store(C command) {
 
-    public Long getOriginId() {
-        return isNull(command.getParentId()) ? command.getId() : command.getParentId();
-    }
-
-    public List<Event> getEvents() {
-        return command.getEvents();
-    }
-
-    public EventState getState() {
-        return command.getState();
-    }
-
-    public <T extends Event> T getFirstEvent(Class<T> event) {
-        return this.command.getFirstEvent(event);
-    }
-
-    public <T extends Event> T getLastEvent(Class<T> event) {
-        return this.command.getLatestEvent(event);
-    }
-
-    public <T extends Event> T getLastEvent() {
-        return this.command.getLatestEvent();
-    }
-
-    public EventTransaction newChild(Event nextEvent, String nextWorkflow) {
-        return EventTransaction.builder()
-                .parentId(getOriginId())
-                .workflow(nextWorkflow)
-                .events(Lists.newArrayList(nextEvent))
-                .build();
-    }
-
-    public void store(Event event) {
-        requireNonNull(event, "Event cannot be null");
-        this.command.store(event);
-        event.nextUpdate(this.command);
-        var onNextState = event.nextState();
-        onNextState.ifPresent(this.command::triggerStateTransition);
     }
 }

@@ -4,6 +4,9 @@ import com.google.gson.Gson;
 import io.debezium.data.Envelope;
 import io.debezium.engine.RecordChangeEvent;
 import io.github.junhuhdev.dracarys.debezium.config.DebeziumConsumer;
+import io.github.junhuhdev.dracarys.jobrunr.scheduling.JobScheduler;
+import io.github.junhuhdev.dracarys.pipeline.chain.ChainRouter;
+import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
@@ -28,9 +31,12 @@ import static java.util.stream.Collectors.toMap;
 @Slf4j
 @RequiredArgsConstructor
 @Component
+@SuppressWarnings("Unchecked")
 public class DracarysDebeziumConsumer implements DebeziumConsumer {
 
 	private final Gson gson;
+	private final ChainRouter router;
+	private final JobScheduler jobScheduler;
 
 	@Override
 	public Consumer<RecordChangeEvent<SourceRecord>> handle() {
@@ -79,9 +85,9 @@ public class DracarysDebeziumConsumer implements DebeziumConsumer {
 													Class.forName((String) message.get("command_class"))));
 							onCmd.ifPresent(
 									cmd -> {
-//										if (cmd instanceof Command) {
-//											pipeline.send((Command) cmd);
-//										}
+										if (cmd instanceof Command.Request) {
+											jobScheduler.enqueue(() -> router.dispatch((Command.Request) cmd));
+										}
 									});
 						} catch (ClassNotFoundException e) {
 							log.error("Command class has been moved or renamed {}", message, e);
