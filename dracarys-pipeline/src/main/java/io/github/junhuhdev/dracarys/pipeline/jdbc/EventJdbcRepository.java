@@ -78,20 +78,6 @@ public class EventJdbcRepository extends BaseJdbcRepository<EventQuery, EventTra
 						new ListExtractor());
 	}
 
-	public List<EventTransaction> selectAllUnprocessedByWorkflow(EventQuery query) {
-		return getNamedParameterJdbcTemplate()
-				.query("SELECT * FROM XEVENT_TRANSACTION WHERE STATE = 'REGISTERED' AND WORKFLOW = :workflow ORDER BY CREATED ASC FETCH FIRST :limit ROWS ONLY ",
-						new BeanPropertySqlParameterSource(query),
-						new ListExtractor());
-	}
-
-	public List<EventTransaction> selectAllUnprocessed(EventQuery query) {
-		return getNamedParameterJdbcTemplate()
-				.query("SELECT * FROM XEVENT_TRANSACTION WHERE STATE = 'REGISTERED' ORDER BY CREATED ASC FETCH FIRST :limit ROWS ONLY ",
-						new BeanPropertySqlParameterSource(query),
-						new ListExtractor());
-	}
-
 	public boolean batchInsert(List<EventTransaction> records) {
 		var params = records.stream()
 				.map(EventJdbcRepository::getParams)

@@ -1,3 +1,5 @@
+package io.github.junhuhdev.dracarys.pipeline;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -12,5 +14,5 @@ import java.lang.annotation.Target;
 @Documented
 @Import(DracarysChainModule.class)
 @Configuration
-public @interface EnableDracarysChain {
+public @interface EnableDracarysChains {
 }
