@@ -1,17 +1,9 @@
 package io.github.junhuhdev.dracarys.pipeline.chain;
 
-import com.google.common.collect.Lists;
 import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
 import io.github.junhuhdev.dracarys.pipeline.cmd.CommandContext;
-import io.github.junhuhdev.dracarys.pipeline.event.Event;
-import io.github.junhuhdev.dracarys.pipeline.event.EventState;
-import io.github.junhuhdev.dracarys.pipeline.event.EventTransaction;
-import org.checkerframework.checker.units.qual.C;
 
 import java.util.List;
-
-import static java.util.Objects.isNull;
-import static java.util.Objects.requireNonNull;
 
 public class ChainContext {
 
