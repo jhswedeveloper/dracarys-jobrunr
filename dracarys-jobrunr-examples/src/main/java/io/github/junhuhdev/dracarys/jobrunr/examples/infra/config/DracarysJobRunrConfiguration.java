@@ -10,6 +10,7 @@ import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProvider;
 import io.github.junhuhdev.dracarys.jobrunr.storage.sql.common.DefaultSqlStorageProvider;
 import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.JsonMapper;
 import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.gson.GsonJsonMapper;
+import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +22,7 @@ import javax.sql.DataSource;
 import static io.github.junhuhdev.dracarys.jobrunr.server.BackgroundJobServerConfiguration.usingStandardBackgroundJobServerConfiguration;
 
 @Configuration
-@Slf4j
+@Log4j2
 public class DracarysJobRunrConfiguration {
 
 	@Bean
