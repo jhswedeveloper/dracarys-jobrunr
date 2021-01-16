@@ -47,8 +47,8 @@ public class DebeziumEmbeddedEngine {
 		try (DebeziumEngine<RecordChangeEvent<SourceRecord>> engine =
 				     DebeziumEngine.create(ChangeEventFormat.of(Connect.class))
 						     .using(configuration.asProperties())
-						     .notifying(consumer.handle())
-//						     .notifying(getConsumer())
+//						     .notifying(consumer.handle())
+						     .notifying(this::handleCommand)
 						     .build()) {
 			// Run the engine asynchronously...
 			ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -59,9 +59,6 @@ public class DebeziumEmbeddedEngine {
 		}
 	}
 
-	private Consumer<RecordChangeEvent<SourceRecord>> getConsumer() {
-		return this::handleCommand;
-	}
 
 	/**
 	 * Note that your application’s handler function should not throw any exceptions; if it does, the

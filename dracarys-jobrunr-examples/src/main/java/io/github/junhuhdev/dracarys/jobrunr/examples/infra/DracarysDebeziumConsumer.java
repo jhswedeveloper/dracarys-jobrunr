@@ -1,21 +1,16 @@
 package io.github.junhuhdev.dracarys.jobrunr.examples.infra;
 
 import com.google.gson.Gson;
-import io.debezium.data.Envelope;
 import io.debezium.engine.RecordChangeEvent;
 import io.github.junhuhdev.dracarys.debezium.config.DebeziumConsumer;
 import io.github.junhuhdev.dracarys.jobrunr.scheduling.JobScheduler;
 import io.github.junhuhdev.dracarys.pipeline.chain.ChainRouter;
 import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.kafka.connect.data.Field;
 import org.apache.kafka.connect.data.Struct;
 import org.apache.kafka.connect.source.SourceRecord;
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.Optional;
@@ -27,16 +22,19 @@ import static io.debezium.data.Envelope.FieldName.BEFORE;
 import static io.debezium.data.Envelope.FieldName.OPERATION;
 import static java.util.stream.Collectors.toMap;
 
-@Primary
 @Slf4j
-@RequiredArgsConstructor
-@Component
 @SuppressWarnings("Unchecked")
 public class DracarysDebeziumConsumer implements DebeziumConsumer {
 
 	private final Gson gson;
 	private final ChainRouter router;
 	private final JobScheduler jobScheduler;
+
+	public DracarysDebeziumConsumer(Gson gson, ChainRouter router, JobScheduler jobScheduler) {
+		this.gson = gson;
+		this.router = router;
+		this.jobScheduler = jobScheduler;
+	}
 
 	@Override
 	public Consumer<RecordChangeEvent<SourceRecord>> handle() {

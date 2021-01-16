@@ -12,7 +12,7 @@ public class DebeziumDefaultConsumer implements DebeziumConsumer{
 
 	@Override
 	public Consumer<RecordChangeEvent<SourceRecord>> handle() {
-		return null;
+		return this::handleCommand;
 	}
 
 	private void handleCommand(RecordChangeEvent<SourceRecord> sourceRecord) {
