@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @Builder
 @Entity
 @Table(name = "COMMAND")
-public class CommandEntity implements Command.Request {
+public class CommandEntity  {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
