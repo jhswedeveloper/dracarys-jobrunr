@@ -3,16 +3,19 @@ package io.github.junhuhdev.dracarys.debezium.config;
 import io.debezium.connector.postgresql.PostgresConnectorConfig;
 import io.debezium.embedded.EmbeddedEngine;
 import io.debezium.relational.history.MemoryDatabaseHistory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class DebeziumConnectorConfiguration {
-
+	private final static Logger log = LoggerFactory.getLogger(DebeziumEmbeddedEngine.class);
 	public static final String APP_NAME = "familydb-postgres-connector";
 
 	@Bean
 	public io.debezium.config.Configuration debeziumConfiguration() {
+		log.info("Starting debezium config...");
 		return io.debezium.config.Configuration.create()
 				.with(EmbeddedEngine.CONNECTOR_CLASS, "io.debezium.connector.postgresql.PostgresConnector")
 				.with(EmbeddedEngine.ENGINE_NAME, APP_NAME)

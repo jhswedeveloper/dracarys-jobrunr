@@ -25,11 +25,11 @@
             <artifactId>dracarys-jobrunr</artifactId>
             <version>1.0.3-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>io.github.junhuhdev</groupId>
-            <artifactId>dracarys-debezium</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.github.junhuhdev</groupId>-->
+<!--            <artifactId>dracarys-debezium</artifactId>-->
+<!--            <version>0.0.1-SNAPSHOT</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -88,7 +88,8 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>7.3.2</version>
                 <configuration>
-                    <url>jdbc:postgresql://localhost:5432/family</url>
+<!--                    <url>jdbc:postgresql://localhost:5432/family</url>-->
+                    <url>jdbc:postgresql://localhost:5433/familydb</url>
                     <user>user</user>
                     <password>test</password>
                     <schemas>

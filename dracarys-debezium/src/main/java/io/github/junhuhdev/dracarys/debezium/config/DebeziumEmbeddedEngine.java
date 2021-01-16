@@ -7,11 +7,12 @@ import io.debezium.embedded.Connect;
 import io.debezium.engine.DebeziumEngine;
 import io.debezium.engine.RecordChangeEvent;
 import io.debezium.engine.format.ChangeEventFormat;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.kafka.connect.data.Field;
 import org.apache.kafka.connect.data.Struct;
 import org.apache.kafka.connect.source.SourceRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -27,10 +28,9 @@ import static io.debezium.data.Envelope.FieldName.BEFORE;
 import static io.debezium.data.Envelope.FieldName.OPERATION;
 import static java.util.stream.Collectors.toMap;
 
-@Slf4j
 @Component
 public class DebeziumEmbeddedEngine {
-
+	private final static Logger log = LoggerFactory.getLogger(DebeziumEmbeddedEngine.class);
 	private final Configuration configuration;
 	private final Gson gson;
 	private final DebeziumConsumer consumer;
@@ -43,6 +43,7 @@ public class DebeziumEmbeddedEngine {
 
 	@PostConstruct
 	public void start() {
+		log.info("Starting Dracarys Debezium Embedded Engine...");
 		try (DebeziumEngine<RecordChangeEvent<SourceRecord>> engine =
 				     DebeziumEngine.create(ChangeEventFormat.of(Connect.class))
 						     .using(configuration.asProperties())

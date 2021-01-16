@@ -1,11 +1,9 @@
 package io.github.junhuhdev.dracarys.jobrunr.examples.infra.config;
 
-import io.github.junhuhdev.dracarys.debezium.EnableDracarysDebezium;
-import io.github.junhuhdev.dracarys.debezium.config.DebeziumConsumer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@EnableDracarysDebezium
+//@EnableDracarysDebezium
 @Configuration
 public class DracarysDebeziumConfiguration {
 
