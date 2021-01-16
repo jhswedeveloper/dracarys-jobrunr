@@ -3,6 +3,7 @@ package io.github.junhuhdev.dracarys.pipeline.chain;
 import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,7 +16,8 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 @Component
 public class ChainRouter implements Chainable {
 
-	private final List<ChainBase<Command.Request>> chains;
+	private final List<ChainBase> chains;
+
 
 	@Override
 	public ChainContext dispatch(Command.Request event) throws Exception {
