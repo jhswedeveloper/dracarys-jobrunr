@@ -1,20 +1,12 @@
 package io.github.junhuhdev.dracarys.pipeline.chain;
 
+import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
 import io.github.junhuhdev.dracarys.pipeline.event.EventTransaction;
+import org.checkerframework.checker.units.qual.C;
 
-public interface Chainable {
+public interface Chainable<R extends Command.Request, C extends Command> {
 
 	/** Main entry point to trigger a chain execution */
-	ChainContext dispatch(EventTransaction event) throws Exception;
-
-	/** Resume processing of callback event */
-	default ChainContext resume(String referenceId) throws Exception {
-		throw new IllegalStateException(String.format("Chain %s does not support resume", this.getClass().getSimpleName()));
-	}
-
-	/** Flag whether this chain can be mixed with others */
-	default boolean isMixable() {
-		return true;
-	}
+	ChainContext<C> dispatch(R event) throws Exception;
 
 }

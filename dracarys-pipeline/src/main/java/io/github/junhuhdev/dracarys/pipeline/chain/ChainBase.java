@@ -1,13 +1,8 @@
 package io.github.junhuhdev.dracarys.pipeline.chain;
 
 import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
-import io.github.junhuhdev.dracarys.pipeline.common.Conditional;
 import io.github.junhuhdev.dracarys.pipeline.common.FirstGenericArgOf;
-import io.github.junhuhdev.dracarys.pipeline.event.EventTransaction;
-import io.github.junhuhdev.dracarys.pipeline.jdbc.EventJdbcRepository;
 import org.springframework.beans.factory.ListableBeanFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -17,12 +12,10 @@ import java.util.ListIterator;
 /**
  * One chain per event to process
  */
-public abstract class ChainBase<R extends Command.Request> implements Chainable, Conditional {
+public abstract class ChainBase<R extends Command.Request, C extends Command> implements Chainable<R, C> {
 
 	@Resource
 	private ListableBeanFactory beanFactory;
-	@Autowired
-	private EventJdbcRepository eventJdbcRepository;
 
 	protected abstract List<Class<? extends Command>> getCommands();
 
@@ -46,13 +39,7 @@ public abstract class ChainBase<R extends Command.Request> implements Chainable,
 	}
 
 	@Override
-	public ChainContext resume(String referenceId) throws Exception {
-		var event = eventJdbcRepository.findByReferenceId(referenceId);
-		return dispatch(event);
-	}
-
-	@Override
-	public ChainContext dispatch(EventTransaction event) throws Exception {
+	public ChainContext<C> dispatch(R event) throws Exception {
 		ListIterator<Command.Handler> commands = this.createCommands();
 		Chain chain = new Chain(commands);
 		return chain.proceed(new ChainContext(event));

@@ -1,6 +1,7 @@
 package io.github.junhuhdev.dracarys.pipeline.chain;
 
 import com.google.common.collect.Lists;
+import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
 import io.github.junhuhdev.dracarys.pipeline.event.Event;
 import io.github.junhuhdev.dracarys.pipeline.event.EventState;
 import io.github.junhuhdev.dracarys.pipeline.event.EventTransaction;
@@ -10,56 +11,49 @@ import java.util.List;
 import static java.util.Objects.isNull;
 import static java.util.Objects.requireNonNull;
 
-public class ChainContext {
+public class ChainContext<C extends Command> {
 
-    private final EventTransaction xEventTransaction;
+    private final C command;
 
-    public ChainContext(EventTransaction xEventTransaction) {
-        this.xEventTransaction = xEventTransaction;
+    public ChainContext(C command) {
+        this.command = command;
     }
 
-    public EventTransaction getEventTransaction() {
-        return xEventTransaction;
+    public C getEventTransaction() {
+        return command;
     }
 
-    public void setNextWorkflow(String workflow) {
-        xEventTransaction.setWorkflow(workflow);
-    }
-
-    public String getWorkflow() {
-        return xEventTransaction.getWorkflow();
-    }
 
     public Long getId() {
-        return xEventTransaction.getId();
+        return command.getId();
     }
 
     public Long getParentId() {
-        return xEventTransaction.getParentId();
+        return command.getParentId();
     }
 
     public Long getOriginId() {
-        return isNull(xEventTransaction.getParentId()) ? xEventTransaction.getId() : xEventTransaction.getParentId();
+        return isNull(command.getParentId()) ? command.getId() : command.getParentId();
     }
 
     public List<Event> getEvents() {
-        return xEventTransaction.getEvents();
+        return command.getEvents();
     }
 
     public EventState getState() {
-        return xEventTransaction.getState();
+        return command.getState();
     }
 
     public <T extends Event> T getFirstEvent(Class<T> event) {
-        return this.xEventTransaction.getFirstEvent(event);
+        return this.command.getFirstEvent(event);
     }
 
     public <T extends Event> T getLastEvent(Class<T> event) {
-        return this.xEventTransaction.getLatestEvent(event);
+        return this.command.getLatestEvent(event);
     }
 
     public <T extends Event> T getLastEvent() {
-        return this.xEventTransaction.getLatestEvent();
+        return this.command.getLatestEvent();
     }
 
     public EventTransaction newChild(Event nextEvent, String nextWorkflow) {
@@ -72,9 +66,9 @@ public class ChainContext {
 
     public void store(Event event) {
         requireNonNull(event, "Event cannot be null");
-        this.xEventTransaction.store(event);
-        event.nextUpdate(this.xEventTransaction);
+        this.command.store(event);
+        event.nextUpdate(this.command);
         var onNextState = event.nextState();
-        onNextState.ifPresent(this.xEventTransaction::triggerStateTransition);
+        onNextState.ifPresent(this.command::triggerStateTransition);
     }
 }

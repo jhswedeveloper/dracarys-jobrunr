@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class UserRegistrationChain extends ChainBase {
+public class UserRegistrationChain extends ChainBase<UserRegistrationChain.UserRegistrationRequest> {
 
 	@Override
 	protected List<Class<? extends Command>> getCommands() {

@@ -16,7 +16,7 @@ public class Chain {
 	}
 
 	/** Recusively calls itself until all cmds of chain have executed */
-	public ChainContext proceed(ChainContext ctx) throws Exception {
+	public <C extends Command> ChainContext<C> proceed(ChainContext ctx) throws Exception {
 		if (!commands.hasNext()) {
 			return completeChain();
 		}
