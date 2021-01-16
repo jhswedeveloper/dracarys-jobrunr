@@ -26,9 +26,6 @@ import static io.github.junhuhdev.dracarys.jobrunr.server.BackgroundJobServerCon
 @Slf4j
 public class JobRunrConfig {
 
-	@Autowired
-	private BackgroundJobServer backgroundJobServer;
-
 	@Bean
 	public JobActivator jobActivator(ApplicationContext applicationContext) {
 		return applicationContext::getBean;

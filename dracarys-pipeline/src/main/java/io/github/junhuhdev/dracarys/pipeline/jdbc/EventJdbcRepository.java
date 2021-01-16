@@ -1,5 +1,6 @@
 package io.github.junhuhdev.dracarys.pipeline.jdbc;
 
+import io.github.junhuhdev.dracarys.pipeline.event.Event;
 import io.github.junhuhdev.dracarys.pipeline.event.EventQuery;
 import io.github.junhuhdev.dracarys.pipeline.event.EventSQLQuery;
 import io.github.junhuhdev.dracarys.pipeline.event.EventState;
