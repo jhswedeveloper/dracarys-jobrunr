@@ -9,14 +9,19 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @Slf4j
-@RequiredArgsConstructor
 @Data
-@Component
 public class SlackNotifyCmd implements Command {
 
-	@Override
-	public ChainContext execute(ChainContext ctx, Chain chain) throws Exception {
-		return null;
+	@Slf4j
+	@RequiredArgsConstructor
+	@Component
+	static class Handler implements Command.Handler {
+
+		@Override
+		public ChainContext execute(ChainContext ctx, Chain chain) throws Exception {
+			return null;
+		}
+
 	}
 
 }

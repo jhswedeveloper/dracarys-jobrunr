@@ -16,7 +16,7 @@ public class Chain {
 	}
 
 	/** Recusively calls itself until all cmds of chain have executed */
-	public <C extends Command> ChainContext<C> proceed(ChainContext ctx) throws Exception {
+	public ChainContext proceed(ChainContext ctx) throws Exception {
 		if (!commands.hasNext()) {
 			return completeChain();
 		}
@@ -26,7 +26,7 @@ public class Chain {
 			log.info("Processing command={} id={} ", cmdClazz, ctx.getId());
 			return command.execute(ctx, this);
 		} catch (Exception e) {
-			log.error("Failed to process command={}, event={}", cmdClazz, ctx.getEventTransaction(), e);
+			log.error("Failed to process command={}", cmdClazz, e);
 			throw e;
 		} finally {
 			commands.previous();

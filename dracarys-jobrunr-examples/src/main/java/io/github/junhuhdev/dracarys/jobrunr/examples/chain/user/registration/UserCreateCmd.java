@@ -20,7 +20,8 @@ public class UserCreateCmd implements Command {
 
 		@Override
 		public ChainContext execute(ChainContext ctx, Chain chain) throws Exception {
-			return null;
+			var request = ctx.getFirst(UserRegistrationChain.UserRegistrationRequest.class);
+			return chain.proceed(ctx);
 		}
 
 	}
