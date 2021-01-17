@@ -49,6 +49,7 @@ public class AllJVMInstructions {
         instructions.put(Opcodes.GETSTATIC, GetStaticInstruction::new);
         instructions.put(Opcodes.RETURN, ReturnOperandInstruction::new);
         instructions.put(Opcodes.SIPUSH, SingleIntOperandInstruction::new);
+        instructions.put(Opcodes.CHECKCAST, NewOperandInstruction::new);
     }
 
     private AllJVMInstructions() {

@@ -36,8 +36,6 @@ public class GsonJsonMapper implements JsonMapper {
     public GsonJsonMapper() {
         gson = new GsonBuilder()
                 .serializeNulls()
-                .registerTypeAdapterFactory(RuntimeClassNameTypeAdapterFactory.of(ChainBase.class))
-                .registerTypeAdapterFactory(RuntimeClassNameTypeAdapterFactory.of(Command.Request.class))
                 .registerTypeAdapterFactory(RuntimeClassNameTypeAdapterFactory.of(Command.class))
                 .registerTypeAdapterFactory(RuntimeClassNameTypeAdapterFactory.of(JobState.class))
                 .registerTypeAdapterFactory(RuntimeClassNameTypeAdapterFactory.of(Map.class))
