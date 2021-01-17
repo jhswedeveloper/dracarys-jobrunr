@@ -20,6 +20,7 @@ public class UserValidateCmd implements Command {
 
 		@Override
 		public ChainContext execute(ChainContext ctx, Chain chain) throws Exception {
+			log.info("Running (1) UserValidateCmd");
 			return chain.proceed(ctx);
 		}
 

@@ -13,17 +13,16 @@ import org.springframework.stereotype.Component;
 @Data
 public class UserCreateCmd implements Command {
 
-	@Slf4j
-	@RequiredArgsConstructor
-	@Component
-	static class Handler implements Command.Handler {
+    @Slf4j
+    @RequiredArgsConstructor
+    @Component
+    static class Handler implements Command.Handler {
 
-		@Override
-		public ChainContext execute(ChainContext ctx, Chain chain) throws Exception {
-			var request = ctx.getFirst(UserRegistrationChain.UserRegistrationRequest.class);
-			return chain.proceed(ctx);
-		}
-
-	}
-
+        @Override
+        public ChainContext execute(ChainContext ctx, Chain chain) throws Exception {
+            log.info("Running (2) UserCreateCmd");
+            var request = ctx.getFirst(UserRegistrationChain.UserRegistrationRequest.class);
+            return chain.proceed(ctx);
+        }
+    }
 }

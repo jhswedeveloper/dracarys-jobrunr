@@ -3,6 +3,8 @@ package io.github.junhuhdev.dracarys.pipeline.chain;
 import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
 import io.github.junhuhdev.dracarys.pipeline.common.FirstGenericArgOf;
 import org.springframework.beans.factory.ListableBeanFactory;
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -18,6 +20,9 @@ public abstract class ChainBase<R extends Command.Request> implements Chainable 
     @Resource
     private ListableBeanFactory beanFactory;
 
+    @Autowired
+    protected ObjectProvider<Command.Middleware> middlewares;
+
     protected abstract List<Class<? extends Command>> getCommands();
 
     public boolean matches(R request) {
@@ -29,7 +34,7 @@ public abstract class ChainBase<R extends Command.Request> implements Chainable 
     @Override
     public ChainContext dispatch(Command.Request event) throws Exception {
         ListIterator<Command.Handler> commands = this.createCommands();
-        Chain chain = new Chain(commands);
+        Chain chain = new Chain(commands, middlewares);
         return chain.proceed(new ChainContext(event));
     }
 
@@ -42,7 +47,6 @@ public abstract class ChainBase<R extends Command.Request> implements Chainable 
     private void addCommands(List<Command.Handler> commands, List<Class<? extends Command>> listOfCmds) {
         for (var cmd : listOfCmds) {
             Command.Handler bean = (Command.Handler) beanFactory.getBean(Arrays.stream(cmd.getDeclaredClasses()).findFirst().get());
-//            Command.Handler bean = (Command.Handler) beanFactory.getBean(cmd.getName().concat("$Handler"));
             commands.add(bean);
         }
     }

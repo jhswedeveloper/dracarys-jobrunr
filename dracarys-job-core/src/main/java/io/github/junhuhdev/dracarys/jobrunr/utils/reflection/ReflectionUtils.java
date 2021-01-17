@@ -93,7 +93,8 @@ public class ReflectionUtils {
         try {
             ClassLoader classLoader = currentThread().getContextClassLoader();
             if (classLoader != null) {
-                return Class.forName(className, true, classLoader);
+                return Class.forName(className);
+//                return Class.forName(className, true, classLoader);
             }
         } catch (ClassNotFoundException e) {
             // support for Spring Boot Executable jar. See https://github.com/jobrunr/jobrunr/issues/81

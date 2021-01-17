@@ -84,12 +84,12 @@ public class DracarysDebeziumConsumer implements DebeziumConsumer {
                                     cmd -> {
                                         if (cmd instanceof Command.Request) {
                                             try {
-                                                router.dispatch((Command.Request) cmd);
+                                                jobScheduler.enqueue(() -> router.dispatch((Command.Request) cmd));
+//                                                router.dispatch((Command.Request) cmd);
                                             } catch (Exception e) {
                                                 log.error("Failed to dispatch", e);
                                                 e.printStackTrace();
                                             }
-//											jobScheduler.enqueue(() -> router.dispatch((Command.Request) cmd));
                                         }
                                     });
                         } catch (ClassNotFoundException | NoClassDefFoundError e) {

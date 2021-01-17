@@ -11,6 +11,8 @@ import io.github.junhuhdev.dracarys.jobrunr.jobs.states.JobState;
 import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.JsonMapper;
 import io.github.junhuhdev.dracarys.jobrunr.utils.metadata.VersionRetriever;
 import io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils;
+import io.github.junhuhdev.dracarys.pipeline.chain.ChainBase;
+import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -34,6 +36,9 @@ public class GsonJsonMapper implements JsonMapper {
     public GsonJsonMapper() {
         gson = new GsonBuilder()
                 .serializeNulls()
+                .registerTypeAdapterFactory(RuntimeClassNameTypeAdapterFactory.of(ChainBase.class))
+                .registerTypeAdapterFactory(RuntimeClassNameTypeAdapterFactory.of(Command.Request.class))
+                .registerTypeAdapterFactory(RuntimeClassNameTypeAdapterFactory.of(Command.class))
                 .registerTypeAdapterFactory(RuntimeClassNameTypeAdapterFactory.of(JobState.class))
                 .registerTypeAdapterFactory(RuntimeClassNameTypeAdapterFactory.of(Map.class))
                 .registerTypeAdapterFactory(RuntimeClassNameTypeAdapterFactory.of(JobContext.Metadata.class))

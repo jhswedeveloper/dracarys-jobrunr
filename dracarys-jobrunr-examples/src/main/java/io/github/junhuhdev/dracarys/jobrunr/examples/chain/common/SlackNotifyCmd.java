@@ -19,6 +19,7 @@ public class SlackNotifyCmd implements Command {
 
 		@Override
 		public ChainContext execute(ChainContext ctx, Chain chain) throws Exception {
+			log.info("Running (4) SlackNotifyCmd");
 			return ctx;
 		}
 

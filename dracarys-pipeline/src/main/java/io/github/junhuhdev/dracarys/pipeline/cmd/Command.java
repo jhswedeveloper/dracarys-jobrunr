@@ -7,19 +7,22 @@ import io.github.junhuhdev.dracarys.pipeline.chain.ChainContext;
  * Default interface for all commands to implement.
  */
 public interface Command {
-//	/**
-//	 * (1) Proceed to next command "chain.proceed(ctx);"
-//	 * (2) Do not proceed to next command "return ctx"
-//	 */
-//	ChainContext execute(ChainContext ctx, Chain chain) throws Exception;
 
-	interface Request extends Command {
-	}
+    interface Request extends Command {
+    }
 
-	interface Handler extends Command {
+    interface Handler extends Command {
 
-		ChainContext execute(ChainContext ctx, Chain chain) throws Exception;
+        ChainContext execute(ChainContext ctx, Chain chain) throws Exception;
+    }
 
-	}
+    @FunctionalInterface
+    interface Middleware {
+        <R, C extends Command.Handler> ChainContext invoke(C command, Next<R> next) throws Exception;
+//        ChainContext invoke(Handler command, Handler next);
 
+        interface Next<T> {
+            ChainContext invoke() throws Exception;
+        }
+    }
 }

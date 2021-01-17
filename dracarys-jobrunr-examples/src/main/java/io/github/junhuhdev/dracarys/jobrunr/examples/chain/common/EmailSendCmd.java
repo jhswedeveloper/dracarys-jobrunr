@@ -24,6 +24,7 @@ public class EmailSendCmd implements Command {
 
 		@Override
 		public ChainContext execute(ChainContext ctx, Chain chain) throws Exception {
+			log.info("Running (3) EmailSendCmd");
 			return chain.proceed(ctx);
 		}
 

@@ -119,6 +119,11 @@
             <version>3.4.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>io.github.junhuhdev</groupId>
+            <artifactId>dracarys-pipeline</artifactId>
+            <version>1.0.3-SNAPSHOT</version>
+        </dependency>
 
     </dependencies>
 
