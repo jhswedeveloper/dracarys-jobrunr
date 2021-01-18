@@ -6,6 +6,8 @@ import io.github.junhuhdev.dracarys.pipeline.cmd.CommandContext;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Objects.requireNonNull;
+
 public class ChainContext {
 
 	private final CommandContext commandContext;
@@ -39,6 +41,7 @@ public class ChainContext {
 	 * @param command
 	 */
 	public void store(Command command) {
+		requireNonNull(command, "Command cannot be null");
 		this.commandContext.store(command);
 	}
 
