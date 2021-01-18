@@ -28,10 +28,16 @@ public class CommandEntity  {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	private Long id;
+
+	@Column(name = "REFERENCE_ID")
+	private String referenceId;
+
 	@Column(name = "COMMAND_CLASS")
 	private String commandClass;
+
 	@Column(name = "COMMAND")
 	private String command;
+
 	@Column(name = "CREATED")
 	@Builder.Default
 	private LocalDateTime created = LocalDateTime.now();

@@ -20,6 +20,7 @@ public class CommandServiceImpl implements CommandService {
 	public void save(Command.Request request) {
 		var json = gson.toJson(request);
 		var cmd = CommandEntity.builder()
+				.referenceId(request.getReferenceId())
 				.commandClass(request.getClass().getName())
 				.command(json)
 				.build();
