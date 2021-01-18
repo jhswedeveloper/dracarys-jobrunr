@@ -25,7 +25,6 @@ public class UserCreateCmd implements Command {
 
         @Override
         public ChainContext execute(ChainContext ctx, Chain chain) throws Exception {
-            log.info("Running (2) UserCreateCmd");
             var request = ctx.getFirst(UserRegistrationChain.UserRegistrationRequest.class);
             var user = new UserEntity();
             user.setName(request.getName());
