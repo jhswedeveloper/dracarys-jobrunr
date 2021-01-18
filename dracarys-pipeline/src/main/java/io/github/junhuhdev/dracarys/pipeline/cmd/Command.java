@@ -8,21 +8,26 @@ import io.github.junhuhdev.dracarys.pipeline.chain.ChainContext;
  */
 public interface Command {
 
-    interface Request extends Command {
-    }
+	interface Request extends Command {
+	}
 
-    interface Handler extends Command {
+	interface Handler extends Command {
 
-        ChainContext execute(ChainContext ctx, Chain chain) throws Exception;
-    }
+		ChainContext execute(ChainContext ctx, Chain chain) throws Exception;
 
-    @FunctionalInterface
-    interface Middleware {
-        <R, C extends Command.Handler> ChainContext invoke(C command, Next<R> next) throws Exception;
-//        ChainContext invoke(Handler command, Handler next);
+	}
 
-        interface Next<T> {
-            ChainContext invoke() throws Exception;
-        }
-    }
+	@FunctionalInterface
+	interface Middleware {
+
+		<R, C extends Command.Handler> ChainContext invoke(C command, Next<R> next) throws Exception;
+
+		interface Next<T> {
+
+			ChainContext invoke() throws Exception;
+
+		}
+
+	}
+
 }

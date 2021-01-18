@@ -11,8 +11,6 @@ import io.github.junhuhdev.dracarys.jobrunr.jobs.states.JobState;
 import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.JsonMapper;
 import io.github.junhuhdev.dracarys.jobrunr.utils.metadata.VersionRetriever;
 import io.github.junhuhdev.dracarys.jobrunr.utils.reflection.ReflectionUtils;
-import io.github.junhuhdev.dracarys.pipeline.chain.ChainBase;
-import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -31,60 +29,74 @@ import static java.util.Collections.unmodifiableList;
 
 public class GsonJsonMapper implements JsonMapper {
 
-    private final Gson gson;
+	private final Gson gson;
 
-    public GsonJsonMapper() {
-        gson = new GsonBuilder()
-                .serializeNulls()
-                .registerTypeAdapterFactory(RuntimeClassNameTypeAdapterFactory.of(Command.class))
-                .registerTypeAdapterFactory(RuntimeClassNameTypeAdapterFactory.of(JobState.class))
-                .registerTypeAdapterFactory(RuntimeClassNameTypeAdapterFactory.of(Map.class))
-                .registerTypeAdapterFactory(RuntimeClassNameTypeAdapterFactory.of(JobContext.Metadata.class))
-                .registerTypeHierarchyAdapter(Path.class, new PathAdapter().nullSafe())
-                .registerTypeAdapter(Instant.class, new InstantAdapter().nullSafe())
-                .registerTypeAdapter(Duration.class, new DurationAdapter())
-                .registerTypeAdapter(JobParameter.class, new JobParameterDeserializer())
-                .create();
-        fixGsonNotBeingExtensible(gson);
-    }
+	public GsonJsonMapper(GsonBuilder builder) {
+		gson = builder
+				.serializeNulls()
+				.registerTypeAdapterFactory(RuntimeClassNameTypeAdapterFactory.of(JobState.class))
+				.registerTypeAdapterFactory(RuntimeClassNameTypeAdapterFactory.of(Map.class))
+				.registerTypeAdapterFactory(RuntimeClassNameTypeAdapterFactory.of(JobContext.Metadata.class))
+				.registerTypeHierarchyAdapter(Path.class, new PathAdapter().nullSafe())
+				.registerTypeAdapter(Instant.class, new InstantAdapter().nullSafe())
+				.registerTypeAdapter(Duration.class, new DurationAdapter())
+				.registerTypeAdapter(JobParameter.class, new JobParameterDeserializer())
+				.create();
+		fixGsonNotBeingExtensible(gson);
+	}
 
-    @Override
-    public String serialize(Object object) {
-        return gson.toJson(object);
-    }
+	public GsonJsonMapper() {
+		gson = new GsonBuilder()
+				.serializeNulls()
+				.registerTypeAdapterFactory(RuntimeClassNameTypeAdapterFactory.of(JobState.class))
+				.registerTypeAdapterFactory(RuntimeClassNameTypeAdapterFactory.of(Map.class))
+				.registerTypeAdapterFactory(RuntimeClassNameTypeAdapterFactory.of(JobContext.Metadata.class))
+				.registerTypeHierarchyAdapter(Path.class, new PathAdapter().nullSafe())
+				.registerTypeAdapter(Instant.class, new InstantAdapter().nullSafe())
+				.registerTypeAdapter(Duration.class, new DurationAdapter())
+				.registerTypeAdapter(JobParameter.class, new JobParameterDeserializer())
+				.create();
+		fixGsonNotBeingExtensible(gson);
+	}
 
-    @Override
-    public void serialize(Writer writer, Object object) {
-        gson.toJson(object, writer);
-    }
+	@Override
+	public String serialize(Object object) {
+		return gson.toJson(object);
+	}
 
-    @Override
-    public void serialize(OutputStream outputStream, Object object) {
-        try (final OutputStreamWriter writer = new OutputStreamWriter(outputStream)) {
-            gson.toJson(object, writer);
-        } catch (IOException e) {
-            throw JobRunrException.shouldNotHappenException(e);
-        }
-    }
+	@Override
+	public void serialize(Writer writer, Object object) {
+		gson.toJson(object, writer);
+	}
 
-    @Override
-    public <T> T deserialize(String serializedObjectAsString, Class<T> clazz) {
-        return gson.fromJson(serializedObjectAsString, clazz);
-    }
+	@Override
+	public void serialize(OutputStream outputStream, Object object) {
+		try (final OutputStreamWriter writer = new OutputStreamWriter(outputStream)) {
+			gson.toJson(object, writer);
+		} catch (IOException e) {
+			throw JobRunrException.shouldNotHappenException(e);
+		}
+	}
 
-    // I'm really sorry for this
-    // see https://github.com/google/gson/issues/1177
-    private void fixGsonNotBeingExtensible(Gson gson) {
-        try {
-            final Field factories = ReflectionUtils.getField(Gson.class, "factories");
-            ReflectionUtils.makeAccessible(factories);
-            final List o = new ArrayList<TypeAdapterFactory>((Collection<? extends TypeAdapterFactory>) factories.get(gson));
-            if (!o.get(1).equals(ObjectTypeAdapter.FACTORY))
-                throw JobRunrException.shouldNotHappenException(String.format("It looks like you are running a Gson version (%s) which is not compatible with JobRunr", VersionRetriever.getVersion(Gson.class)));
-            o.set(1, ClassNameObjectTypeAdapter.FACTORY);
-            factories.set(gson, unmodifiableList(o));
-        } catch (ReflectiveOperationException e) {
-            throw JobRunrException.shouldNotHappenException(e);
-        }
-    }
+	@Override
+	public <T> T deserialize(String serializedObjectAsString, Class<T> clazz) {
+		return gson.fromJson(serializedObjectAsString, clazz);
+	}
+
+	// I'm really sorry for this
+	// see https://github.com/google/gson/issues/1177
+	private void fixGsonNotBeingExtensible(Gson gson) {
+		try {
+			final Field factories = ReflectionUtils.getField(Gson.class, "factories");
+			ReflectionUtils.makeAccessible(factories);
+			final List o = new ArrayList<TypeAdapterFactory>((Collection<? extends TypeAdapterFactory>) factories.get(gson));
+			if (!o.get(1).equals(ObjectTypeAdapter.FACTORY))
+				throw JobRunrException.shouldNotHappenException(String.format("It looks like you are running a Gson version (%s) which is not compatible with JobRunr", VersionRetriever.getVersion(Gson.class)));
+			o.set(1, ClassNameObjectTypeAdapter.FACTORY);
+			factories.set(gson, unmodifiableList(o));
+		} catch (ReflectiveOperationException e) {
+			throw JobRunrException.shouldNotHappenException(e);
+		}
+	}
+
 }

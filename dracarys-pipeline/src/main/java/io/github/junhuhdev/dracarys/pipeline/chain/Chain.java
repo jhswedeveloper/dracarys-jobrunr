@@ -10,59 +10,59 @@ import java.util.ListIterator;
 
 public class Chain {
 
-    private static final Logger log = LoggerFactory.getLogger(Chain.class);
-    private final ListIterator<Command.Handler> commands;
-    private final StreamSupplier<Command.Middleware> middlewares;
+	private static final Logger log = LoggerFactory.getLogger(Chain.class);
+	private final ListIterator<Command.Handler> commands;
+	private final StreamSupplier<Command.Middleware> middlewares;
 
-    public Chain(ListIterator<Command.Handler> commands, ObjectProvider<Command.Middleware> middlewares) {
-        this.commands = commands;
-        this.middlewares = middlewares::orderedStream;
-    }
+	public Chain(ListIterator<Command.Handler> commands, ObjectProvider<Command.Middleware> middlewares) {
+		this.commands = commands;
+		this.middlewares = middlewares::orderedStream;
+	}
 
-    /**
-     * Recusively calls itself until all cmds of chain have executed
-     */
-    public ChainContext proceed(ChainContext ctx) throws Exception {
-        if (!commands.hasNext()) {
-            return completeChain();
-        }
-        Command.Handler command = commands.next();
-        String cmdClazz = command.getClass().getSimpleName();
-        Command.Middleware.Next handleCommand = new HandleCommand<>(command, ctx, this);
-        try {
-//            log.info("---> Started command={} id={} ", command.getClass(), ctx.getId());
-            return middlewares
-                    .supplyEx()
-                    .foldRight(handleCommand, (step, next) -> () -> step.invoke(command, next))
-                    .invoke();
-//            return command.execute(ctx, this);
-        } catch (Exception e) {
-            log.error("Failed to process command={}", cmdClazz, e);
-            throw e;
-        } finally {
-            commands.previous();
-        }
-    }
+	/**
+	 * Recusively calls itself until all cmds of chain have executed
+	 */
+	public ChainContext proceed(ChainContext ctx) throws Exception {
+		if (!commands.hasNext()) {
+			return completeChain();
+		}
+		Command.Handler command = commands.next();
+		String cmdClazz = command.getClass().getSimpleName();
+		Command.Middleware.Next handleCommand = new HandleCommand<>(command, ctx, this);
+		try {
+			return middlewares
+					.supplyEx()
+					.foldRight(handleCommand, (step, next) -> () -> step.invoke(command, next))
+					.invoke();
+		} catch (Exception e) {
+			log.error("Failed to process command={}", cmdClazz, e);
+			throw e;
+		} finally {
+			commands.previous();
+		}
+	}
 
-    private class HandleCommand<R, C extends Command.Handler> implements Command.Middleware.Next<ChainContext> {
+	private static class HandleCommand<R, C extends Command.Handler> implements Command.Middleware.Next<ChainContext> {
 
-        private final C command;
-        private final ChainContext ctx;
-        private final Chain chain;
+		private final C command;
+		private final ChainContext ctx;
+		private final Chain chain;
 
-        public HandleCommand(C command, ChainContext ctx, Chain chain) {
-            this.command = command;
-            this.ctx = ctx;
-            this.chain = chain;
-        }
+		public HandleCommand(C command, ChainContext ctx, Chain chain) {
+			this.command = command;
+			this.ctx = ctx;
+			this.chain = chain;
+		}
 
-        @Override
-        public ChainContext invoke() throws Exception {
-            return command.execute(ctx, chain);
-        }
-    }
+		@Override
+		public ChainContext invoke() throws Exception {
+			return command.execute(ctx, chain);
+		}
 
-    private ChainContext completeChain() {
-        throw new IllegalStateException("No command configured to handle end of chain gracefully.");
-    }
+	}
+
+	private ChainContext completeChain() {
+		throw new IllegalStateException("No command configured to handle end of chain gracefully.");
+	}
+
 }

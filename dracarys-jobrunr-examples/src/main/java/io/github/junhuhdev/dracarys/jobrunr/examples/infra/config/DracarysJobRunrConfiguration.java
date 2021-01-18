@@ -1,5 +1,6 @@
 package io.github.junhuhdev.dracarys.jobrunr.examples.infra.config;
 
+import com.google.gson.GsonBuilder;
 import io.github.junhuhdev.dracarys.jobrunr.configuration.JobRunr;
 import io.github.junhuhdev.dracarys.jobrunr.configuration.JobRunrConfiguration;
 import io.github.junhuhdev.dracarys.jobrunr.dashboard.JobRunrDashboardWebServer;
@@ -12,6 +13,8 @@ import io.github.junhuhdev.dracarys.jobrunr.storage.StorageProvider;
 import io.github.junhuhdev.dracarys.jobrunr.storage.sql.common.DefaultSqlStorageProvider;
 import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.JsonMapper;
 import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.gson.GsonJsonMapper;
+import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.gson.RuntimeClassNameTypeAdapterFactory;
+import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -47,7 +50,9 @@ public class DracarysJobRunrConfiguration {
 
 	@Bean
 	public JsonMapper jsonMapper() {
-		return new GsonJsonMapper();
+		GsonBuilder gsonBuilder = new GsonBuilder()
+				.registerTypeAdapterFactory(RuntimeClassNameTypeAdapterFactory.of(Command.class));
+		return new GsonJsonMapper(gsonBuilder);
 	}
 
 	@Bean
