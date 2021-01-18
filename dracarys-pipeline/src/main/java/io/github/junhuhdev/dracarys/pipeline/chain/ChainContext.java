@@ -4,6 +4,7 @@ import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
 import io.github.junhuhdev.dracarys.pipeline.cmd.CommandContext;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ChainContext {
 
@@ -17,19 +18,23 @@ public class ChainContext {
 		return this.commandContext.getId();
 	}
 
-	public List<Command.Request> getAll() {
+	public List<Command> getAll() {
 		return this.commandContext.getRequests();
 	}
 
-	public <R extends Command.Request> R getFirst(Class<R> type) {
+	public <R extends Command> R getFirst(Class<R> type) {
 		return this.commandContext.getFirst(type);
+	}
+
+	public <R extends Command> Optional<R> onFirst(Class<R> type) {
+		return this.commandContext.onFirst(type);
 	}
 
 	/**
 	 * Command can store command
 	 * @param command
 	 */
-	public void store(Command.Request command) {
+	public void store(Command command) {
 		this.commandContext.store(command);
 	}
 

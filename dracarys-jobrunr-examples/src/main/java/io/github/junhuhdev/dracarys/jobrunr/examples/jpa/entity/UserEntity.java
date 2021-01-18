@@ -23,11 +23,12 @@ public class UserEntity {
 	@Id
 	@Column(name = "EMAIL")
 	private String email;
+
+	@Column(name = "NAME")
+	private String name;
+
 	@Column(name = "PASSWORD")
 	private String password;
-	@Column(name = "FIRST_NAME")
-	private String firstName;
-	@Column(name = "LAST_NAME")
-	private String lastName;
+
 
 }

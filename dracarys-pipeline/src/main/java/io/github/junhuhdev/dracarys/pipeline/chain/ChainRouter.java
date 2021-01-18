@@ -18,7 +18,6 @@ public class ChainRouter implements Chainable {
 
 	private final List<ChainBase> chains;
 
-
 	@Override
 	public ChainContext dispatch(Command.Request event) throws Exception {
 		var chainMatches = chains.stream()
