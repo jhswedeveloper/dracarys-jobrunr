@@ -17,12 +17,16 @@ public class ChainContext {
 		this.commandContext = new CommandContext(command);
 	}
 
+	public CommandContext getCmdCtx() {
+		return commandContext;
+	}
+
 	public String getId() {
 		return this.commandContext.getId();
 	}
 
 	public List<Command> getAll() {
-		return this.commandContext.getRequests();
+		return this.commandContext.getCommands();
 	}
 
 	public <CMD extends Command> CMD getFirst(Class<CMD> type) {

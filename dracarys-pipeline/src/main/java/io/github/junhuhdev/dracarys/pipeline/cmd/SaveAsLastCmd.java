@@ -1,5 +1,6 @@
 package io.github.junhuhdev.dracarys.pipeline.cmd;
 
+import io.github.junhuhdev.dracarys.pipeline.api.CommandStorageApi;
 import io.github.junhuhdev.dracarys.pipeline.chain.Chain;
 import io.github.junhuhdev.dracarys.pipeline.chain.ChainContext;
 import lombok.Data;
@@ -15,9 +16,12 @@ public class SaveAsLastCmd implements Command {
 	@Component
 	static class Handler implements Command.Handler {
 
+		private final CommandStorageApi commandStorageApi;
+
 		@Override
 		public ChainContext execute(ChainContext ctx, Chain chain) throws Exception {
 			ctx = chain.proceed(ctx);
+			commandStorageApi.update(ctx.getCmdCtx());
 			return ctx;
 		}
 

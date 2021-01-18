@@ -11,16 +11,16 @@ public class CommandContext {
 	private final String id;
 	private final List<Command> requests;
 
-	public CommandContext(Command request) {
+	public CommandContext(Command.Request request) {
 		this.requests = Lists.newArrayList(request);
-		this.id = UUID.randomUUID().toString();
+		this.id = request.getReferenceId();
 	}
 
 	public String getId() {
 		return this.id;
 	}
 
-	public List<Command> getRequests() {
+	public List<Command> getCommands() {
 		return requests;
 	}
 
