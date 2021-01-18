@@ -4,6 +4,7 @@ import io.github.junhuhdev.dracarys.jobrunr.examples.jpa.repository.UserReposito
 import io.github.junhuhdev.dracarys.pipeline.chain.Chain;
 import io.github.junhuhdev.dracarys.pipeline.chain.ChainContext;
 import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
+import io.github.junhuhdev.dracarys.pipeline.cmd.FaultCmd;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,8 @@ public class UserValidateCmd implements Command {
 			var request = ctx.getFirst(UserRegistrationChain.UserRegistrationRequest.class);
 			var userExists = userRepository.existsById(request.getEmail());
 			if (userExists) {
-
+				ctx.store(FaultCmd.of("User with email %s already exists.", request.getEmail()));
+				return ctx;
 			}
 			return chain.proceed(ctx);
 		}

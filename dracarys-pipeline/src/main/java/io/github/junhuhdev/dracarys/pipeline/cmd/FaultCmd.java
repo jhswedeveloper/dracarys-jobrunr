@@ -23,6 +23,10 @@ public class FaultCmd implements Command {
 		this.stackTrace = getStackTrace(cause);
 	}
 
+	public static FaultCmd of(String format, Object... args) {
+		return new FaultCmd(String.format(format, args));
+	}
+
 	public String getMessage() {
 		return message;
 	}
@@ -41,6 +45,14 @@ public class FaultCmd implements Command {
 			errMsg.append(stackTrace[i]).append("\n");
 		}
 		return errMsg.toString();
+	}
+
+	@Override
+	public String toString() {
+		return "FaultCmd{" +
+				"message='" + message + '\'' +
+				", stackTrace='" + stackTrace + '\'' +
+				'}';
 	}
 
 }

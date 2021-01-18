@@ -2,6 +2,7 @@ package io.github.junhuhdev.dracarys.pipeline.chain;
 
 import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
 import io.github.junhuhdev.dracarys.pipeline.cmd.CommandContext;
+import io.github.junhuhdev.dracarys.pipeline.cmd.FaultCmd;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +31,11 @@ public class ChainContext {
 
 	public Command getLast() {
 		return this.commandContext.getLast();
+	}
+
+	public boolean hasFault() {
+		var cmd = this.commandContext.getLast();
+		return cmd instanceof FaultCmd;
 	}
 
 	public <CMD extends Command> Optional<CMD> onFirst(Class<CMD> type) {

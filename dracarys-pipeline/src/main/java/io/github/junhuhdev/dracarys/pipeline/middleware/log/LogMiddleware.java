@@ -30,6 +30,10 @@ public class LogMiddleware implements Command.Middleware {
 			Instant start = Instant.now();
 			logger.info("---> Started cmd={}, input={}", command.getClass().getDeclaringClass().getSimpleName(), ctx.getLast());
 			ChainContext response = sneak().get(next::invoke);
+			if (response.hasFault()) {
+				logger.error("<--- Failed cmd={} with error={} took {} ms", command.getClass().getDeclaringClass().getSimpleName(), ctx.getLast(), Duration.between(start, Instant.now()).toMillis());
+				return response;
+			}
 			logger.info("<--- Completed cmd={} took {} ms", command.getClass().getDeclaringClass().getSimpleName(), Duration.between(start, Instant.now()).toMillis());
 			return response;
 		});

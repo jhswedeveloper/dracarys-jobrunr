@@ -17,14 +17,14 @@ public class CommandServiceImpl implements CommandService {
 	private final Gson gson;
 
 	@Override
-	public void save(Command.Request request) {
+	public CommandEntity save(Command.Request request) {
 		var json = gson.toJson(request);
 		var cmd = CommandEntity.builder()
 				.referenceId(request.getReferenceId())
 				.commandClass(request.getClass().getName())
 				.command(json)
 				.build();
-		commandRepository.save(cmd);
+		return commandRepository.save(cmd);
 	}
 
 }
