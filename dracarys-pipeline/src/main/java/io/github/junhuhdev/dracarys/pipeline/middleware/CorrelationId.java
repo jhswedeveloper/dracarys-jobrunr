@@ -1,4 +1,4 @@
-package io.github.junhuhdev.dracarys.jobrunr.examples.chain.middleware;
+package io.github.junhuhdev.dracarys.pipeline.middleware;
 
 import org.slf4j.MDC;
 import org.springframework.stereotype.Component;

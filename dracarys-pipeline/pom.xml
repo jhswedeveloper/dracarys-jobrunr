@@ -54,6 +54,11 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.11</version>
         </dependency>
+        <dependency>
+            <groupId>com.machinezoo.noexception</groupId>
+            <artifactId>noexception</artifactId>
+            <version>1.6.2</version>
+        </dependency>
 
     </dependencies>
 

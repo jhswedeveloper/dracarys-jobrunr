@@ -33,7 +33,7 @@ public class ChainRouter implements Chainable {
 			throw new IllegalStateException("No chain to process workflow=" + event.getClass().getSimpleName());
 		}
 		for (var chain : chainMatches) {
-			log.info("Processing chain={} ...", chain.getClass().getSimpleName());
+			log.info("---> Started chain={}", chain.getClass().getSimpleName());
 			ctx = chain.dispatch(event);
 		}
 		return ctx;

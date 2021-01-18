@@ -1,4 +1,4 @@
-package io.github.junhuhdev.dracarys.jobrunr.examples.chain.middleware;
+package io.github.junhuhdev.dracarys.pipeline.middleware;
 
 import io.github.junhuhdev.dracarys.pipeline.chain.ChainContext;
 import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import static com.machinezoo.noexception.Exceptions.sneak;
 
 @RequiredArgsConstructor
-@Component
 @Order(1)
 public class LogMiddleware implements Command.Middleware {
 
@@ -25,9 +24,9 @@ public class LogMiddleware implements Command.Middleware {
 	public <R, C extends Command.Handler> ChainContext invoke(C command, Next<R> next) throws Exception {
 		var logger = logger(command);
 		return correlationId.wrap(() -> {
-			logger.info("---> Started {}", command.getClass());
+			logger.info("---> Started {}", command.getClass().getDeclaringClass().getSimpleName());
 			ChainContext response = sneak().get(next::invoke);
-			logger.info("<--- Completed {}", command);
+			logger.info("<--- Completed {}", command.getClass().getDeclaringClass().getSimpleName());
 			return response;
 		});
 	}
