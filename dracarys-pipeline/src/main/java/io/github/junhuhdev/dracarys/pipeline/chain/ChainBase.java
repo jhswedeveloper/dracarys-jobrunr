@@ -2,6 +2,8 @@ package io.github.junhuhdev.dracarys.pipeline.chain;
 
 import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
 import io.github.junhuhdev.dracarys.pipeline.common.FirstGenericArgOf;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +17,9 @@ import java.util.ListIterator;
 /**
  * One chain per event to process
  */
-public abstract class ChainBase<R extends Command.Request> implements Chainable {
+public abstract class ChainBase<REQUEST extends Command.Request> implements Chainable {
 
+	protected final Logger log = LoggerFactory.getLogger(getClass());
 	@Autowired
 	protected ObjectProvider<Command.Middleware> middlewares;
 	@Resource
@@ -24,7 +27,7 @@ public abstract class ChainBase<R extends Command.Request> implements Chainable 
 
 	protected abstract List<Class<? extends Command>> getCommands();
 
-	public boolean matches(R request) {
+	protected boolean matches(REQUEST request) {
 		Class handlerType = getClass();
 		Class commandType = request.getClass();
 		return new FirstGenericArgOf(handlerType).isAssignableFrom(commandType);
@@ -32,26 +35,26 @@ public abstract class ChainBase<R extends Command.Request> implements Chainable 
 
 	@Override
 	public ChainContext dispatch(Command.Request event) throws Exception {
-		ListIterator<Command.Handler> commands = this.createCommands();
+		ListIterator<Command.Handler> commands = createCommands();
 		Chain chain = new Chain(commands, middlewares);
 		return chain.proceed(new ChainContext(event));
 	}
 
 	private ListIterator<Command.Handler> createCommands() {
 		List<Command.Handler> commands = new ArrayList<>();
-		addCommands(commands, this.getCommands());
+		initCmdBeans(commands, getCommands());
 		return commands.listIterator();
 	}
 
-	private void addCommands(List<Command.Handler> commands, List<Class<? extends Command>> listOfCmds) {
+	private void initCmdBeans(List<Command.Handler> commands, List<Class<? extends Command>> listOfCmds) {
 		for (var cmd : listOfCmds) {
 			var clazz = Arrays.stream(cmd.getDeclaredClasses())
 					.filter(r -> r.getSimpleName().equalsIgnoreCase("Handler"))
 					.findFirst();
-			clazz.ifPresent(handlerClazz -> {
+			clazz.ifPresentOrElse(handlerClazz -> {
 				var bean = (Command.Handler) beanFactory.getBean(handlerClazz);
 				commands.add(bean);
-			});
+			}, () -> log.error("Failed to find cmd={}", cmd));
 		}
 	}
 

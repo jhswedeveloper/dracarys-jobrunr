@@ -22,7 +22,7 @@ public class ChainContext {
 		return this.commandContext.getRequests();
 	}
 
-	public <R extends Command> R getFirst(Class<R> type) {
+	public <CMD extends Command> CMD getFirst(Class<CMD> type) {
 		return this.commandContext.getFirst(type);
 	}
 
@@ -30,7 +30,7 @@ public class ChainContext {
 		return this.commandContext.getLast();
 	}
 
-	public <R extends Command> Optional<R> onFirst(Class<R> type) {
+	public <CMD extends Command> Optional<CMD> onFirst(Class<CMD> type) {
 		return this.commandContext.onFirst(type);
 	}
 

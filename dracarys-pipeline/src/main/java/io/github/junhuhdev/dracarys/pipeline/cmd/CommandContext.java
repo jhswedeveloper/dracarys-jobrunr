@@ -25,20 +25,20 @@ public class CommandContext {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <R extends Command> R getFirst(Class<R> type) {
+	public <CMD extends Command> CMD getFirst(Class<CMD> type) {
 		for (Command req : requests) {
 			if (type.isInstance(req)) {
-				return (R) req;
+				return (CMD) req;
 			}
 		}
 		throw new IllegalArgumentException("Request " + type.getSimpleName() + " not found");
 	}
 
 	@SuppressWarnings("unchecked")
-	public <R extends Command> Optional<R> onFirst(Class<R> type) {
+	public <CMD extends Command> Optional<CMD> onFirst(Class<CMD> type) {
 		for (Command req : requests) {
 			if (type.isInstance(req)) {
-				return Optional.of((R) req);
+				return Optional.of((CMD) req);
 			}
 		}
 		return Optional.empty();
