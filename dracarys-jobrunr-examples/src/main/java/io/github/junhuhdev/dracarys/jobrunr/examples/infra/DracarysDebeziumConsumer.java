@@ -53,7 +53,7 @@ public class DracarysDebeziumConsumer implements DebeziumConsumer {
     @SuppressWarnings("unchecked")
     private void handleCommand(SourceRecord sourceRecord) {
         try {
-            log.info("Incoming ... {}", sourceRecord);
+//            log.info("Incoming ... {}", sourceRecord);
             Struct sourceRecordValue = (Struct) sourceRecord.value();
             if (sourceRecordValue != null) {
                 Operation operation = Operation.forCode((String) sourceRecordValue.get(OPERATION));

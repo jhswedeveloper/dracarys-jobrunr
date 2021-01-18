@@ -3,6 +3,7 @@ package io.github.junhuhdev.dracarys.pipeline.chain;
 import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MarkerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,8 +33,9 @@ public class ChainRouter implements Chainable {
 			throw new IllegalStateException("No chain to process workflow=" + event.getClass().getSimpleName());
 		}
 		for (var chain : chainMatches) {
-			log.info("---> Started chain={}", chain.getClass().getSimpleName());
+			log.info(MarkerFactory.getMarker(chain.getClass().getSimpleName()), "---> Started chain={}", chain.getClass().getSimpleName());
 			ctx = chain.dispatch(event);
+			log.info(MarkerFactory.getMarker(chain.getClass().getSimpleName()), "<--- Completed chain={}", chain.getClass().getSimpleName());
 		}
 		return ctx;
 	}

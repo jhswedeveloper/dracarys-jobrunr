@@ -26,6 +26,10 @@ public class ChainContext {
 		return this.commandContext.getFirst(type);
 	}
 
+	public Command getLast() {
+		return this.commandContext.getLast();
+	}
+
 	public <R extends Command> Optional<R> onFirst(Class<R> type) {
 		return this.commandContext.onFirst(type);
 	}

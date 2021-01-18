@@ -9,6 +9,7 @@ import java.util.UUID;
 public class CommandContext {
 
 	private final String id;
+
 	private final List<Command> requests;
 
 	public CommandContext(Command request) {
@@ -42,6 +43,10 @@ public class CommandContext {
 			}
 		}
 		return Optional.empty();
+	}
+
+	public Command getLast() {
+		return requests.get(requests.size() - 1);
 	}
 
 	public void store(Command request) {

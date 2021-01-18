@@ -42,7 +42,7 @@ public class Chain {
 		}
 	}
 
-	private static class HandleCommand<R, C extends Command.Handler> implements Command.Middleware.Next<ChainContext> {
+	public static class HandleCommand<R, C extends Command.Handler> implements Command.Middleware.Next<ChainContext> {
 
 		private final C command;
 		private final ChainContext ctx;
@@ -52,6 +52,10 @@ public class Chain {
 			this.command = command;
 			this.ctx = ctx;
 			this.chain = chain;
+		}
+
+		public ChainContext ctx() {
+			return ctx;
 		}
 
 		@Override
