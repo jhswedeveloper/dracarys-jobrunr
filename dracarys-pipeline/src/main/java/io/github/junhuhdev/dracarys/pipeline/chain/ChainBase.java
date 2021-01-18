@@ -1,12 +1,17 @@
 package io.github.junhuhdev.dracarys.pipeline.chain;
 
 import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
+import io.github.junhuhdev.dracarys.pipeline.cmd.CompletionCmd;
+import io.github.junhuhdev.dracarys.pipeline.cmd.ExceptionHandlerCmd;
+import io.github.junhuhdev.dracarys.pipeline.cmd.SaveAsLastCmd;
 import io.github.junhuhdev.dracarys.pipeline.common.FirstGenericArgOf;
+import io.github.junhuhdev.dracarys.pipeline.common.Voidy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -20,10 +25,14 @@ import java.util.ListIterator;
 public abstract class ChainBase<REQUEST extends Command.Request> implements Chainable {
 
 	protected final Logger log = LoggerFactory.getLogger(getClass());
-	@Autowired
-	protected ObjectProvider<Command.Middleware> middlewares;
 	@Resource
 	private ListableBeanFactory beanFactory;
+	@Autowired
+	private ObjectProvider<Command.Middleware> middlewares;
+	@Autowired
+	private PreChain preChain;
+	@Autowired
+	private PostChain postChain;
 
 	protected abstract List<Class<? extends Command>> getCommands();
 
@@ -42,7 +51,9 @@ public abstract class ChainBase<REQUEST extends Command.Request> implements Chai
 
 	private ListIterator<Command.Handler> createCommands() {
 		List<Command.Handler> commands = new ArrayList<>();
+		initCmdBeans(commands, preChain.getCommands());
 		initCmdBeans(commands, getCommands());
+		initCmdBeans(commands, postChain.getCommands());
 		return commands.listIterator();
 	}
 
@@ -56,6 +67,28 @@ public abstract class ChainBase<REQUEST extends Command.Request> implements Chai
 				commands.add(bean);
 			}, () -> log.error("Failed to find cmd={}", cmd));
 		}
+	}
+
+	@Component
+	static class PreChain extends ChainBase<Voidy> {
+
+		@Override
+		protected List<Class<? extends Command>> getCommands() {
+			return List.of(
+					ExceptionHandlerCmd.class,
+					SaveAsLastCmd.class);
+		}
+
+	}
+
+	@Component
+	static class PostChain extends ChainBase<Voidy> {
+
+		@Override
+		protected List<Class<? extends Command>> getCommands() {
+			return List.of(CompletionCmd.class);
+		}
+
 	}
 
 }

@@ -1,6 +1,8 @@
 package io.github.junhuhdev.dracarys.pipeline.common;
 
-public class Voidy {
+import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
+
+public class Voidy implements Command.Request {
 
 	@Override
 	public String toString() {

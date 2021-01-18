@@ -19,9 +19,7 @@ public class Chain {
 		this.middlewares = middlewares::orderedStream;
 	}
 
-	/**
-	 * Recusively calls itself until all cmds of chain have executed
-	 */
+	/** Recusively calls itself until all cmds of chain have executed */
 	public ChainContext proceed(ChainContext ctx) throws Exception {
 		if (!commands.hasNext()) {
 			return completeChain();
