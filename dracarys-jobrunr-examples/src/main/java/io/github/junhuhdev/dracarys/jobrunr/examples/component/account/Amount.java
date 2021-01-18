@@ -51,6 +51,10 @@ public class Amount {
 		return isGreaterThanOrEqualTo(ZERO);
 	}
 
+	public boolean isNegative() {
+		return this.decimal.intValue() < 0;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Amount) {

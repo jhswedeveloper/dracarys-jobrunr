@@ -35,3 +35,8 @@ CREATE TABLE USERS (
     CREATED timestamp without time zone DEFAULT now()
 );
 
+CREATE TABLE ACCOUNT (
+    EMAIL CHARACTER VARYING NOT NULL PRIMARY KEY,
+    AMOUNT decimal(12,2) NOT NULL,
+    CREATED timestamp without time zone DEFAULT now()
+);
