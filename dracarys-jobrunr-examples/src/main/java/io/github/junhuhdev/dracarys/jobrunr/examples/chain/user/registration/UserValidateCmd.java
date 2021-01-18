@@ -1,5 +1,6 @@
 package io.github.junhuhdev.dracarys.jobrunr.examples.chain.user.registration;
 
+import io.github.junhuhdev.dracarys.jobrunr.examples.jpa.repository.CommandRepository;
 import io.github.junhuhdev.dracarys.jobrunr.examples.jpa.repository.UserRepository;
 import io.github.junhuhdev.dracarys.pipeline.chain.Chain;
 import io.github.junhuhdev.dracarys.pipeline.chain.ChainContext;
@@ -21,12 +22,13 @@ public class UserValidateCmd implements Command {
 	static class Handler implements Command.Handler {
 
 		private final UserRepository userRepository;
+		private final CommandRepository commandRepository;
 
 		@Override
 		public ChainContext execute(ChainContext ctx, Chain chain) throws Exception {
-			log.info("---> Running {}", getClass().getSimpleName());
 			var request = ctx.getFirst(UserRegistrationChain.UserRegistrationRequest.class);
 			var userExists = userRepository.existsById(request.getEmail());
+			var cmd = commandRepository.findByReferenceId(request.getReferenceId());
 			if (userExists) {
 				ctx.store(FaultCmd.of("User with email %s already exists.", request.getEmail()));
 				return ctx;

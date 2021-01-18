@@ -13,9 +13,11 @@ public interface Command {
 
 	interface Request extends Command {
 
-		default String getReferenceId() {
-			return getClass().getSimpleName().concat("-").concat(UUID.randomUUID().toString());
-		}
+		String getReferenceId();
+
+//		default String getReferenceId() {
+//			return getClass().getSimpleName().concat("-").concat(UUID.randomUUID().toString());
+//		}
 
 	}
 

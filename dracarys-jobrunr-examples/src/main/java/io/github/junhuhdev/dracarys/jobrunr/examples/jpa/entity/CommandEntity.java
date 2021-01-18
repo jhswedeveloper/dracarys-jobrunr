@@ -1,6 +1,7 @@
 package io.github.junhuhdev.dracarys.jobrunr.examples.jpa.entity;
 
 import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
+import io.github.junhuhdev.dracarys.pipeline.xstream.XStreamFactory;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -38,8 +40,15 @@ public class CommandEntity {
 	@Column(name = "COMMAND")
 	private String command;
 
+	@Column(name = "HISTORY")
+	private String history;
+
 	@Column(name = "CREATED")
 	@Builder.Default
 	private LocalDateTime created = LocalDateTime.now();
 
+	@SuppressWarnings("unchecked")
+	public List<Command> getHistory() {
+		return (List<Command>) XStreamFactory.xstream().fromXML(history);
+	}
 }

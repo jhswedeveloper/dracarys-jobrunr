@@ -4,8 +4,11 @@ import io.github.junhuhdev.dracarys.jobrunr.examples.chain.common.EmailSendCmd;
 import io.github.junhuhdev.dracarys.jobrunr.examples.chain.common.SlackNotifyCmd;
 import io.github.junhuhdev.dracarys.pipeline.chain.ChainBase;
 import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
+import io.github.junhuhdev.dracarys.pipeline.cmd.CommandRequestBase;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -22,9 +25,11 @@ public class UserRegistrationChain extends ChainBase<UserRegistrationChain.UserR
 				SlackNotifyCmd.class);
 	}
 
+	@EqualsAndHashCode(callSuper = true)
 	@AllArgsConstructor
+	@NoArgsConstructor
 	@Data
-	public static class UserRegistrationRequest implements Command.Request {
+	public static class UserRegistrationRequest extends CommandRequestBase {
 
 		private String email;
 		private String name;

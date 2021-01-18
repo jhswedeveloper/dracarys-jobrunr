@@ -23,7 +23,7 @@ public class AccountController {
 		return ResponseEntity.ok(res);
 	}
 
-	@PostMapping ("credit")
+	@PostMapping ("/credit")
 	public ResponseEntity<?> credit(@RequestBody AccountCreditChain.AccountCreditRequest cmd) {
 		var res = commandService.save(cmd);
 		return ResponseEntity.ok(res);
