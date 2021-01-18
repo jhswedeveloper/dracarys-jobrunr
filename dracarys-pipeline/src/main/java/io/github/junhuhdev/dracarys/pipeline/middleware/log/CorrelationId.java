@@ -8,17 +8,19 @@ import java.util.function.Supplier;
 
 @Component
 public class CorrelationId {
-    private static final String MDC_KEY = "ccid";
-    private final AtomicLong counter = new AtomicLong();
 
-    <T> T wrap(Supplier<T> action) throws Exception  {
-        var closeable = MDC.putCloseable(MDC_KEY, next());
-        try (closeable) {
-            return action.get();
-        }
-    }
+	private static final String MDC_KEY = "ccid";
+	private final AtomicLong counter = new AtomicLong();
 
-    private String next() {
-        return String.valueOf(counter.incrementAndGet() % 1000);
-    }
+	<T> T wrap(Supplier<T> action) throws Exception {
+		var closeable = MDC.putCloseable(MDC_KEY, next());
+		try (closeable) {
+			return action.get();
+		}
+	}
+
+	private String next() {
+		return String.valueOf(counter.incrementAndGet() % 1000);
+	}
+
 }

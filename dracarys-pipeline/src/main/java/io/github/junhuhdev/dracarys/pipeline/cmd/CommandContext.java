@@ -9,7 +9,6 @@ import java.util.UUID;
 public class CommandContext {
 
 	private final String id;
-
 	private final List<Command> requests;
 
 	public CommandContext(Command request) {

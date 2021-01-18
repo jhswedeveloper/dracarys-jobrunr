@@ -42,6 +42,10 @@ public class Chain {
 		}
 	}
 
+	private ChainContext completeChain() {
+		throw new IllegalStateException("No command configured to handle end of chain gracefully.");
+	}
+
 	public static class HandleCommand<CMD extends Command.Handler> implements Command.Middleware.Next {
 
 		private final CMD command;
@@ -63,10 +67,6 @@ public class Chain {
 			return command.execute(ctx, chain);
 		}
 
-	}
-
-	private ChainContext completeChain() {
-		throw new IllegalStateException("No command configured to handle end of chain gracefully.");
 	}
 
 }

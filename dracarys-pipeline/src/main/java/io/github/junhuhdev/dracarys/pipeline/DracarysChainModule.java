@@ -24,7 +24,6 @@ public class DracarysChainModule {
 		return new LogMiddleware(correlationId);
 	}
 
-
 	@Order(2)
 	@ConditionalOnMissingBean(TxMiddleware.class)
 	@Bean
@@ -32,4 +31,5 @@ public class DracarysChainModule {
 		log.info("Initializing transactional middleware...");
 		return new TxMiddleware(transactionManager);
 	}
+
 }

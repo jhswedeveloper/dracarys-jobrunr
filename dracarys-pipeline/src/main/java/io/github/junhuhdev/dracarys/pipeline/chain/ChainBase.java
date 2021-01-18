@@ -17,11 +17,10 @@ import java.util.ListIterator;
  */
 public abstract class ChainBase<R extends Command.Request> implements Chainable {
 
-	@Resource
-	private ListableBeanFactory beanFactory;
-
 	@Autowired
 	protected ObjectProvider<Command.Middleware> middlewares;
+	@Resource
+	private ListableBeanFactory beanFactory;
 
 	protected abstract List<Class<? extends Command>> getCommands();
 

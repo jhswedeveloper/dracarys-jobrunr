@@ -35,7 +35,7 @@ public interface Command {
 	@FunctionalInterface
 	interface Middleware {
 
-		< C extends Command.Handler> ChainContext invoke(C command, ChainContext ctx, Next next) throws Exception;
+		<C extends Command.Handler> ChainContext invoke(C command, ChainContext ctx, Next next) throws Exception;
 
 		interface Next {
 
