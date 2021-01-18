@@ -4,7 +4,6 @@ import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MarkerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -25,7 +24,7 @@ public class ChainRouter implements Chainable {
 				.filter(chain -> chain.matches(event))
 				.collect(toList());
 		ChainContext ctx = null;
-		log.info("Routing to chains {}", chainMatches.stream().map(r -> r.getClass().getSimpleName()).collect(toList()));
+		log.info("---> Routing to chains {}", chainMatches.stream().map(r -> r.getClass().getSimpleName()).collect(toList()));
 		if (chainMatches.size() > 1) {
 			throw new IllegalStateException(String.format("Found more than one chain to route type=%s", event.getClass().getSimpleName()));
 		}

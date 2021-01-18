@@ -32,7 +32,7 @@ public class Chain {
 		try {
 			return middlewares
 					.supplyEx()
-					.foldRight(handleCommand, (step, next) -> () -> step.invoke(command, next))
+					.foldRight(handleCommand, (step, next) -> () -> step.invoke(command, ctx, next))
 					.invoke();
 		} catch (Exception e) {
 			log.error("Failed to process command={}", cmdClazz, e);
@@ -42,13 +42,13 @@ public class Chain {
 		}
 	}
 
-	public static class HandleCommand<R, C extends Command.Handler> implements Command.Middleware.Next<ChainContext> {
+	public static class HandleCommand<CMD extends Command.Handler> implements Command.Middleware.Next {
 
-		private final C command;
+		private final CMD command;
 		private final ChainContext ctx;
 		private final Chain chain;
 
-		public HandleCommand(C command, ChainContext ctx, Chain chain) {
+		public HandleCommand(CMD command, ChainContext ctx, Chain chain) {
 			this.command = command;
 			this.ctx = ctx;
 			this.chain = chain;

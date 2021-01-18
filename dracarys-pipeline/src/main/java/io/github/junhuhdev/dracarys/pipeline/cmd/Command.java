@@ -4,6 +4,7 @@ import io.github.junhuhdev.dracarys.pipeline.chain.Chain;
 import io.github.junhuhdev.dracarys.pipeline.chain.ChainContext;
 
 import java.util.UUID;
+import java.util.stream.Stream;
 
 /**
  * Default interface for all commands to implement.
@@ -15,6 +16,7 @@ public interface Command {
 		default String getReferenceId() {
 			return getClass().getSimpleName().concat("-").concat(UUID.randomUUID().toString());
 		}
+
 	}
 
 	interface Handler extends Command {
@@ -24,11 +26,18 @@ public interface Command {
 	}
 
 	@FunctionalInterface
+	interface Middlewares {
+
+		Stream<Middleware> supply();
+
+	}
+
+	@FunctionalInterface
 	interface Middleware {
 
-		<R, C extends Command.Handler> ChainContext invoke(C command, Next<R> next) throws Exception;
+		< C extends Command.Handler> ChainContext invoke(C command, ChainContext ctx, Next next) throws Exception;
 
-		interface Next<T> {
+		interface Next {
 
 			ChainContext invoke() throws Exception;
 

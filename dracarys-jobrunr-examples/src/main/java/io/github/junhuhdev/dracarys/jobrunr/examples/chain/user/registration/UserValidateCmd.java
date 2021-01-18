@@ -23,6 +23,7 @@ public class UserValidateCmd implements Command {
 
 		@Override
 		public ChainContext execute(ChainContext ctx, Chain chain) throws Exception {
+			log.info("---> Running {}", getClass().getSimpleName());
 			var request = ctx.getFirst(UserRegistrationChain.UserRegistrationRequest.class);
 			var userExists = userRepository.existsById(request.getEmail());
 			if (userExists) {

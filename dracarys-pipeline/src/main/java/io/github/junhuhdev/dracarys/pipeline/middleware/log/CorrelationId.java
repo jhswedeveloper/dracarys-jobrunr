@@ -1,4 +1,4 @@
-package io.github.junhuhdev.dracarys.pipeline.middleware;
+package io.github.junhuhdev.dracarys.pipeline.middleware.log;
 
 import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
