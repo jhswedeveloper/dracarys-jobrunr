@@ -122,7 +122,7 @@ const CommandHistory = (props) => {
             >
                 <Alert className={classes.alert} severity="warning" icon={processingIcon}>
                     <Typography className={classes.primaryHeading} variant="h6">
-                        Command History
+                        Command History - {txCmdHistory.status}
                     </Typography>
                 </Alert>
             </ExpansionPanelSummary>
