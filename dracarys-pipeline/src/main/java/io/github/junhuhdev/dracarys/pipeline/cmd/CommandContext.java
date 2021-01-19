@@ -11,9 +11,18 @@ public class CommandContext {
 	private final String id;
 	private final List<Command> requests;
 
-	public CommandContext(Command.Request request) {
+	public CommandContext(Command request) {
 		this.requests = Lists.newArrayList(request);
-		this.id = request.getReferenceId();
+		this.id = ((Command.Request) request).getReferenceId();
+	}
+
+	public CommandContext(List<Command> cmds) {
+		this.requests = Lists.newArrayList(cmds);
+		this.id = cmds.stream()
+				.filter(r -> r instanceof Command.Request)
+				.map(r -> ((Command.Request) r).getReferenceId())
+				.findFirst()
+				.orElseThrow(() -> new IllegalArgumentException("Should not throw"));
 	}
 
 	public String getId() {

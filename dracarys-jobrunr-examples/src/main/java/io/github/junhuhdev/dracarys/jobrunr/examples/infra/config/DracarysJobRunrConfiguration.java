@@ -1,9 +1,11 @@
 package io.github.junhuhdev.dracarys.jobrunr.examples.infra.config;
 
+import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import io.github.junhuhdev.dracarys.jobrunr.configuration.JobRunr;
 import io.github.junhuhdev.dracarys.jobrunr.configuration.JobRunrConfiguration;
 import io.github.junhuhdev.dracarys.jobrunr.dashboard.JobRunrDashboardWebServer;
+import io.github.junhuhdev.dracarys.jobrunr.jobs.filters.RetryFilter;
 import io.github.junhuhdev.dracarys.jobrunr.jobs.mappers.JobMapper;
 import io.github.junhuhdev.dracarys.jobrunr.scheduling.BackgroundJob;
 import io.github.junhuhdev.dracarys.jobrunr.scheduling.JobScheduler;
@@ -59,6 +61,7 @@ public class DracarysJobRunrConfiguration {
 	public BackgroundJobServer backgroundJobServer(StorageProvider storageProvider, JobActivator jobActivator) {
 		var config = usingStandardBackgroundJobServerConfiguration().andWorkerCount(5);
 		final BackgroundJobServer backgroundJobServer = new BackgroundJobServer(storageProvider, jobActivator, config);
+		backgroundJobServer.setJobFilters(Lists.newArrayList(new RetryFilter(2)));
 		backgroundJobServer.start();
 		return backgroundJobServer;
 	}
@@ -74,7 +77,7 @@ public class DracarysJobRunrConfiguration {
 
 	@Bean
 	public JobScheduler initJobRunr(StorageProvider storageProvider, JobActivator jobActivator) {
-		JobScheduler jobScheduler = new JobScheduler(storageProvider);
+		JobScheduler jobScheduler = new JobScheduler(storageProvider, Lists.newArrayList(new RetryFilter(2)));
 		BackgroundJob.setJobScheduler(jobScheduler);
 		Runtime.getRuntime().addShutdownHook(new Thread(JobRunr::destroy, "extShutdownHook"));
 		return jobScheduler;

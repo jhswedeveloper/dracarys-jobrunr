@@ -43,10 +43,16 @@ public abstract class ChainBase<REQUEST extends Command.Request> implements Chai
 	}
 
 	@Override
-	public ChainContext dispatch(Command.Request event) throws Exception {
+	public ChainContext dispatch(Command.Request command) throws Exception {
 		ListIterator<Command.Handler> commands = createCommands();
 		Chain chain = new Chain(commands, middlewares);
-		return chain.proceed(new ChainContext(event));
+		return chain.proceed(new ChainContext(command));
+	}
+
+	protected ChainContext dispatchRetry(List<Command> listOfCmds) throws Exception {
+		ListIterator<Command.Handler> commands = createCommands();
+		Chain chain = new Chain(commands, middlewares);
+		return chain.proceed(new ChainContext(listOfCmds));
 	}
 
 	private ListIterator<Command.Handler> createCommands() {

@@ -13,8 +13,12 @@ public class ChainContext {
 
 	private final CommandContext commandContext;
 
-	public ChainContext(Command.Request command) {
+	public ChainContext(Command command) {
 		this.commandContext = new CommandContext(command);
+	}
+
+	public ChainContext(List<Command> commands) {
+		this.commandContext = new CommandContext(commands);
 	}
 
 	public CommandContext getCmdCtx() {

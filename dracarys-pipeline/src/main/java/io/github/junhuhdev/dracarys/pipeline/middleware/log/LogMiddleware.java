@@ -28,13 +28,23 @@ public class LogMiddleware implements Command.Middleware {
 		var logger = logger(command);
 		return correlationId.wrap(() -> {
 			Instant start = Instant.now();
-			logger.info("---> Started cmd={}, input={}", command.getClass().getDeclaringClass().getSimpleName(), ctx.getLast());
+			logger.info("---> Started cmd={}, id={}, input={}",
+					command.getClass().getDeclaringClass().getSimpleName(),
+					ctx.getFirst(Command.Request.class).getReferenceId(),
+					ctx.getLast());
 			ChainContext response = sneak().get(next::invoke);
 			if (response.hasFault()) {
-				logger.error("<--- Failed cmd={} with error={} took {} ms", command.getClass().getDeclaringClass().getSimpleName(), ctx.getLast(), Duration.between(start, Instant.now()).toMillis());
+				logger.error("<--- Failed cmd={}, id={} with error={} took {} ms",
+						command.getClass().getDeclaringClass().getSimpleName(),
+						ctx.getFirst(Command.Request.class).getReferenceId(),
+						ctx.getLast(),
+						Duration.between(start, Instant.now()).toMillis());
 				return response;
 			}
-			logger.info("<--- Completed cmd={} took {} ms", command.getClass().getDeclaringClass().getSimpleName(), Duration.between(start, Instant.now()).toMillis());
+			logger.info("<--- Completed cmd={}, id={} took {} ms",
+					command.getClass().getDeclaringClass().getSimpleName(),
+					ctx.getFirst(Command.Request.class).getReferenceId(),
+					Duration.between(start, Instant.now()).toMillis());
 			return response;
 		});
 	}

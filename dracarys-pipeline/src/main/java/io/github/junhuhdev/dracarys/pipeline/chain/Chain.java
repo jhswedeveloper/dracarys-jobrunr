@@ -25,16 +25,12 @@ public class Chain {
 			return completeChain();
 		}
 		Command.Handler command = commands.next();
-		String cmdClazz = command.getClass().getSimpleName();
 		Command.Middleware.Next handleCommand = new HandleCommand<>(command, ctx, this);
 		try {
 			return middlewares
 					.supplyEx()
 					.foldRight(handleCommand, (step, next) -> () -> step.invoke(command, ctx, next))
 					.invoke();
-		} catch (Exception e) {
-			log.error("Failed to process command={}", cmdClazz, e);
-			throw e;
 		} finally {
 			commands.previous();
 		}
