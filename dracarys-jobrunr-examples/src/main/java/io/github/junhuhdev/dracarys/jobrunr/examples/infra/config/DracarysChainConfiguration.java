@@ -34,7 +34,7 @@ public class DracarysChainConfiguration {
 				cmdEntity.setHistory(xml);
 				cmdEntity.setRetryCount(cmd.countFaults());
 				cmdEntity.setStatus(cmd.getStatus());
-				commandRepository.save(cmdEntity);
+				commandRepository.saveAndFlush(cmdEntity);
 			}
 
 			@Transactional(Transactional.TxType.REQUIRES_NEW)

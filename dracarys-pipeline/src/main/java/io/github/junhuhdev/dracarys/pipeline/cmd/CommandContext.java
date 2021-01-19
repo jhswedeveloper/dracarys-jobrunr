@@ -70,7 +70,7 @@ public class CommandContext {
 	public int countFaults() {
 		int count = 0;
 		for (Command req : requests) {
-			if (req instanceof FaultCmd) {
+			if (req instanceof FaultCmd || req instanceof FaultRetryCmd) {
 				count++;
 			}
 		}
