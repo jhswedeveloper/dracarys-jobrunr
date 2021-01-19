@@ -53,6 +53,16 @@ public class CommandContext {
 		return Optional.empty();
 	}
 
+	public int countFaults() {
+		int count = 0;
+		for (Command req : requests) {
+			if (req instanceof FaultCmd) {
+				count++;
+			}
+		}
+		return count;
+	}
+
 	public Command getLast() {
 		return requests.get(requests.size() - 1);
 	}

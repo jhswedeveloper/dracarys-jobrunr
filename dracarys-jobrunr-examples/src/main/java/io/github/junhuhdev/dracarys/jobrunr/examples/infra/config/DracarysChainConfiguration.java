@@ -31,6 +31,7 @@ public class DracarysChainConfiguration {
 				var cmdEntity = commandRepository.findByReferenceId(cmd.getId());
 				var xml = XStreamFactory.xstream().toXML(cmd.getCommands());
 				cmdEntity.setHistory(xml);
+				cmdEntity.setRetryCount(cmd.countFaults());
 				commandRepository.save(cmdEntity);
 			}
 

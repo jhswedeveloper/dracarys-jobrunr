@@ -10,6 +10,8 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,6 +45,13 @@ public class CommandEntity {
 	@Column(name = "HISTORY")
 	private String history;
 
+	@Column(name = "RETRY_COUNT")
+	private int retryCount;
+
+	@Column(name = "STATUS")
+	@Enumerated(EnumType.STRING)
+	private CommandStatus status = CommandStatus.REGISTERED;
+
 	@Column(name = "CREATED")
 	@Builder.Default
 	private LocalDateTime created = LocalDateTime.now();
@@ -51,4 +60,5 @@ public class CommandEntity {
 	public List<Command> getHistory() {
 		return (List<Command>) XStreamFactory.xstream().fromXML(history);
 	}
+
 }

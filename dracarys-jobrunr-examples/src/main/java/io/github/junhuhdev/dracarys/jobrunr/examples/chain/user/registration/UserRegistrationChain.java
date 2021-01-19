@@ -4,7 +4,7 @@ import io.github.junhuhdev.dracarys.jobrunr.examples.chain.common.EmailSendCmd;
 import io.github.junhuhdev.dracarys.jobrunr.examples.chain.common.SlackNotifyCmd;
 import io.github.junhuhdev.dracarys.pipeline.chain.ChainBase;
 import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
-import io.github.junhuhdev.dracarys.pipeline.cmd.CommandRequestBase;
+import io.github.junhuhdev.dracarys.pipeline.cmd.CommandRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -29,7 +29,7 @@ public class UserRegistrationChain extends ChainBase<UserRegistrationChain.UserR
 	@AllArgsConstructor
 	@NoArgsConstructor
 	@Data
-	public static class UserRegistrationRequest extends CommandRequestBase {
+	public static class UserRegistrationRequest extends CommandRequest {
 
 		private String email;
 		private String name;

@@ -1,9 +1,9 @@
 package io.github.junhuhdev.dracarys.pipeline.common;
 
 import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
-import io.github.junhuhdev.dracarys.pipeline.cmd.CommandRequestBase;
+import io.github.junhuhdev.dracarys.pipeline.cmd.CommandRequest;
 
-public class Voidy extends CommandRequestBase {
+public class Voidy extends CommandRequest {
 
 	@Override
 	public String toString() {
