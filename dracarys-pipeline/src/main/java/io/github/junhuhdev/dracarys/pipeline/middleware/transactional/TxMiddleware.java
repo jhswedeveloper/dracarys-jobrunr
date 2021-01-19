@@ -20,7 +20,7 @@ public class TxMiddleware implements Command.Middleware {
 		var tx = new TransactionTemplate(txManager);
 		tx.setName("Tx for " + command.getClass().getSimpleName());
 		tx.setReadOnly(command instanceof ReadOnly);
-		return tx.execute(status -> sneak().get(next::invoke));
+		return sneak().get(tx.execute(status -> next::invoke));
 	}
 
 }

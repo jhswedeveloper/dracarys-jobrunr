@@ -31,6 +31,7 @@ public class ExceptionHandlerCmd implements Command {
 			} catch (Exception e) {
 				log.error("Exception was thrown while processing {}", ctx.getId(), e);
 				ctx.store(new FaultCmd(e));
+				commandStorageApi.update(ctx.getCmdCtx());
 			}
 			return ctx;
 		}
