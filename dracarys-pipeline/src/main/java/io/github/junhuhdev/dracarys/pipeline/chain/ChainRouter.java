@@ -22,27 +22,28 @@ public class ChainRouter implements Chainable {
 	private final CommandStorageApi commandStorageApi;
 
 	@Override
-	public ChainContext dispatch(Command.Request event) throws Exception {
+	public ChainContext dispatch(Command.Request cmd) throws Exception {
 		var chainMatches = chains.stream()
-				.filter(chain -> chain.matches(event))
+				.filter(chain -> chain.matches(cmd))
 				.collect(toList());
 		log.info("---> Routing to chains {}", chainMatches.stream().map(r -> r.getClass().getSimpleName()).collect(toList()));
 		if (chainMatches.size() > 1) {
-			throw new IllegalStateException(String.format("Found more than one chain to route type=%s", event.getClass().getSimpleName()));
+			throw new IllegalStateException(String.format("Found more than one chain to route type=%s", cmd.getClass().getSimpleName()));
 		}
 		if (isEmpty(chainMatches)) {
-			throw new IllegalStateException("No chain to process workflow=" + event.getClass().getSimpleName());
+			throw new IllegalStateException("No chain to process workflow=" + cmd.getClass().getSimpleName());
 		}
-		var cmds = commandStorageApi.findByReferenceId(event.getReferenceId());
+		var cmds = commandStorageApi.findByReferenceId(cmd.getReferenceId());
 		var shouldRetry = cmds.size() > 1;
 		ChainContext ctx = null;
 		for (var chain : chainMatches) {
 			if (shouldRetry) {
-				log.info("---> Retrying attempt={}, chain={}, id={}", cmds.stream().filter(r -> r instanceof FaultCmd).count(), chain.getClass().getSimpleName(), event.getReferenceId());
-				ctx = chain.dispatchRetry(cmds);
+				log.info("---> Retrying attempt={}, chain={}, id={}", cmds.stream().filter(r -> r instanceof FaultCmd).count(), chain.getClass().getSimpleName(), cmd.getReferenceId());
+				var status = commandStorageApi.findStatus(cmd.getReferenceId());
+				ctx = chain.dispatchRetry(cmds, status);
 			} else {
-				log.info("---> Started chain={}, id={}", chain.getClass().getSimpleName(), event.getReferenceId());
-				ctx = chain.dispatch(event);
+				log.info("---> Started chain={}, id={}", chain.getClass().getSimpleName(), cmd.getReferenceId());
+				ctx = chain.dispatch(cmd);
 			}
 			log.info("<--- Completed chain={}", chain.getClass().getSimpleName());
 		}

@@ -3,7 +3,7 @@ package io.github.junhuhdev.dracarys.pipeline.cmd;
 import io.github.junhuhdev.dracarys.pipeline.chain.Chain;
 import io.github.junhuhdev.dracarys.pipeline.chain.ChainContext;
 
-import java.util.UUID;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
@@ -11,13 +11,13 @@ import java.util.stream.Stream;
  */
 public interface Command {
 
+	default Optional<CommandStatus> nextState() {
+		return Optional.empty();
+	}
+
 	interface Request extends Command {
 
 		String getReferenceId();
-
-//		default String getReferenceId() {
-//			return getClass().getSimpleName().concat("-").concat(UUID.randomUUID().toString());
-//		}
 
 	}
 

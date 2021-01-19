@@ -1,4 +1,4 @@
-package io.github.junhuhdev.dracarys.jobrunr.examples.jpa.entity;
+package io.github.junhuhdev.dracarys.pipeline.cmd;
 
 import com.google.common.collect.Lists;
 

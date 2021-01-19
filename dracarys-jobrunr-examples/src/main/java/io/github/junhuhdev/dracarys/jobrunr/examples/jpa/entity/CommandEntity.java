@@ -1,6 +1,7 @@
 package io.github.junhuhdev.dracarys.jobrunr.examples.jpa.entity;
 
 import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
+import io.github.junhuhdev.dracarys.pipeline.cmd.CommandStatus;
 import io.github.junhuhdev.dracarys.pipeline.xstream.XStreamFactory;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -50,6 +51,7 @@ public class CommandEntity {
 
 	@Column(name = "STATUS")
 	@Enumerated(EnumType.STRING)
+	@Builder.Default
 	private CommandStatus status = CommandStatus.REGISTERED;
 
 	@Column(name = "CREATED")

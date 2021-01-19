@@ -1,9 +1,12 @@
 package io.github.junhuhdev.dracarys.pipeline.chain;
 
 import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
+import io.github.junhuhdev.dracarys.pipeline.cmd.CommandStatus;
 import io.github.junhuhdev.dracarys.pipeline.cmd.CompletionCmd;
 import io.github.junhuhdev.dracarys.pipeline.cmd.ExceptionHandlerCmd;
+import io.github.junhuhdev.dracarys.pipeline.cmd.LockHandlerCmd;
 import io.github.junhuhdev.dracarys.pipeline.cmd.SaveAsLastCmd;
+import io.github.junhuhdev.dracarys.pipeline.cmd.SuccessfulHandlerCmd;
 import io.github.junhuhdev.dracarys.pipeline.common.FirstGenericArgOf;
 import io.github.junhuhdev.dracarys.pipeline.common.Voidy;
 import org.slf4j.Logger;
@@ -49,10 +52,10 @@ public abstract class ChainBase<REQUEST extends Command.Request> implements Chai
 		return chain.proceed(new ChainContext(command));
 	}
 
-	protected ChainContext dispatchRetry(List<Command> listOfCmds) throws Exception {
+	protected ChainContext dispatchRetry(List<Command> listOfCmds, CommandStatus status) throws Exception {
 		ListIterator<Command.Handler> commands = createCommands();
 		Chain chain = new Chain(commands, middlewares);
-		return chain.proceed(new ChainContext(listOfCmds));
+		return chain.proceed(new ChainContext(listOfCmds, status));
 	}
 
 	private ListIterator<Command.Handler> createCommands() {
@@ -81,6 +84,7 @@ public abstract class ChainBase<REQUEST extends Command.Request> implements Chai
 		@Override
 		protected List<Class<? extends Command>> getCommands() {
 			return List.of(
+					LockHandlerCmd.class,
 					ExceptionHandlerCmd.class,
 					SaveAsLastCmd.class);
 		}
@@ -92,7 +96,9 @@ public abstract class ChainBase<REQUEST extends Command.Request> implements Chai
 
 		@Override
 		protected List<Class<? extends Command>> getCommands() {
-			return List.of(CompletionCmd.class);
+			return List.of(
+					SuccessfulHandlerCmd.class,
+					CompletionCmd.class);
 		}
 
 	}

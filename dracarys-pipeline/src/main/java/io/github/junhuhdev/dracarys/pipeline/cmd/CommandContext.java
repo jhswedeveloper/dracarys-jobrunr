@@ -10,19 +10,22 @@ public class CommandContext {
 
 	private final String id;
 	private final List<Command> requests;
+	private CommandStatus status;
 
 	public CommandContext(Command request) {
 		this.requests = Lists.newArrayList(request);
 		this.id = ((Command.Request) request).getReferenceId();
+		this.status = CommandStatus.REGISTERED;
 	}
 
-	public CommandContext(List<Command> cmds) {
+	public CommandContext(List<Command> cmds, CommandStatus status) {
 		this.requests = Lists.newArrayList(cmds);
 		this.id = cmds.stream()
 				.filter(r -> r instanceof Command.Request)
 				.map(r -> ((Command.Request) r).getReferenceId())
 				.findFirst()
 				.orElseThrow(() -> new IllegalArgumentException("Should not throw"));
+		this.status = status;
 	}
 
 	public String getId() {
@@ -31,6 +34,17 @@ public class CommandContext {
 
 	public List<Command> getCommands() {
 		return requests;
+	}
+
+	public CommandStatus getStatus() {
+		return status;
+	}
+
+	public void triggerStateTransition(CommandStatus newState) {
+		if (!status.canStateTransitionTo(newState)) {
+			throw new IllegalStateException("Cannot trigger state transition from " + this.status + " to " + newState);
+		}
+		this.status = newState;
 	}
 
 	@SuppressWarnings("unchecked")

@@ -6,6 +6,7 @@ import io.github.junhuhdev.dracarys.pipeline.EnableDracarysChains;
 import io.github.junhuhdev.dracarys.pipeline.api.CommandStorageApi;
 import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
 import io.github.junhuhdev.dracarys.pipeline.cmd.CommandContext;
+import io.github.junhuhdev.dracarys.pipeline.cmd.CommandStatus;
 import io.github.junhuhdev.dracarys.pipeline.xstream.XStreamFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,12 +33,24 @@ public class DracarysChainConfiguration {
 				var xml = XStreamFactory.xstream().toXML(cmd.getCommands());
 				cmdEntity.setHistory(xml);
 				cmdEntity.setRetryCount(cmd.countFaults());
+				cmdEntity.setStatus(cmd.getStatus());
 				commandRepository.save(cmdEntity);
+			}
+
+			@Transactional(Transactional.TxType.REQUIRES_NEW)
+			@Override
+			public boolean lock(String referenceId) {
+				return commandRepository.lock(referenceId) == 1;
 			}
 
 			@Override
 			public List<Command> findByReferenceId(String refId) {
 				return commandRepository.findByReferenceId(refId).getHistory();
+			}
+
+			@Override
+			public CommandStatus findStatus(String referenceId) {
+				return commandRepository.findByReferenceId(referenceId).getStatus();
 			}
 		};
 	}

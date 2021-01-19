@@ -2,6 +2,7 @@ package io.github.junhuhdev.dracarys.pipeline.chain;
 
 import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
 import io.github.junhuhdev.dracarys.pipeline.cmd.CommandContext;
+import io.github.junhuhdev.dracarys.pipeline.cmd.CommandStatus;
 import io.github.junhuhdev.dracarys.pipeline.cmd.FaultCmd;
 
 import java.util.List;
@@ -17,12 +18,16 @@ public class ChainContext {
 		this.commandContext = new CommandContext(command);
 	}
 
-	public ChainContext(List<Command> commands) {
-		this.commandContext = new CommandContext(commands);
+	public ChainContext(List<Command> commands, CommandStatus status) {
+		this.commandContext = new CommandContext(commands, status);
 	}
 
 	public CommandContext getCmdCtx() {
 		return commandContext;
+	}
+
+	public CommandStatus getStatus() {
+		return commandContext.getStatus();
 	}
 
 	public String getId() {
@@ -57,6 +62,8 @@ public class ChainContext {
 	public void store(Command command) {
 		requireNonNull(command, "Command cannot be null");
 		this.commandContext.store(command);
+		var onNextState = command.nextState();
+		onNextState.ifPresent(commandContext::triggerStateTransition);
 	}
 
 }
