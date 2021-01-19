@@ -3,6 +3,7 @@ package io.github.junhuhdev.dracarys.pipeline.cmd;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 public class FaultCmd implements Command {
 
@@ -55,6 +56,11 @@ public class FaultCmd implements Command {
 			errMsg.append(stackTrace[i]).append("\n");
 		}
 		return errMsg.toString();
+	}
+
+	@Override
+	public Optional<CommandStatus> nextState() {
+		return Optional.of(CommandStatus.FAILED);
 	}
 
 	@Override

@@ -1,10 +1,13 @@
 package io.github.junhuhdev.dracarys.pipeline.chain;
 
+import io.github.junhuhdev.dracarys.jobrunr.jobs.context.JobRunrDashboardLogger;
 import io.github.junhuhdev.dracarys.pipeline.api.CommandStorageApi;
 import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
 import io.github.junhuhdev.dracarys.pipeline.cmd.FaultCmd;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.MarkerFactory;
 import org.springframework.stereotype.Component;
 
@@ -13,11 +16,11 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
-@Slf4j
 @RequiredArgsConstructor
 @Component
 public class ChainRouter implements Chainable {
 
+	private final static Logger log = new JobRunrDashboardLogger(LoggerFactory.getLogger(ChainRouter.class));
 	private final List<ChainBase> chains;
 	private final CommandStorageApi commandStorageApi;
 

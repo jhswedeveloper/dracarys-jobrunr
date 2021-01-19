@@ -15,13 +15,15 @@ public enum CommandStatus {
 	PROCESSING,
 	/** WAITING_CALLBACK state -> waiting for callback from Kafka */
 	WAITING_CALLBACK,
+	RETRY,
 	SUCCESSFUL,
 	FAILED;
 	private final static Map<CommandStatus, List<CommandStatus>> stateTransitions = new HashMap<>();
 
 	static {
 		stateTransitions.put(REGISTERED, Lists.newArrayList(PROCESSING, FAILED));
-		stateTransitions.put(PROCESSING, Lists.newArrayList(SUCCESSFUL, FAILED, WAITING_CALLBACK));
+		stateTransitions.put(RETRY, Lists.newArrayList(PROCESSING, FAILED));
+		stateTransitions.put(PROCESSING, Lists.newArrayList(SUCCESSFUL, FAILED, RETRY, WAITING_CALLBACK));
 		stateTransitions.put(WAITING_CALLBACK, Lists.newArrayList(PROCESSING, FAILED));
 	}
 

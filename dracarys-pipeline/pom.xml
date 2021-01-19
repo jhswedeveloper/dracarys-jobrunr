@@ -59,6 +59,11 @@
             <artifactId>noexception</artifactId>
             <version>1.6.2</version>
         </dependency>
+        <dependency>
+            <groupId>io.github.junhuhdev</groupId>
+            <artifactId>dracarys-job-core</artifactId>
+            <version>1.0.3-SNAPSHOT</version>
+        </dependency>
 
     </dependencies>
 

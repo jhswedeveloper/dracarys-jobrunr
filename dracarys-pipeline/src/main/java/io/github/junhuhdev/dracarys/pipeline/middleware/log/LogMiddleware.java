@@ -1,5 +1,6 @@
 package io.github.junhuhdev.dracarys.pipeline.middleware.log;
 
+import io.github.junhuhdev.dracarys.jobrunr.jobs.context.JobRunrDashboardLogger;
 import io.github.junhuhdev.dracarys.pipeline.chain.ChainContext;
 import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
 import lombok.RequiredArgsConstructor;
@@ -19,29 +20,29 @@ public class LogMiddleware implements Command.Middleware {
 	private final CorrelationId correlationId;
 
 	private <C extends Command.Handler> Logger logger(C command) {
-		return LoggerFactory.getLogger(command.getClass());
+		return new JobRunrDashboardLogger(LoggerFactory.getLogger(command.getClass()));
 	}
 
 	@SuppressWarnings("Unchecked")
 	@Override
 	public <C extends Command.Handler> ChainContext invoke(C command, ChainContext ctx, Next next) throws Exception {
-		var logger = logger(command);
+		var log = logger(command);
 		return correlationId.wrap(() -> {
 			Instant start = Instant.now();
-			logger.info("---> Started cmd={}, id={}, input={}",
+			log.info("---> Started cmd={}, id={}, input={}",
 					command.getClass().getDeclaringClass().getSimpleName(),
 					ctx.getFirst(Command.Request.class).getReferenceId(),
 					ctx.getLast());
 			ChainContext response = sneak().get(next::invoke);
 			if (response.hasFault()) {
-				logger.error("<--- Failed cmd={}, id={} with error={} took {} ms",
+				log.error("<--- Failed cmd={}, id={} with error={} took {} ms",
 						command.getClass().getDeclaringClass().getSimpleName(),
 						ctx.getFirst(Command.Request.class).getReferenceId(),
 						ctx.getLast(),
 						Duration.between(start, Instant.now()).toMillis());
 				return response;
 			}
-			logger.info("<--- Completed cmd={}, id={} took {} ms",
+			log.info("<--- Completed cmd={}, id={} took {} ms",
 					command.getClass().getDeclaringClass().getSimpleName(),
 					ctx.getFirst(Command.Request.class).getReferenceId(),
 					Duration.between(start, Instant.now()).toMillis());
