@@ -108,6 +108,10 @@ const CommandHistory = (props) => {
         setExpanded(!expanded);
     };
 
+    if (!txCmdHistory) {
+        return null;
+    }
+
     return (
         <ExpansionPanel expanded={expanded} onChange={handleChange}>
             <ExpansionPanelSummary

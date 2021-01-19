@@ -74,8 +74,6 @@ const JobView = (props) => {
             getJob(jobId);
         }
 
-        getCommandHistory(jobId);
-
         const eventSource = new EventSource(process.env.REACT_APP_SSE_URL + "/jobs/" + jobId);
         eventSource.addEventListener('message', e => onJob(JSON.parse(e.data)));
         eventSource.addEventListener('close', e => eventSource.close());
@@ -92,6 +90,10 @@ const JobView = (props) => {
             }
         }
     }, [job, order]);
+
+    React.useEffect(() => {
+        getCommandHistory(jobId);
+    }, [])
 
     const getJob = (id) => {
         fetch(`/api/jobs/${id}`)
