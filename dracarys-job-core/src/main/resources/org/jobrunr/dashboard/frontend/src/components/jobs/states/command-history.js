@@ -4,9 +4,7 @@ import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import LinearProgress from '@material-ui/core/LinearProgress';
 import Alert from "@material-ui/lab/Alert";
-import TimeAgo from "react-timeago/lib";
 import {makeStyles, withStyles} from '@material-ui/core/styles';
 import {Cogs} from "mdi-material-ui";
 import Highlight from "react-highlight";
@@ -73,35 +71,10 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-const ColoredLinearProgress = withStyles({
-    root: {
-        height: '7px'
-    },
-    barColorPrimary: {
-        backgroundColor: '#78b869'
-    },
-})(LinearProgress);
-
-const getLogs = (job, index) => {
-    if (job.metadata && job.metadata['jobRunrDashboardLog-' + (index + 1)]) {
-        return job.metadata['jobRunrDashboardLog-' + (index + 1)].logLines;
-    }
-    return [];
-};
-
-const getProgressBar = (job, index) => {
-    if (job.metadata && job.metadata['jobRunrDashboardProgressBar-' + (index + 1)]) {
-        return job.metadata['jobRunrDashboardProgressBar-' + (index + 1)];
-    }
-    return null;
-};
-
 const CommandHistory = (props) => {
     const classes = useStyles();
-    const index = props.index;
-    const job = props.job;
     const txCmdHistory = props.txCmdHistory;
-    const [expanded, setExpanded] = React.useState(job.jobHistory.length === (index + 1));
+    const [expanded, setExpanded] = React.useState(true);
     const processingIcon = <Cogs/>;
 
     const handleChange = () => {

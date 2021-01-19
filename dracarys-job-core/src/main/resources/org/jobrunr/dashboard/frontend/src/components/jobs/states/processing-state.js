@@ -133,8 +133,8 @@ const Processing = (props) => {
                 <div className={classes.details}>Job is processing on server {jobState.serverId}</div>
                 {logs.length > 0 &&
                 <div className={classes.console}>
-                    {logs.map((log) => (
-                        <dl key={log.logInstant} className={log.level}>
+                    {logs.map((log, index) => (
+                        <dl key={log.logInstant + index} className={log.level}>
                             <dt><TimeAgo date={new Date(log.logInstant)} now={() => new Date(jobState.createdAt)}
                                          live="false" formatter={(a, b, c) => a > 1 ? `+${a} ${b}s` : `+${a} ${b}`}/>
                             </dt>

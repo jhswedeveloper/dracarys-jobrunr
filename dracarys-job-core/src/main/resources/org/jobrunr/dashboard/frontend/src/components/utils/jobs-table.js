@@ -11,6 +11,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TimeAgo from "react-timeago/lib";
 import {makeStyles} from '@material-ui/core/styles';
 import LoadingIndicator from "../LoadingIndicator";
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -89,6 +90,9 @@ const JobsTable = (props) => {
                 ? <Typography id="no-jobs-found-message" variant="body1" className={classes.noItemsFound}>No jobs
                     found</Typography>
                 : <>
+                    <form noValidate autoComplete="off">
+                        <TextField id="standard-basic" label="Standard"/>
+                    </form>
                     <TableContainer>
                         <Table id="jobs-table" className={classes.table} aria-label="jobs table">
                             <TableHead>
@@ -138,6 +142,6 @@ const JobsTable = (props) => {
         }
         </>
     );
-}
+};
 
 export default JobsTable;

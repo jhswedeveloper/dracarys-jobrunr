@@ -93,7 +93,7 @@ const JobView = (props) => {
 
     React.useEffect(() => {
         getCommandHistory(jobId);
-    }, [])
+    }, [jobId])
 
     const getJob = (id) => {
         fetch(`/api/jobs/${id}`)
