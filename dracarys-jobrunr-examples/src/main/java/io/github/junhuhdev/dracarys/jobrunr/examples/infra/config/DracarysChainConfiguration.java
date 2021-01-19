@@ -45,7 +45,7 @@ public class DracarysChainConfiguration {
 
 			@Override
 			public List<Command> findByReferenceId(String refId) {
-				return commandRepository.findByReferenceId(refId).getHistory();
+				return commandRepository.findByReferenceId(refId).getTxHistory();
 			}
 
 			@Override

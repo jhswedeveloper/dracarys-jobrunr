@@ -170,7 +170,7 @@ public class JobRunrConfiguration {
      */
     public JobRunrConfiguration useDashboardIf(boolean guard) {
         if (guard) {
-            this.dashboardWebServer = new JobRunrDashboardWebServer(storageProvider, jsonMapper);
+            this.dashboardWebServer = new JobRunrDashboardWebServer(storageProvider, jsonMapper, null);
             this.dashboardWebServer.start();
         }
         return this;
@@ -195,7 +195,7 @@ public class JobRunrConfiguration {
      */
     public JobRunrConfiguration useDashboardIf(boolean guard, int dashboardPort) {
         if (guard) {
-            this.dashboardWebServer = new JobRunrDashboardWebServer(storageProvider, jsonMapper, dashboardPort);
+            this.dashboardWebServer = new JobRunrDashboardWebServer(storageProvider, jsonMapper, dashboardPort, null);
             this.dashboardWebServer.start();
         }
         return this;
@@ -220,7 +220,7 @@ public class JobRunrConfiguration {
      */
     public JobRunrConfiguration useDashboardIf(boolean guard, JobRunrDashboardWebServerConfiguration configuration) {
         if (guard) {
-            this.dashboardWebServer = new JobRunrDashboardWebServer(storageProvider, jsonMapper, configuration);
+            this.dashboardWebServer = new JobRunrDashboardWebServer(storageProvider, jsonMapper, configuration, null);
             this.dashboardWebServer.start();
         }
         return this;

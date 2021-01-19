@@ -27,6 +27,7 @@ import LoadingIndicator from "../LoadingIndicator";
 import {jobStateToHumanReadableName} from "../utils/job-utils";
 import SucceededNotification from "./notifications/succeeded-notification";
 import DeletedNotification from "./notifications/deleted-notification";
+import CommandHistory from "./states/command-history";
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -63,6 +64,7 @@ const JobView = (props) => {
     const [stateBreadcrumb, setStateBreadcrumb] = React.useState({});
     const [jobStates, setJobStates] = React.useState([]);
     const [order, setOrder] = React.useState(true);
+    const [commandHistory, setCommandHistory] = React.useState(null);
     const jobId = props.match.params.id;
 
     React.useEffect(() => {
@@ -71,6 +73,8 @@ const JobView = (props) => {
         } else {
             getJob(jobId);
         }
+
+        getCommandHistory(jobId);
 
         const eventSource = new EventSource(process.env.REACT_APP_SSE_URL + "/jobs/" + jobId);
         eventSource.addEventListener('message', e => onJob(JSON.parse(e.data)));
@@ -97,6 +101,17 @@ const JobView = (props) => {
                         .then(job => onJob(job));
                 } else {
                     onJobNotFound();
+                }
+            })
+            .catch(error => console.error(error));
+    }
+
+    const getCommandHistory = (id) => {
+        fetch(`/api/jobs/history/${id}`)
+            .then(res => {
+                if (res.status === 200) {
+                    res.json()
+                        .then(r => setCommandHistory(r));
                 }
             })
             .catch(error => console.error(error));
@@ -214,6 +229,10 @@ const JobView = (props) => {
                             {stateBreadcrumb.state === 'SUCCEEDED' && <SucceededNotification job={job}/>}
                             {stateBreadcrumb.state === 'DELETED' && <DeletedNotification job={job}/>}
 
+                            <Grid id="job-xml" item xs={12} >
+                                <CommandHistory txCmdHistory={commandHistory} job={job} />
+                            </Grid>
+
                             <Grid item xs={12}>
                                 <Typography variant="h5" component="h2">
                                     History&nbsp;
@@ -250,6 +269,7 @@ const JobView = (props) => {
                                         }
                                     })}
                             </Grid>
+
                         </Grid>
                         {apiStatus &&
                         <Snackbar open={true} autoHideDuration={3000} onClose={handleCloseAlert}>

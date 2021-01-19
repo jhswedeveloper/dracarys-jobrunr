@@ -2,9 +2,12 @@ package io.github.junhuhdev.dracarys.jobrunr.examples.infra.config;
 
 import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
+import io.github.junhuhdev.dracarys.jobrunr.api.DracarysJobStorageApi;
+import io.github.junhuhdev.dracarys.jobrunr.api.TxCommand;
 import io.github.junhuhdev.dracarys.jobrunr.configuration.JobRunr;
 import io.github.junhuhdev.dracarys.jobrunr.configuration.JobRunrConfiguration;
 import io.github.junhuhdev.dracarys.jobrunr.dashboard.JobRunrDashboardWebServer;
+import io.github.junhuhdev.dracarys.jobrunr.examples.jpa.repository.CommandRepository;
 import io.github.junhuhdev.dracarys.jobrunr.jobs.filters.RetryFilter;
 import io.github.junhuhdev.dracarys.jobrunr.jobs.mappers.JobMapper;
 import io.github.junhuhdev.dracarys.jobrunr.scheduling.BackgroundJob;
@@ -17,6 +20,7 @@ import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.JsonMapper;
 import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.gson.GsonJsonMapper;
 import io.github.junhuhdev.dracarys.jobrunr.utils.mapper.gson.RuntimeClassNameTypeAdapterFactory;
 import io.github.junhuhdev.dracarys.pipeline.cmd.Command;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -67,10 +71,27 @@ public class DracarysJobRunrConfiguration {
 	}
 
 	@Bean
-	public JobRunrDashboardWebServer dashboardWebServer(StorageProvider storageProvider, JsonMapper jsonMapper, Environment env) {
+	public DracarysJobStorageApi dracarysJobStorageApi(CommandRepository commandRepository) {
+		return new DracarysJobStorageApi() {
+			@Override
+			public TxCommand findByJobId(String jobId) {
+				var cmd = commandRepository.findByJobId(jobId);
+				var txCommand = new TxCommand();
+				txCommand.setJobId(cmd.getJobId());
+				txCommand.setId(cmd.getId());
+				txCommand.setHistory(cmd.getHistory());
+				txCommand.setStatus(cmd.getStatus().name());
+				txCommand.setReferenceId(cmd.getReferenceId());
+				return txCommand;
+			}
+		};
+	}
+
+	@Bean
+	public JobRunrDashboardWebServer dashboardWebServer(StorageProvider storageProvider, JsonMapper jsonMapper, Environment env, DracarysJobStorageApi dracarysJobStorageApi) {
 		int port = Integer.parseInt(env.getProperty("server.port")) + 1;
 		log.info("Running dashboard on port {}", port);
-		final JobRunrDashboardWebServer jobRunrDashboardWebServer = new JobRunrDashboardWebServer(storageProvider, jsonMapper, port);
+		final JobRunrDashboardWebServer jobRunrDashboardWebServer = new JobRunrDashboardWebServer(storageProvider, jsonMapper, port, dracarysJobStorageApi);
 		jobRunrDashboardWebServer.start();
 		return jobRunrDashboardWebServer;
 	}

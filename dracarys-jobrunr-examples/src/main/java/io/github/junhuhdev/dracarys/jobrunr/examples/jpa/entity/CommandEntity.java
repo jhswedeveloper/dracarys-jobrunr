@@ -37,6 +37,9 @@ public class CommandEntity {
 	@Column(name = "REFERENCE_ID")
 	private String referenceId;
 
+	@Column(name = "JOB_ID")
+	private String jobId;
+
 	@Column(name = "COMMAND_CLASS")
 	private String commandClass;
 
@@ -59,8 +62,12 @@ public class CommandEntity {
 	private LocalDateTime created = LocalDateTime.now();
 
 	@SuppressWarnings("unchecked")
-	public List<Command> getHistory() {
+	public List<Command> getTxHistory() {
 		return (List<Command>) XStreamFactory.xstream().fromXML(history);
+	}
+
+	public String getHistory() {
+		return history;
 	}
 
 }

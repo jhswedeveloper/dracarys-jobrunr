@@ -10,6 +10,8 @@ public interface CommandRepository extends JpaRepository<CommandEntity, Long> {
 
 	CommandEntity findByReferenceId(String referenceId);
 
+	CommandEntity findByJobId(String jobId);
+
 	@Modifying
 	@Query(value = "UPDATE COMMAND SET STATUS = 'PROCESSING' WHERE REFERENCE_ID = :referenceId AND STATUS <> 'PROCESSING'", nativeQuery = true)
 	int lock(@Param("referenceId") String referenceId);

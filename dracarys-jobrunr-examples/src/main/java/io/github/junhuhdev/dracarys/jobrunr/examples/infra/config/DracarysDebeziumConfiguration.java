@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import io.github.junhuhdev.dracarys.debezium.EnableDracarysDebezium;
 import io.github.junhuhdev.dracarys.debezium.config.DebeziumConsumer;
 import io.github.junhuhdev.dracarys.jobrunr.examples.infra.DracarysDebeziumConsumer;
+import io.github.junhuhdev.dracarys.jobrunr.examples.jpa.repository.CommandRepository;
 import io.github.junhuhdev.dracarys.jobrunr.scheduling.JobScheduler;
 import io.github.junhuhdev.dracarys.pipeline.chain.ChainRouter;
 import lombok.extern.slf4j.Slf4j;
@@ -18,8 +19,8 @@ public class DracarysDebeziumConfiguration {
 
 	@Primary
     @Bean
-    public DebeziumConsumer debeziumConsumer(Gson gson, ChainRouter router, JobScheduler jobScheduler) {
+    public DebeziumConsumer debeziumConsumer(Gson gson, ChainRouter router, JobScheduler jobScheduler, CommandRepository commandRepository) {
         log.info("Starting DRACARYS DEBEZIUM....");
-		return new DracarysDebeziumConsumer(gson, router, jobScheduler);
+		return new DracarysDebeziumConsumer(gson, router, jobScheduler, commandRepository);
     }
 }

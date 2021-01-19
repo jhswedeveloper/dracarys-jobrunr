@@ -1,6 +1,7 @@
 package io.github.junhuhdev.dracarys.jobrunr.dashboard;
 
 
+import io.github.junhuhdev.dracarys.jobrunr.api.DracarysJobStorageApi;
 import io.github.junhuhdev.dracarys.jobrunr.dashboard.server.http.RestHttpHandler;
 import io.github.junhuhdev.dracarys.jobrunr.dashboard.server.http.handlers.HttpRequestHandler;
 import io.github.junhuhdev.dracarys.jobrunr.dashboard.ui.model.RecurringJobUIModel;
@@ -21,11 +22,12 @@ public class JobRunrApiHandler extends RestHttpHandler {
 
     private ProblemsManager problemsManager;
 
-    public JobRunrApiHandler(StorageProvider storageProvider, JsonMapper jsonMapper) {
+    public JobRunrApiHandler(StorageProvider storageProvider, JsonMapper jsonMapper, DracarysJobStorageApi dracarysJobStorageApi) {
         super("/api", jsonMapper);
         this.problemsManager = new ProblemsManager(storageProvider);
 
         get("/jobs", findJobByState(storageProvider));
+        get("/jobs/history/:id", getCmdHistory(dracarysJobStorageApi));
 
         get("/jobs/:id", getJobById(storageProvider));
         delete("/jobs/:id", deleteJobById(storageProvider));
@@ -40,6 +42,10 @@ public class JobRunrApiHandler extends RestHttpHandler {
         get("/servers", getBackgroundJobServers(storageProvider));
 
         withExceptionMapping(JobNotFoundException.class, (exc, resp) -> resp.statusCode(404));
+    }
+
+    private HttpRequestHandler getCmdHistory(DracarysJobStorageApi dracarysJobStorageApi) {
+        return (request, response) -> response.asJson(dracarysJobStorageApi.findByJobId(request.param(":id")));
     }
 
     private HttpRequestHandler getJobById(StorageProvider storageProvider) {
